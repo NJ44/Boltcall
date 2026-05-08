@@ -48,30 +48,7 @@ function substituteTemplate(
   return result;
 }
 
-// ─── Self-Healing Detection ─────────────────────────────────────────────────
-
-function isFailedCall(call: any): boolean {
-  const analysis = call.call_analysis;
-  if (!analysis) return false;
-
-  // Explicit failure flag from Retell's post-call analysis
-  if (analysis.call_successful === false) return true;
-
-  // Negative user sentiment
-  const sentiment = (analysis.user_sentiment || '').toLowerCase();
-  if (sentiment === 'negative' || sentiment === 'very negative') return true;
-
-  // Call summary mentions failure keywords
-  const summary = (analysis.call_summary || '').toLowerCase();
-  const failureKeywords = [
-    'hung up', 'disconnected', 'frustrated', 'angry', 'confused',
-    'could not help', 'unable to assist', 'wrong information',
-    'incorrect', 'loop', 'repeated', 'hallucinated',
-  ];
-  if (failureKeywords.some(kw => summary.includes(kw))) return true;
-
-  return false;
-}
+// ─── Outcome Evaluation ──────────────────────────────────────────────────────
 
 function buildTranscriptText(call: any): string {
   const transcript = call.transcript_object || call.transcript;
@@ -87,45 +64,31 @@ function buildTranscriptText(call: any): string {
   return JSON.stringify(transcript);
 }
 
-async function checkAndTriggerSelfHeal(call: any, agentId: string): Promise<boolean> {
-  // Skip test calls and very short calls (missed calls handled separately)
-  if (!call.call_analysis) return false;
-  if (call.call_status !== 'ended') return false;
-  if ((call.duration_ms || 0) < 15000) return false;
-
-  if (!isFailedCall(call)) return false;
+async function triggerOutcomeEvaluation(call: any, agentId: string, userId: string | null): Promise<void> {
+  // Only evaluate calls with enough substance
+  if (call.call_status !== 'ended') return;
+  if ((call.duration_ms || 0) < 15000) return;
 
   const transcript = buildTranscriptText(call);
-  if (!transcript || transcript.length < 50) return false;
+  if (!transcript || transcript.length < 50) return;
 
-  console.log(`[retell-webhook] Failed call detected: ${call.call_id}, triggering self-heal`);
-
-  // Look up user_id for this agent
-  const supabase = getSupabase();
-  const { data: agentRow } = await supabase
-    .from('agents')
-    .select('user_id')
-    .filter('api_keys->>retell_agent_id', 'eq', agentId)
-    .single();
-
-  // Fire-and-forget: trigger self-healing pipeline asynchronously
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  fetch(`${baseUrl}/.netlify/functions/agent-self-heal`, {
+
+  // Fire-and-forget: conversation-outcome handles win recording OR self-heal trigger
+  fetch(`${baseUrl}/.netlify/functions/conversation-outcome`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      action: 'heal',
+      channel: 'voice',
       agentId,
-      callId: call.call_id,
+      userId: userId || '',
+      conversationId: call.call_id,
       transcript,
-      callAnalysis: call.call_analysis,
-      userId: agentRow?.user_id || null,
+      callAnalysis: call.call_analysis || null,
     }),
   }).catch(err => {
-    console.error('[retell-webhook] Self-heal trigger failed (non-blocking):', err);
+    console.error('[retell-webhook] Outcome evaluation trigger failed (non-blocking):', err);
   });
-
-  return true;
 }
 
 export const handler: Handler = async (event) => {
