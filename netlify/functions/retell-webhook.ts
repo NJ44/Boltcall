@@ -154,10 +154,6 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ ok: true, skipped: true }) };
     }
 
-    // ─── Self-Healing: Detect failed calls and trigger auto-fix ────────────
-    // This runs for ALL completed calls, not just missed ones
-    const selfHealTriggered = await checkAndTriggerSelfHeal(call, agentId);
-
     // Check if this is a missed call
     if (!isMissedCall(call)) {
       console.log(`[retell-webhook] Call ${call.call_id} is not a missed call (status=${call.call_status}, duration=${call.duration_ms}ms)`);
