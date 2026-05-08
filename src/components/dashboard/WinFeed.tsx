@@ -9,29 +9,20 @@ dayjs.extend(relativeTime);
 
 interface FeedEvent {
   id: string;
-  client_name: string;
-  status: string;
+  label: string;
+  dot: string;
   created_at: string;
+  channel?: string;
 }
 
-function describeEvent(event: FeedEvent): string {
-  const name = event.client_name || 'A lead';
-  switch (event.status) {
-    case 'completed':  return `Booking confirmed with ${name}`;
-    case 'scheduled':  return `AI booked ${name} for an appointment`;
-    case 'pending':    return `New lead captured — ${name} waiting for callback`;
-    default:           return `Lead captured: ${name}`;
-  }
-}
-
-function statusDot(status: string): string {
-  switch (status) {
-    case 'completed': return 'bg-emerald-400';
-    case 'scheduled': return 'bg-blue-400';
-    case 'pending':   return 'bg-amber-400';
-    default:          return 'bg-foreground/20';
-  }
-}
+const CHANNEL_BADGE: Record<string, string> = {
+  voice:    '📞',
+  chat:     '💬',
+  sms:      '📱',
+  whatsapp: '💬',
+  email:    '✉️',
+  ads:      '📣',
+};
 
 const WinFeed: React.FC = () => {
   const { user } = useAuth();
@@ -40,16 +31,48 @@ const WinFeed: React.FC = () => {
 
   useEffect(() => {
     if (!user?.id) return;
-    supabase
-      .from('callbacks')
-      .select('id, client_name, status, created_at')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(5)
-      .then(({ data }) => {
-        if (data) setEvents(data as FeedEvent[]);
-        setLoading(false);
-      });
+
+    const uid = user.id;
+
+    Promise.all([
+      // Legacy callbacks table
+      supabase
+        .from('callbacks')
+        .select('id, client_name, status, created_at')
+        .eq('user_id', uid)
+        .order('created_at', { ascending: false })
+        .limit(5),
+      // AI-evaluated wins
+      supabase
+        .from('conversation_wins')
+        .select('id, channel, outcome_type, summary, created_at')
+        .eq('user_id', uid)
+        .order('created_at', { ascending: false })
+        .limit(5),
+    ]).then(([callbacksResult, winsResult]) => {
+      const callbackEvents: FeedEvent[] = (callbacksResult.data || []).map((c: any) => ({
+        id: `cb-${c.id}`,
+        label: buildCallbackLabel(c),
+        dot: callbackDot(c.status),
+        created_at: c.created_at,
+      }));
+
+      const winEvents: FeedEvent[] = (winsResult.data || []).map((w: any) => ({
+        id: `win-${w.id}`,
+        label: buildWinLabel(w),
+        dot: 'bg-emerald-400',
+        created_at: w.created_at,
+        channel: w.channel,
+      }));
+
+      // Merge, sort by time, take top 8
+      const merged = [...callbackEvents, ...winEvents]
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        .slice(0, 8);
+
+      setEvents(merged);
+      setLoading(false);
+    });
   }, [user?.id]);
 
   if (loading) {
@@ -78,8 +101,13 @@ const WinFeed: React.FC = () => {
       <ul className="space-y-3" aria-label="Recent AI activity">
         {events.map((event) => (
           <li key={event.id} className="flex items-center gap-3">
-            <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${statusDot(event.status)}`} aria-hidden="true" />
-            <span className="text-sm text-foreground/75 truncate">{describeEvent(event)}</span>
+            <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${event.dot}`} aria-hidden="true" />
+            <span className="text-sm text-foreground/75 truncate">
+              {event.channel && CHANNEL_BADGE[event.channel] ? (
+                <span className="mr-1">{CHANNEL_BADGE[event.channel]}</span>
+              ) : null}
+              {event.label}
+            </span>
             <span className="ml-auto text-[10px] text-foreground/40 shrink-0 tabular-nums">
               {dayjs(event.created_at).fromNow()}
             </span>
@@ -89,5 +117,35 @@ const WinFeed: React.FC = () => {
     </motion.div>
   );
 };
+
+function buildCallbackLabel(c: { client_name?: string; status: string }): string {
+  const name = c.client_name || 'A lead';
+  switch (c.status) {
+    case 'completed': return `Booking confirmed with ${name}`;
+    case 'scheduled': return `AI booked ${name} for an appointment`;
+    case 'pending':   return `New lead captured — ${name} waiting for callback`;
+    default:          return `Lead captured: ${name}`;
+  }
+}
+
+function buildWinLabel(w: { channel?: string; outcome_type?: string; summary?: string }): string {
+  const channel = w.channel || 'unknown';
+  if (w.outcome_type === 'booked') {
+    return `AI booked appointment via ${channel}`;
+  }
+  if (w.outcome_type === 'answered') {
+    return `Lead question resolved via ${channel}`;
+  }
+  return w.summary || `Conversation resolved via ${channel}`;
+}
+
+function callbackDot(status: string): string {
+  switch (status) {
+    case 'completed': return 'bg-emerald-400';
+    case 'scheduled': return 'bg-blue-400';
+    case 'pending':   return 'bg-amber-400';
+    default:          return 'bg-foreground/20';
+  }
+}
 
 export default WinFeed;
