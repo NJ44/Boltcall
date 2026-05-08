@@ -15,22 +15,31 @@ app.get('/health', (_req, res) => {
 
 wss.on('connection', (ws: WebSocket) => {
   let callId: string | null = null;
+  console.log('[retell-llm-server] WebSocket connected');
 
   ws.on('message', async (raw) => {
     let req: RetellRequest;
     try {
       req = JSON.parse(raw.toString());
     } catch {
+      console.error('[retell-llm-server] failed to parse message:', raw.toString().slice(0, 200));
       return;
     }
 
+    console.log(`[retell-llm-server] msg type=${req.interaction_type} call_id=${(req as any).call?.call_id ?? callId}`);
+
     // ── call_details: first message Retell sends — load prompt, send greeting ──
     if (req.interaction_type === 'call_details') {
-      if (!req.call) return;
+      if (!req.call) {
+        console.warn('[retell-llm-server] call_details missing .call field, raw:', raw.toString().slice(0, 500));
+        return;
+      }
       callId = req.call.call_id;
       const agentId = req.call.agent_id;
+      console.log(`[retell-llm-server] call_details agent=${agentId} call=${callId}`);
 
       const session = await loadSession(callId, agentId);
+      console.log(`[retell-llm-server] session loaded, begin="${session.beginMessage.slice(0, 60)}"`);
 
       const greet: RetellResponse = {
         response_id: 0,
@@ -39,6 +48,7 @@ wss.on('connection', (ws: WebSocket) => {
         end_call: false,
       };
       ws.send(JSON.stringify(greet));
+      console.log('[retell-llm-server] begin_message sent');
       return;
     }
 
@@ -46,10 +56,11 @@ wss.on('connection', (ws: WebSocket) => {
     if (req.interaction_type === 'update_only') return;
 
     // ── response_required / reminder_required: generate and stream response ──
-    if (!callId) return;
+    if (!callId) { console.warn('[retell-llm-server] response_required but no callId'); return; }
     const session = getSession(callId);
-    if (!session) return;
+    if (!session) { console.warn(`[retell-llm-server] no session for ${callId}`); return; }
 
+    console.log(`[retell-llm-server] streaming response for response_id=${req.response_id}`);
     try {
       let chunkSent = false;
 
@@ -71,6 +82,7 @@ wss.on('connection', (ws: WebSocket) => {
         end_call: false,
       };
       ws.send(JSON.stringify(final));
+      console.log(`[retell-llm-server] stream complete, chunks_sent=${chunkSent}`);
     } catch (err) {
       console.error('[retell-llm-server] stream error:', err);
       const fallback: RetellResponse = {
@@ -84,6 +96,7 @@ wss.on('connection', (ws: WebSocket) => {
   });
 
   ws.on('close', () => {
+    console.log(`[retell-llm-server] WebSocket closed call=${callId}`);
     if (callId) clearSession(callId);
   });
 

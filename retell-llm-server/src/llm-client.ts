@@ -44,7 +44,7 @@ export async function* streamChatCompletion(
     body: JSON.stringify({
       messages,
       stream: true,
-      max_tokens: 150,
+      max_completion_tokens: 300,
       temperature: 0.7,
     }),
   });
@@ -60,7 +60,20 @@ export async function* streamChatCompletion(
 
   while (true) {
     const { done, value } = await reader.read();
-    if (done) break;
+    if (done) {
+      // Flush any remaining bytes in the buffer on stream end
+      if (buffer.trim()) {
+        const data = buffer.startsWith('data: ') ? buffer.slice(6).trim() : buffer.trim();
+        if (data !== '[DONE]') {
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (typeof content === 'string' && content) yield content;
+          } catch { /* ignore */ }
+        }
+      }
+      break;
+    }
 
     buffer += decoder.decode(value, { stream: true });
     const lines = buffer.split('\n');
