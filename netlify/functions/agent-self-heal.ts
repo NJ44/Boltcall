@@ -67,6 +67,13 @@ interface HealScenario {
   messages: string[];
 }
 
+interface RubricCriterion {
+  id: string;
+  label: string;
+  description: string;
+  weight: number;
+}
+
 // ─── Step 1: Analyze failure ──────────────────────────────────────────────────
 
 async function analyzeFailure(
