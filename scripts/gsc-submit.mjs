@@ -90,9 +90,35 @@ function normalizePath(urlPath) {
   return urlPath;
 }
 
+// Google's Indexing API officially supports ONLY JobPosting and BroadcastEvent
+// schemas. John Mueller has publicly called out misuse of URL_UPDATED on
+// generic pages (May 2025). Submitting non-eligible URLs does NOT speed up
+// indexation and may flag the site. We keep the function but gate it behind
+// an explicit allowlist of route patterns. Today the allowlist is empty,
+// because no Boltcall route serves JobPosting or BroadcastEvent schema.
+//
+// To opt a route in (e.g. a future /jobs/* page), add a regex below.
+const INDEXING_API_ELIGIBLE_PATTERNS = [
+  // /^\/jobs\//,           // JobPosting
+  // /^\/live\//,           // BroadcastEvent
+];
+
+function isIndexingApiEligible(urlPath) {
+  const cleaned = normalizePath(urlPath);
+  const path = cleaned.startsWith('http')
+    ? cleaned.replace(/^https?:\/\/[^/]+/, '')
+    : cleaned;
+  return INDEXING_API_ELIGIBLE_PATTERNS.some(re => re.test(path));
+}
+
 async function requestIndexing(token, urlPath) {
   const cleaned = normalizePath(urlPath);
   const fullUrl = cleaned.startsWith('http') ? cleaned : `${BASE_URL}${cleaned}`;
+
+  if (!isIndexingApiEligible(urlPath)) {
+    console.log(`· Indexing API skipped (not JobPosting/BroadcastEvent): ${fullUrl}`);
+    return;
+  }
 
   const res = await fetch('https://indexing.googleapis.com/v3/urlNotifications:publish', {
     method: 'POST',
@@ -148,11 +174,17 @@ async function main() {
   await submitSitemap(gscToken);
 
   if (urlsToIndex.length > 0) {
-    const indexToken = await getAccessToken(['https://www.googleapis.com/auth/indexing']);
-    console.log(`\nRequesting indexing for ${urlsToIndex.length} URL(s)...`);
-    for (const urlPath of urlsToIndex) {
-      await requestIndexing(indexToken, urlPath);
-      await new Promise(r => setTimeout(r, 300));
+    const eligible = urlsToIndex.filter(isIndexingApiEligible);
+    if (eligible.length === 0) {
+      console.log(`\n${urlsToIndex.length} URL(s) detected, none eligible for Indexing API`);
+      console.log('(Google supports only JobPosting + BroadcastEvent schemas — sitemap submission above is the correct discovery channel for everything else.)');
+    } else {
+      const indexToken = await getAccessToken(['https://www.googleapis.com/auth/indexing']);
+      console.log(`\nRequesting indexing for ${eligible.length} eligible URL(s) (of ${urlsToIndex.length} new)...`);
+      for (const urlPath of eligible) {
+        await requestIndexing(indexToken, urlPath);
+        await new Promise(r => setTimeout(r, 300));
+      }
     }
   } else {
     console.log('\nNo new URLs detected.');
