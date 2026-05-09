@@ -1,12 +1,10 @@
 import type { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
-
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
-const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || '';
-const PAYPAL_API_BASE = process.env.PAYPAL_MODE === 'sandbox'
-  ? 'https://api-m.sandbox.paypal.com'
-  : 'https://api-m.paypal.com';
-const PAYPAL_WEBHOOK_ID = process.env.PAYPAL_WEBHOOK_ID || '';
+import {
+  PAYPAL_API_BASE,
+  PAYPAL_WEBHOOK_ID,
+  getPayPalAccessToken,
+} from './_shared/paypal-client';
 
 const supabase = createClient(
   process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
@@ -14,13 +12,13 @@ const supabase = createClient(
 );
 
 // ── User lookup helper (auth.users) ──────────────────────────────────────────
+// Used as fallback when a webhook payload lacks `custom_id` (legacy
+// hosted-button payments). Subscriptions API flows attach the user UUID via
+// `custom_id` in the create-subscription call so we don't need this scan.
 
 async function findUserByEmail(email: string | undefined): Promise<{ id: string; email: string | undefined } | null> {
   if (!email) return null;
   try {
-    // listUsers paginates; the typical Boltcall org is well under 1000 users so
-    // a single page is sufficient for now. If the user count grows, switch to
-    // a dedicated email-indexed view or add filter support.
     const { data, error } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
     if (error || !data?.users) return null;
     const match = data.users.find(u => u.email?.toLowerCase() === email.toLowerCase());
@@ -29,26 +27,6 @@ async function findUserByEmail(email: string | undefined): Promise<{ id: string;
     console.error('findUserByEmail failed:', e);
     return null;
   }
-}
-
-// ── PayPal Auth ──────────────────────────────────────────────────────────────
-
-async function getPayPalAccessToken(): Promise<string> {
-  const res = await fetch(`${PAYPAL_API_BASE}/v1/oauth2/token`, {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials',
-  });
-
-  if (!res.ok) {
-    throw new Error(`PayPal auth failed: ${res.status} ${await res.text()}`);
-  }
-
-  const data = await res.json();
-  return data.access_token;
 }
 
 // ── Webhook Signature Verification ───────────────────────────────────────────
