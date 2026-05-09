@@ -6,7 +6,7 @@ const FreeSetup: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="hidden md:block mt-32">
+    <section className="mt-32">
       <ScrollingAnimation onNavigate={(href) => navigate(href)} />
     </section>
   );
