@@ -65,6 +65,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 />
               ))}
             </div>
+
+            <div className="space-y-1 mt-6">
+              <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+                Tools
+              </h2>
+              <a
+                href="file:///C:/Users/Asus/Desktop/Marketing/agentic-os/dashboard.html"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-underline text-sm font-medium px-3 py-2 rounded-md transition-colors duration-200 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 flex items-center gap-2"
+                aria-label="Open Agentic OS"
+              >
+                <span className="w-4 h-4"><Activity /></span>
+                <span>Agentic OS</span>
+              </a>
+            </div>
           </nav>
         </div>
       </aside>
