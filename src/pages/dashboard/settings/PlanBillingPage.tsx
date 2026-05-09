@@ -88,19 +88,8 @@ const PlanBillingPage: React.FC = () => {
     { label: 'Tokens Used', used: tokensUsed, limit: tokenLimit || 1000 },
   ];
 
-  // The legacy /payment/elite-starter and /payment/pro pages render PayPal
-  // hosted-buttons that are broken (the hardcoded button IDs return an error
-  // for the configured client_id). Until the PayPal Subscriptions API
-  // migration lands (see Boltcall_QA/paypal-subscriptions-api-guide.md), every
-  // upgrade routes to /book-a-call so a human picks it up. Enterprise/Ultimate
-  // were already routing there.
-  const PLAN_ROUTES: Record<string, string> = {
-    starter: '/book-a-call',
-    pro: '/book-a-call',
-    ultimate: '/book-a-call',
-    enterprise: '/book-a-call',
-  };
-
+  // Enterprise stays high-touch (sales call); self-serve tiers go through
+  // PayPal Subscriptions API checkout via redirectToPayPalCheckout.
   const PLAN_RANK: Record<string, number> = {
     free: 0, starter: 1, pro: 2, ultimate: 3, enterprise: 4,
   };
@@ -110,19 +99,20 @@ const PlanBillingPage: React.FC = () => {
 
   const handlePlanChange = async (plan: PlanLevel) => {
     setUpgrading(plan);
-    if (isUpgrade(plan)) {
-      const route = PLAN_ROUTES[plan] || '/book-a-call';
-      window.location.href = route;
-    } else {
-      // Downgrade: open the customer portal (Stripe today; PayPal once
-      // openCustomerPortal is migrated alongside Subscriptions API).
-      try {
-        await openCustomerPortal();
-      } catch (error) {
-        console.error('Portal error:', error);
-      } finally {
-        setUpgrading(null);
+    try {
+      if (plan === 'enterprise') {
+        window.location.href = '/book-a-call';
+        return;
       }
+      if (isUpgrade(plan)) {
+        await redirectToPayPalCheckout({ plan, interval: currentInterval });
+      } else {
+        // Downgrade or change of interval — open PayPal autopay management.
+        await openCustomerPortal();
+      }
+    } catch (error) {
+      console.error('Plan change error:', error);
+      setUpgrading(null);
     }
   };
 
