@@ -387,6 +387,12 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/integrations', label: t('nav.integrations'), icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
+  const navItemsQuality = [
+    { to: '/dashboard/qa/rubrics',   label: 'QA Rubrics',    icon: <ClipboardList className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/qa/review',    label: 'Review Queue',  icon: <ListChecks className="w-3.5 h-3.5 scale-[0.95]" />, badge: pendingQACount > 0 ? String(pendingQACount) : undefined },
+    { to: '/dashboard/qa/analytics', label: 'QA Analytics',  icon: <TrendingUp className="w-3.5 h-3.5 scale-[0.95]" /> },
+  ];
+
   const navItemsFooter = [
     { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" />, onboardingId: 'nav-settings' },
     { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
