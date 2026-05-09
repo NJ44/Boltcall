@@ -49,7 +49,8 @@ export type TokenCategory =
   | 'ai_self_heal'
   | 'ai_kb_extract'
   | 'whatsapp_sent'
-  | 'whatsapp_ai_draft';
+  | 'whatsapp_ai_draft'
+  | 'ai_qa_success_analysis';
 
 export const TOKEN_COSTS: Record<TokenCategory, number> = {
   ai_voice_minute: 10,
