@@ -5,12 +5,12 @@ const GlassDefs = () => (
   <svg style={{ display: "none", position: "absolute" }} aria-hidden="true">
     <defs>
       <filter id="gb-specular" x="0%" y="0%" width="100%" height="100%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.45 0.55" numOctaves="4" seed="8" result="noise" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.06 0.08" numOctaves="2" seed="8" result="noise" />
         <feColorMatrix type="saturate" values="0" in="noise" result="gray" />
-        <feSpecularLighting in="gray" surfaceScale="10" specularConstant="1.4" specularExponent="90" lightingColor="white" result="spec">
+        <feSpecularLighting in="gray" surfaceScale="8" specularConstant="1.2" specularExponent="160" lightingColor="white" result="spec">
           <fePointLight x="-80" y="-120" z="350" />
         </feSpecularLighting>
-        <feComposite in="spec" operator="arithmetic" k1="0" k2="0.32" k3="0" k4="0" />
+        <feComposite in="spec" operator="arithmetic" k1="0" k2="0.28" k3="0" k4="0" />
       </filter>
       <filter id="gb-grain" x="0%" y="0%" width="100%" height="100%">
         <feTurbulence type="fractalNoise" baseFrequency="0.82 0.92" numOctaves="4" stitchTiles="stitch" result="g" />
