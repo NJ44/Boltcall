@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CheckCircle2, XCircle, AlertTriangle, Clock, ChevronDown, ChevronUp,
-  Check, X, Flag, RotateCcw, RefreshCw, Sparkles, TrendingDown,
+  Check, Flag, RotateCcw, RefreshCw, Sparkles, TrendingDown,
   ThumbsUp, Lightbulb, AlertCircle, ShieldCheck, Activity,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -59,7 +59,7 @@ const STATUS_CONFIG: Record<ReviewStatus, { label: string; color: string; icon: 
 
 export default function QAReviewPage() {
   const { user } = useAuth();
-  const { addToast } = useToast();
+  const { showToast } = useToast();
 
   const [reviews, setReviews] = useState<QAReview[]>([]);
   const [agents, setAgents] = useState<Map<string, string>>(new Map());
@@ -105,11 +105,11 @@ export default function QAReviewPage() {
       if (error) throw error;
       setReviews((data || []) as QAReview[]);
     } catch (err) {
-      addToast({ type: 'error', message: 'Failed to load review queue' });
+      showToast({ variant: 'error', message: 'Failed to load review queue' });
     } finally {
       setLoading(false);
     }
-  }, [user, addToast]);
+  }, [user, showToast]);
 
   useEffect(() => {
     loadAgents();
@@ -152,9 +152,9 @@ export default function QAReviewPage() {
         .eq('user_id', user!.id);
       if (error) throw error;
       setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, status: 'approved', reviewed_at: new Date().toISOString() } : r));
-      addToast({ type: 'success', message: 'Review approved' });
+      showToast({ variant: 'success', message: 'Review approved' });
     } catch {
-      addToast({ type: 'error', message: 'Failed to approve review' });
+      showToast({ variant: 'error', message: 'Failed to approve review' });
     } finally {
       setActionLoading(prev => ({ ...prev, [reviewId]: false }));
     }
@@ -162,7 +162,7 @@ export default function QAReviewPage() {
 
   const handleRevert = async (review: QAReview) => {
     if (!review.heal_log_id) {
-      addToast({ type: 'error', message: 'No heal log linked to this review' });
+      showToast({ variant: 'error', message: 'No heal log linked to this review' });
       return;
     }
     setActionLoading(prev => ({ ...prev, [review.id]: true }));
@@ -179,9 +179,9 @@ export default function QAReviewPage() {
         throw new Error(err.error || 'Revert failed');
       }
       setReviews(prev => prev.map(r => r.id === review.id ? { ...r, status: 'rejected', reviewed_at: new Date().toISOString() } : r));
-      addToast({ type: 'success', message: 'Fix reverted — agent restored to original prompt' });
+      showToast({ variant: 'success', message: 'Fix reverted ג€” agent restored to original prompt' });
     } catch (err) {
-      addToast({ type: 'error', message: err instanceof Error ? err.message : 'Revert failed' });
+      showToast({ variant: 'error', message: err instanceof Error ? err.message : 'Revert failed' });
     } finally {
       setActionLoading(prev => ({ ...prev, [review.id]: false }));
     }
@@ -202,9 +202,9 @@ export default function QAReviewPage() {
       ));
       setFlaggingId(null);
       setFlagNotes('');
-      addToast({ type: 'success', message: 'Review flagged for follow-up' });
+      showToast({ variant: 'success', message: 'Review flagged for follow-up' });
     } catch {
-      addToast({ type: 'error', message: 'Failed to flag review' });
+      showToast({ variant: 'error', message: 'Failed to flag review' });
     } finally {
       setActionLoading(prev => ({ ...prev, [reviewId]: false }));
     }
@@ -291,7 +291,7 @@ export default function QAReviewPage() {
         <div className="space-y-3">
           <AnimatePresence initial={false}>
             {filtered.map(review => {
-              const agentName = agents.get(review.agent_id) || review.agent_id.slice(0, 12) + '…';
+              const agentName = agents.get(review.agent_id) || review.agent_id.slice(0, 12) + 'ג€¦';
               const isExpanded = expandedId === review.id;
               const isFlagging = flaggingId === review.id;
               const isActing = actionLoading[review.id];
@@ -338,7 +338,7 @@ export default function QAReviewPage() {
 
                     {/* Auto summary */}
                     <span className="text-sm text-gray-400 flex-1 truncate">
-                      {review.auto_summary || '—'}
+                      {review.auto_summary || 'ג€”'}
                     </span>
 
                     {/* Score */}
@@ -406,7 +406,7 @@ export default function QAReviewPage() {
                               <textarea
                                 value={flagNotes}
                                 onChange={e => setFlagNotes(e.target.value)}
-                                placeholder="Add a note explaining why this is flagged…"
+                                placeholder="Add a note explaining why this is flaggedג€¦"
                                 rows={2}
                                 className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-orange-500/50 resize-none"
                               />
@@ -561,7 +561,7 @@ function SuccessDetail({
     return (
       <div className="flex items-center gap-2 text-gray-500 text-sm">
         <div className="w-3 h-3 border border-gray-500 border-t-transparent rounded-full animate-spin" />
-        Loading analysis…
+        Loading analysisג€¦
       </div>
     );
   }

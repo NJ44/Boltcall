@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
@@ -78,7 +78,7 @@ function last30Days(): string[] {
 
 export default function QAAnalyticsPage() {
   const { user } = useAuth();
-  const { addToast } = useToast();
+  const { showToast } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [healLogs, setHealLogs] = useState<HealLog[]>([]);
@@ -127,15 +127,15 @@ export default function QAAnalyticsPage() {
       });
       setAgentMap(map);
     } catch {
-      addToast({ type: 'error', message: 'Failed to load analytics data' });
+      showToast({ variant: 'error', message: 'Failed to load analytics data' });
     } finally {
       setLoading(false);
     }
-  }, [user, addToast]);
+  }, [user, showToast]);
 
   useEffect(() => { load(); }, [load]);
 
-  // ── Derived data ──────────────────────────────────────────────
+  // ג”€ג”€ Derived data ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€ג”€
 
   const totalHeals = healLogs.length;
   const successfulHeals = healLogs.filter(h => h.fix_verified === true).length;
@@ -146,7 +146,7 @@ export default function QAAnalyticsPage() {
   const successReviews = reviews.filter(r => r.call_type === 'success' && r.friction_score != null);
   const avgFriction = successReviews.length > 0
     ? (successReviews.reduce((s, r) => s + (r.friction_score ?? 0), 0) / successReviews.length).toFixed(1)
-    : '—';
+    : 'ג€”';
 
   const kpis: KPI[] = [
     {
@@ -165,7 +165,7 @@ export default function QAAnalyticsPage() {
     },
     {
       label: 'Avg friction score',
-      value: avgFriction === '—' ? '—' : `${avgFriction}/10`,
+      value: avgFriction === 'ג€”' ? 'ג€”' : `${avgFriction}/10`,
       sub: `from ${successReviews.length} success calls`,
       icon: <Activity className="w-5 h-5" />,
       color: Number(avgFriction) >= 6 ? 'text-orange-400' : 'text-green-400',
@@ -282,7 +282,7 @@ export default function QAAnalyticsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">QA Analytics</h1>
-          <p className="text-sm text-gray-400 mt-1">Heal performance, friction trends, and agent health — last 30 days</p>
+          <p className="text-sm text-gray-400 mt-1">Heal performance, friction trends, and agent health ג€” last 30 days</p>
         </div>
         <button
           onClick={load}
