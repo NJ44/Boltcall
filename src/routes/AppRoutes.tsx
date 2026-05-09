@@ -67,6 +67,9 @@ const FeedbackPage = React.lazy(() => import('../pages/dashboard/FeedbackPage'))
 const BoltcallAgentPage = React.lazy(() => import('../pages/dashboard/BoltcallAgentPage'));
 
 // ── Lazy loads — Dashboard settings ──────────────────────────────────────
+const QARubricsPage = React.lazy(() => import('../pages/dashboard/QARubricsPage'));
+const QAReviewPage = React.lazy(() => import('../pages/dashboard/QAReviewPage'));
+const QAAnalyticsPage = React.lazy(() => import('../pages/dashboard/QAAnalyticsPage'));
 const GeneralPage = React.lazy(() => import('../pages/dashboard/settings/GeneralPage'));
 const PreferencesPage = React.lazy(() => import('../pages/dashboard/settings/PreferencesPage'));
 const MembersPage = React.lazy(() => import('../pages/dashboard/settings/MembersPage'));
