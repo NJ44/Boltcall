@@ -117,28 +117,38 @@ async function handlePaymentCompleted(resource: any) {
 async function handleSubscriptionActivated(resource: any) {
   const subscriptionId = resource.id;
   const planId = resource.plan_id;
+  const customId = resource.custom_id; // user UUID we attached during create
   const payerEmail = resource.subscriber?.email_address;
   const payerId = resource.subscriber?.payer_id;
   const startTime = resource.start_time;
 
-  console.log(`Subscription activated: ${subscriptionId} (plan: ${planId}) for ${payerEmail}`);
+  console.log(`Subscription activated: ${subscriptionId} (plan: ${planId}) for ${payerEmail} custom_id=${customId || '<none>'}`);
 
-  // Map PayPal plan ID to our plan levels
-  const planLevel = mapPayPalPlanToLevel(planId);
+  const { level, interval } = mapPayPalPlan(planId);
 
-  // Find user by email — auth.users via admin API (service role required).
-  const user = await findUserByEmail(payerEmail);
+  // Resolve user_id: trust custom_id (set by create-paypal-subscription) first,
+  // fall back to email lookup for legacy hosted-button payments.
+  let userId: string | null = customId || null;
+  let matchSource = customId ? 'custom_id' : 'none';
+  if (!userId) {
+    const u = await findUserByEmail(payerEmail);
+    if (u) {
+      userId = u.id;
+      matchSource = 'email';
+    }
+  }
 
-  if (user) {
+  if (userId) {
     const { error } = await supabase
       .from('subscriptions')
       .upsert({
-        user_id: user.id,
+        user_id: userId,
         payment_provider: 'paypal',
         paypal_subscription_id: subscriptionId,
         paypal_payer_id: payerId,
-        plan_level: planLevel,
-        billing_interval: 'monthly',
+        paypal_plan_id: planId,
+        plan_level: level,
+        billing_interval: interval,
         status: 'active',
         current_period_start: startTime,
         updated_at: new Date().toISOString(),
@@ -154,10 +164,10 @@ async function handleSubscriptionActivated(resource: any) {
 
   await sendTelegramNotification(
     `🎉 New PayPal Subscription!\n\n` +
-    `Plan: ${planLevel}\n` +
+    `Plan: ${level} (${interval})\n` +
     `From: ${payerEmail}\n` +
     `Subscription: ${subscriptionId}\n` +
-    `User: ${user ? 'Matched ✅' : 'No account ⚠️'}`
+    `User match: ${matchSource}${userId ? ' ✅' : ' ⚠️ no account'}`
   );
 }
 
