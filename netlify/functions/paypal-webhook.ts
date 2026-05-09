@@ -231,18 +231,35 @@ async function handlePaymentSaleCompleted(resource: any) {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function mapPayPalPlanToLevel(planId: string): string {
-  // Map PayPal plan/button IDs to Boltcall plan levels
-  // Hosted button IDs: 6QXWAZWNEVEV2 = Starter, FUL2XPWPEMFUY = Pro
-  const planMap: Record<string, string> = {
-    '6QXWAZWNEVEV2': 'starter',
-    'FUL2XPWPEMFUY': 'pro',
-    // Add PayPal subscription plan IDs here when created:
-    // 'P-XXXXX': 'starter',
-    // 'P-XXXXX': 'pro',
-    // 'P-XXXXX': 'ultimate',
-  };
-  return planMap[planId] || 'starter';
+// Reverse-lookup: PayPal Plan ID → { level, interval }. Built from env vars
+// at module load so a missing var doesn't crash the handler — unknown plans
+// fall back to 'starter monthly' and a Telegram alert fires.
+type PlanInfo = { level: 'starter' | 'pro' | 'ultimate'; interval: 'monthly' | 'yearly' };
+
+function buildPlanReverseMap(): Record<string, PlanInfo> {
+  const isSandbox = process.env.PAYPAL_MODE === 'sandbox';
+  const suffix = isSandbox ? '_SANDBOX' : '';
+  const tiers: PlanInfo['level'][] = ['starter', 'pro', 'ultimate'];
+  const intervals: PlanInfo['interval'][] = ['monthly', 'yearly'];
+  const map: Record<string, PlanInfo> = {};
+  for (const level of tiers) {
+    for (const interval of intervals) {
+      const key = `PAYPAL_PLAN_${level.toUpperCase()}_${interval.toUpperCase()}${suffix}`;
+      const id = process.env[key];
+      if (id) map[id] = { level, interval };
+    }
+  }
+  // Legacy hosted-button IDs (pre-Subscriptions API) — keep for backward compat
+  // until we're confident no live customers are still on hosted buttons.
+  map['6QXWAZWNEVEV2'] = { level: 'starter', interval: 'monthly' };
+  map['FUL2XPWPEMFUY'] = { level: 'pro', interval: 'monthly' };
+  return map;
+}
+
+const PLAN_REVERSE_MAP = buildPlanReverseMap();
+
+function mapPayPalPlan(planId: string): PlanInfo {
+  return PLAN_REVERSE_MAP[planId] || { level: 'starter', interval: 'monthly' };
 }
 
 async function sendTelegramNotification(message: string) {
