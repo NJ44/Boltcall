@@ -516,6 +516,22 @@ export const handler: Handler = async (event) => {
         console.error('[self-heal] Failed to store record:', insertError);
       }
 
+      // Create QA review entry for human oversight
+      if (insertedRecord?.id && userId) {
+        supabase.from('qa_reviews').insert({
+          user_id: userId,
+          agent_id: agentId,
+          call_id: callId || null,
+          heal_log_id: insertedRecord.id,
+          call_type: 'failure',
+          status: 'pending',
+          overall_score: fixSuccessRate,
+          auto_summary: `${analysis.failureType} — ${analysis.failureSummary} | Fix: ${finalStatus} (${passedAfterFix}/${VERIFY_RUNS} passed)`,
+        }).then(({ error: reviewErr }) => {
+          if (reviewErr) console.warn('[self-heal] qa_reviews insert failed:', reviewErr.message);
+        });
+      }
+
       // Notify via Telegram
       const statusEmoji = fixVerified ? '✅' : finalStatus === 'max_attempts_reached' ? '🔴' : '⚠️';
       const fixStatus = fixVerified
