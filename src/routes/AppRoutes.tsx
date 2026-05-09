@@ -410,8 +410,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/speed-test/login" element={<SpeedTestLogin />} />
         <Route path="/speed-test/report" element={<SpeedTestReport />} />
         <Route path="/speed-test/offer" element={<SpeedTestOffer />} />
-        <Route path="/payment/pro" element={<PaymentPro />} />
-        <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
+        {/* Old hosted-button payment pages removed; checkout lives in the dashboard now. */}
+        <Route path="/payment/pro" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
+        <Route path="/payment/elite-starter" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
         <Route path="/giveaway" element={<Giveaway />} />
         <Route path="/lead-magnet" element={<LeadMagnetPage />} />
         <Route path="/lead-magnet/thank-you" element={<LeadMagnetThankYouPage />} />
