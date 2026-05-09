@@ -599,7 +599,169 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, records: data || [] }) };
     }
 
-    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: analyze, heal, history' }) };
+    // ─── ACTION: analyze-success ──────────────────────────────────────────────
+    if (action === 'analyze-success') {
+      const { agentId, callId, transcript, callAnalysis, userId } = body;
+      if (!transcript || !agentId || !userId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId, transcript, and userId are required' }) };
+      }
+
+      const supabase = getSupabase();
+
+      const deductResult = await deductTokens(
+        userId,
+        TOKEN_COSTS.ai_qa_success_analysis,
+        'ai_qa_success_analysis',
+        `Success call QA analysis for agent ${agentId}`,
+      );
+      if (!deductResult.success) {
+        console.warn('[self-heal] Skipping success analysis — insufficient tokens');
+        return { statusCode: 402, headers, body: JSON.stringify({ error: 'Insufficient tokens for QA analysis' }) };
+      }
+
+      const systemPrompt = `You are a QA analyst for an AI voice agent. Analyze this SUCCESSFUL conversation (the goal was achieved) for quality improvement.
+
+Even though this call succeeded, identify:
+1. Friction points — moments of confusion, unnecessary repetition, hesitation, or suboptimal responses
+2. Positive patterns — things the agent did excellently that should be reinforced
+3. Improvement suggestions — specific prompt changes to make similar calls smoother
+
+Respond in JSON only:
+{
+  "friction_points": ["description", ...],
+  "positive_patterns": ["description", ...],
+  "improvement_suggestions": ["specific prompt change", ...],
+  "friction_score": 0
+}
+friction_score: 0 = perfectly smooth, 10 = very rough despite success.`;
+
+      const userPrompt = `## Call Analysis\n${JSON.stringify(callAnalysis || {}, null, 2)}\n\n## Transcript\n${transcript}`;
+      const response = await chatCompletion(systemPrompt, userPrompt, { maxTokens: 1200 });
+      const jsonMatch = response.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, skipped: 'parse_failed' }) };
+      }
+
+      let insights: any;
+      try {
+        insights = JSON.parse(jsonMatch[0]);
+      } catch {
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, skipped: 'parse_failed' }) };
+      }
+
+      const frictionScore = Number(insights.friction_score) || 0;
+
+      // Create review entry first to get its ID
+      const { data: reviewRow } = await supabase.from('qa_reviews').insert({
+        user_id: userId,
+        agent_id: agentId,
+        call_id: callId || null,
+        call_type: 'success',
+        status: 'pending',
+        friction_score: frictionScore,
+        auto_summary: `Successful call. Friction score: ${frictionScore}/10. ${(insights.friction_points || []).length} friction points.`,
+      }).select('id').single();
+
+      await supabase.from('qa_success_insights').insert({
+        user_id: userId,
+        agent_id: agentId,
+        call_id: callId || null,
+        qa_review_id: reviewRow?.id || null,
+        friction_points: insights.friction_points || [],
+        positive_patterns: insights.positive_patterns || [],
+        improvement_suggestions: insights.improvement_suggestions || [],
+        friction_score: frictionScore,
+      });
+
+      if (frictionScore >= 6) {
+        const esc = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+        await notifyInfo(
+          `⚠️ *High\\-Friction Success Call*\n` +
+          `🤖 *Agent:* ${esc(agentId)}\n` +
+          `📊 *Friction Score:* ${frictionScore}/10\n` +
+          `📝 *Top Issue:* ${esc((insights.friction_points || [])[0] || 'See review queue')}`,
+        ).catch(() => {});
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, frictionScore, reviewId: reviewRow?.id }),
+      };
+    }
+
+    // ─── ACTION: revert-fix ───────────────────────────────────────────────────
+    if (action === 'revert-fix') {
+      const { healLogId, userId } = body;
+      if (!healLogId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'healLogId is required' }) };
+      }
+
+      const supabase = getSupabase();
+
+      const { data: healLog, error: fetchErr } = await supabase
+        .from('agent_self_heal_log')
+        .select('agent_id, original_prompt')
+        .eq('id', healLogId)
+        .single();
+
+      if (fetchErr || !healLog) {
+        return { statusCode: 404, headers, body: JSON.stringify({ error: 'Heal log not found' }) };
+      }
+
+      const { agent_id: agentId, original_prompt: storedOriginalPrompt } = healLog;
+
+      const voiceAgent = await retellFetch(`/get-agent/${agentId}`);
+      const llmId = voiceAgent.response_engine?.llm_id;
+      if (!llmId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Agent has no LLM configured' }) };
+      }
+
+      let restoredPrompt: string;
+      if (storedOriginalPrompt) {
+        restoredPrompt = storedOriginalPrompt;
+      } else {
+        // Strip AUTO-FIX sections from old records that didn't store original_prompt
+        const currentLlm = await retellFetch(`/get-retell-llm/${llmId}`);
+        restoredPrompt = (currentLlm.general_prompt || '')
+          .replace(/\n\n## AUTO-FIX v\d+[^\n]*\n[\s\S]*?(?=\n\n## AUTO-FIX v\d|\s*$)/g, '')
+          .trimEnd();
+      }
+
+      await retellFetch(`/update-retell-llm/${llmId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ general_prompt: restoredPrompt }),
+      });
+
+      supabase
+        .from('agents')
+        .update({ system_prompt: restoredPrompt, system_prompt_synced_at: new Date().toISOString() })
+        .eq('retell_agent_id', agentId)
+        .then(({ error: mirrorErr }) => {
+          if (mirrorErr) console.warn('[revert-fix] mirror failed:', mirrorErr.message);
+        });
+
+      supabase
+        .from('qa_reviews')
+        .update({ status: 'rejected', reviewed_at: new Date().toISOString(), reviewed_by: userId || null })
+        .eq('heal_log_id', healLogId)
+        .then(() => {});
+
+      const esc = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+      await notifyInfo(
+        `↩️ *Prompt Reverted*\n` +
+        `🤖 *Agent:* ${esc(voiceAgent.agent_name || agentId)}\n` +
+        `👤 *By:* ${userId ? esc(userId) : 'unknown'}`,
+      ).catch(() => {});
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, reverted: true, agentId, llmId }),
+      };
+    }
+
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: analyze, heal, history, analyze-success, revert-fix' }) };
 
   } catch (err) {
     console.error('[agent-self-heal] Error:', err);
