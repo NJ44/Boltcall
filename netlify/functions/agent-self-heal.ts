@@ -493,6 +493,7 @@ export const handler: Handler = async (event) => {
         root_cause: analysis.rootCause,
         severity: analysis.severity,
         reproduced_count: reproduced,
+        original_prompt: originalPrompt,
         prompt_fix_applied: currentPromptFix,
         fix_verified: fixVerified,
         fix_success_rate: fixSuccessRate,
