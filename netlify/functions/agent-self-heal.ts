@@ -428,7 +428,13 @@ export const handler: Handler = async (event) => {
         try {
           for (const scenario of healScenarios) {
             const result = await runChatTest(verifyAgentId, scenario.messages);
-            const passed = result.analysis === null || (result.analysis as any).call_successful !== false;
+            let passed: boolean;
+            if (activeCriteria.length > 0) {
+              const rubricScore = await scoreWithRubric(result.conversation, activeCriteria);
+              passed = rubricScore.overall >= 70;
+            } else {
+              passed = result.analysis === null || (result.analysis as any).call_successful !== false;
+            }
             if (passed) {
               passedAfterFix++;
             } else {
