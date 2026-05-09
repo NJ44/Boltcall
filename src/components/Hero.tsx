@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.55 }}
               >
                 <div className="-rotate-[3deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <Phone className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
@@ -47,7 +47,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.70 }}
               >
                 <div className="-rotate-12 hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <Users className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.85 }}
               >
                 <div className="-rotate-[4deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <MessageSquare className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.00 }}
               >
                 <div className="rotate-[6deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <Calendar className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.15 }}
               >
                 <div className="rotate-[14deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <Star className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
@@ -107,7 +107,7 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.30 }}
               >
                 <div className="-rotate-[5deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-24 md:h-24 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
                     <Megaphone className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
