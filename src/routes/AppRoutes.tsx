@@ -98,8 +98,9 @@ const NotFound = React.lazy(() => import('../pages/NotFound'));
 const AdminPanel = React.lazy(() => import('../pages/AdminPanel'));
 
 // ── Lazy loads — Payment / Giveaway ──────────────────────────────────────
-const PaymentPro = React.lazy(() => import('../pages/PaymentPro'));
-const PaymentEliteStarter = React.lazy(() => import('../pages/PaymentEliteStarter'));
+// /payment/pro and /payment/elite-starter pages were removed when PayPal moved
+// to the Subscriptions API; checkout now happens in the dashboard via
+// PlanBillingPage → redirectToPayPalCheckout.
 const Giveaway = React.lazy(() => import('../pages/Giveaway'));
 const FreeWebsitePage = React.lazy(() => import('../pages/FreeWebsitePage'));
 
