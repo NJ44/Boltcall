@@ -67,6 +67,7 @@ export const TOKEN_COSTS: Record<TokenCategory, number> = {
   ai_kb_extract: 5,
   whatsapp_sent: 6,
   whatsapp_ai_draft: 8,
+  ai_qa_success_analysis: 5,
 };
 
 interface DeductResult {
