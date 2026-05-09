@@ -65,7 +65,6 @@ const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/Locati
 const GettingStartedPage = React.lazy(() => import('../pages/dashboard/GettingStartedPage'));
 const FeedbackPage = React.lazy(() => import('../pages/dashboard/FeedbackPage'));
 const BoltcallAgentPage = React.lazy(() => import('../pages/dashboard/BoltcallAgentPage'));
-const OutreachMapPage = React.lazy(() => import('../pages/dashboard/OutreachMapPage'));
 
 // ── Lazy loads — Dashboard settings ──────────────────────────────────────
 const QARubricsPage = React.lazy(() => import('../pages/dashboard/QARubricsPage'));
@@ -328,7 +327,6 @@ const NavigationWrapper: React.FC = () => {
           <Route path="boltcall-agent" element={<BoltcallAgentPage />} />
           <Route path="feedback" element={<FeedbackPage />} />
           <Route path="boltcall-agent" element={<BoltcallAgentPage />} />
-          <Route path="outreach-map" element={<OutreachMapPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
 
           {/* Pro-gated merged pages */}

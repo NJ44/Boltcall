@@ -33,7 +33,6 @@ import {
   ClipboardList,
   ListChecks,
   TrendingUp,
-  Network,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -367,7 +366,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard', label: t('nav.overview'), icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/leads', label: t('nav.leads'), icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/outreach-map', label: 'Outreach Map', icon: <Network className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // SERVICES
