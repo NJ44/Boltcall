@@ -117,17 +117,17 @@ const Hero: React.FC = () => {
           </Floating>
         </div>
 
-        {/* Subtle grid background — fades in from center */}
+        {/* Subtle center grid — smaller squares, very light */}
         <div
-          className="absolute inset-0 z-0 pointer-events-none"
+          className="absolute inset-0 z-0 pointer-events-none opacity-60"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #e5e7eb 1px, transparent 1px),
-              linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)
+              linear-gradient(to right, #ededed 1px, transparent 1px),
+              linear-gradient(to bottom, #ededed 1px, transparent 1px)
             `,
-            backgroundSize: "80px 80px",
-            maskImage: "radial-gradient(ellipse 55% 55% at 50% 48%, #000 35%, transparent 75%)",
-            WebkitMaskImage: "radial-gradient(ellipse 55% 55% at 50% 48%, #000 35%, transparent 75%)",
+            backgroundSize: "56px 56px",
+            maskImage: "radial-gradient(ellipse 50% 50% at 50% 48%, #000 30%, transparent 72%)",
+            WebkitMaskImage: "radial-gradient(ellipse 50% 50% at 50% 48%, #000 30%, transparent 72%)",
           }}
         />
 
