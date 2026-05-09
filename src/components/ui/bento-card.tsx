@@ -103,7 +103,7 @@ const BentoCard = () => {
         className="w-full max-w-5xl transition-all duration-500 hover:-translate-y-1 m-0 relative"
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
-      <GlassBox variant="clear" clip="lg" rounded="rounded-3xl" className="w-full">
+      <GlassBox variant="liquid" clip="lg" rounded="rounded-3xl" className="w-full">
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-300/90 uppercase tracking-widest font-semibold">
             Platform Preview
