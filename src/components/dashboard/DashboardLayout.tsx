@@ -74,6 +74,7 @@ const DashboardLayout: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
   const [showLanguageExpanded, setShowLanguageExpanded] = useState(false);
+  const [pendingQACount, setPendingQACount] = useState(0);
 
   // Get current user from auth context
   const { user } = useAuth();
