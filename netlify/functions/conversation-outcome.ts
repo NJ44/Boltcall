@@ -138,6 +138,23 @@ export const handler: Handler = async (event) => {
         console.error('[conversation-outcome] Failed to insert win:', insertErr);
       }
 
+      // Analyze successful call for friction and positive patterns (fire-and-forget)
+      const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+      fetch(`${baseUrl}/.netlify/functions/agent-self-heal`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'analyze-success',
+          agentId,
+          callId: conversationId || null,
+          transcript,
+          callAnalysis: callAnalysis || null,
+          userId,
+        }),
+      }).catch(err => {
+        console.error('[conversation-outcome] Success analysis trigger failed (non-blocking):', err);
+      });
+
       return {
         statusCode: 200,
         headers,
@@ -147,6 +164,7 @@ export const handler: Handler = async (event) => {
           reason: evaluation.reason,
           confidence: evaluation.confidence,
           healTriggered: false,
+          successAnalysisTriggered: true,
         }),
       };
     }
