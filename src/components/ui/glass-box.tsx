@@ -36,7 +36,7 @@ type GlassVariant = "clear"|"frost"|"blue"|"purple"|"rose"|"amber"|"emerald"|"da
 interface VD { bg:string; tint?:string; border:string; topShine:string; sf:string; gOp:number; sOp:number; blur:string; rainbow?:boolean; }
 
 const V: Record<GlassVariant, VD> = {
-  clear:    {bg:"rgba(255,255,255,0.12)",border:"rgba(255,255,255,0.62)",topShine:"rgba(255,255,255,0.55)",sf:"url(#gb-specular)",gOp:0.7,sOp:1,   blur:"blur(18px) saturate(180%)"},
+  clear:    {bg:"rgba(255,255,255,0.12)",border:"rgba(255,255,255,0.62)",topShine:"rgba(255,255,255,0.55)",sf:"url(#gb-specular)",gOp:0.25,sOp:1,   blur:"blur(18px) saturate(180%)"},
   frost:    {bg:"rgba(255,255,255,0.48)",border:"rgba(255,255,255,0.82)",topShine:"rgba(255,255,255,0.72)",sf:"url(#gb-specular)",gOp:0.5,sOp:0.8, blur:"blur(36px) saturate(200%) brightness(1.05)"},
   blue:     {bg:"rgba(59,130,246,0.18)", tint:"rgba(147,197,253,0.12)", border:"rgba(147,197,253,0.60)",topShine:"rgba(219,234,254,0.55)",sf:"url(#gb-specular)",gOp:0.7,sOp:1,blur:"blur(20px) saturate(200%)"},
   cobalt:   {bg:"rgba(29,78,216,0.28)",  tint:"rgba(96,165,250,0.10)",  border:"rgba(96,165,250,0.55)", topShine:"rgba(186,230,253,0.50)",sf:"url(#gb-specular)",gOp:0.6,sOp:1,blur:"blur(22px) saturate(220%)"},
