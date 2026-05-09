@@ -335,6 +335,9 @@ const NavigationWrapper: React.FC = () => {
           <Route path="messages" element={<PlanGate requiredPlan="pro"><MessagesPage /></PlanGate>} />
 
           {/* Starter-gated pages */}
+          <Route path="qa/rubrics"   element={<PlanGate requiredPlan="starter"><QARubricsPage /></PlanGate>} />
+          <Route path="qa/review"    element={<PlanGate requiredPlan="starter"><QAReviewPage /></PlanGate>} />
+          <Route path="qa/analytics" element={<PlanGate requiredPlan="starter"><QAAnalyticsPage /></PlanGate>} />
           <Route path="ai-receptionist" element={<PlanGate requiredPlan="starter"><ReceptionistPage /></PlanGate>} />
           <Route path="agents" element={<PlanGate requiredPlan="starter"><AgentsPage /></PlanGate>} />
           <Route path="agents/:agentId" element={<PlanGate requiredPlan="starter"><AgentDetailPage /></PlanGate>} />
