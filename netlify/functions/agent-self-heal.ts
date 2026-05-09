@@ -236,6 +236,41 @@ async function deleteTempChatAgent(chatAgentId: string) {
   } catch { /* ignore */ }
 }
 
+// ─── Rubric scoring ───────────────────────────────────────────────────────────
+
+async function scoreWithRubric(
+  conversation: Array<{ role: string; content: string }>,
+  criteria: RubricCriterion[],
+): Promise<{ overall: number; criteriaScores: Record<string, { label: string; passed: boolean; notes: string }> }> {
+  if (!criteria || criteria.length === 0) return { overall: 100, criteriaScores: {} };
+
+  const systemPrompt = `You are a QA evaluator for an AI voice agent. Score a conversation against specific rubric criteria.
+For each criterion, determine if it was met and provide brief notes.
+Respond in JSON only:
+{
+  "overall": 0-100,
+  "criteriaScores": {
+    "<criterion-id>": {"label": "<label>", "passed": true or false, "notes": "<brief notes>"}
+  }
+}
+The overall score should reflect weighted pass/fail across all criteria.`;
+
+  const conversationText = conversation.map(m => `${m.role}: ${m.content}`).join('\n');
+  const criteriaText = criteria
+    .map(c => `- ID: ${c.id} | Label: ${c.label} | Description: ${c.description} | Weight: ${c.weight}`)
+    .join('\n');
+  const userPrompt = `## Rubric Criteria\n${criteriaText}\n\n## Conversation\n${conversationText}`;
+
+  const response = await chatCompletion(systemPrompt, userPrompt, { maxTokens: 1000 });
+  const jsonMatch = response.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return { overall: 50, criteriaScores: {} };
+  try {
+    return JSON.parse(jsonMatch[0]);
+  } catch {
+    return { overall: 50, criteriaScores: {} };
+  }
+}
+
 // ─── Step 4: Apply prompt fix ─────────────────────────────────────────────────
 
 async function applyPromptFix(
