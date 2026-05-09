@@ -18,7 +18,7 @@ const handler: Handler = async (event) => {
   const retellApiKey = process.env.RETELL_API_KEY;
   const agentId = process.env.RETELL_DEMO_AGENT_ID;
   const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!retellApiKey) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'RETELL_API_KEY not configured' }) };
