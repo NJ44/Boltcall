@@ -648,7 +648,19 @@ const DashboardLayout: React.FC = () => {
                   </div>
                 </div>
 
-
+                {/* Quality */}
+                <div className="mb-4">
+                  {!(sidebarCollapsed) && (
+                    <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Quality</p>
+                  )}
+                  {sidebarCollapsed && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
+                  <div className="space-y-1">
+                    {navItemsQuality.map((item) => {
+                      const isActive = location.pathname.startsWith(item.to);
+                      return renderNavItem(item, isActive);
+                    })}
+                  </div>
+                </div>
 
               </div>
 
