@@ -379,6 +379,19 @@ export const handler: Handler = async (event) => {
       // Generate 4 targeted test scenarios (3 similar + 1 exact)
       const healScenarios = await generateHealScenarios(transcript, analysis);
 
+      // Fetch active rubric for this agent (used for scenario scoring)
+      let activeCriteria: RubricCriterion[] = [];
+      try {
+        const { data: rubricRow } = await supabase
+          .from('qa_rubrics')
+          .select('criteria')
+          .eq('agent_id', agentId)
+          .eq('is_active', true)
+          .limit(1)
+          .maybeSingle();
+        if (rubricRow?.criteria) activeCriteria = rubricRow.criteria;
+      } catch { /* no rubric, fall back to default scoring */ }
+
       // ── Retry loop: fix → test all 4 → re-analyze if any fail ──────────────
       let fixVerified = false;
       let passedAfterFix = 0;
