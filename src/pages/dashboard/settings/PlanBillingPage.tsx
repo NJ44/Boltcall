@@ -6,6 +6,7 @@ import { PageSkeleton } from '../../../components/ui/loading-skeleton';
 import { useTranslation } from 'react-i18next';
 import { getUserSubscription, getUserInvoices, type PlanLevel } from '../../../lib/stripe';
 import { openCustomerPortal } from '../../../lib/stripe-checkout';
+import { redirectToPayPalCheckout } from '../../../lib/paypal-checkout';
 import { TOKEN_PLANS } from '../../../lib/tokens';
 import { useTokens } from '../../../contexts/TokenContext';
 
