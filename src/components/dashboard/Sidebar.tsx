@@ -1,11 +1,12 @@
 import React from 'react';
-import { 
-  LayoutDashboard, 
-  BarChart3, 
-  Users, 
-  Building2, 
+import {
+  LayoutDashboard,
+  BarChart3,
+  Users,
+  Building2,
   Settings,
-  Volume2
+  Volume2,
+  Activity
 } from 'lucide-react';
 import NavItem from './NavItem';
 
