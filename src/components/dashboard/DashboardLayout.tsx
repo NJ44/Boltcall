@@ -100,6 +100,17 @@ const DashboardLayout: React.FC = () => {
     instantLeadResponse: false,
   });
 
+  // Fetch pending QA review count for sidebar badge
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('qa_reviews')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('status', 'pending')
+      .then(({ count }) => { if (count != null) setPendingQACount(count); });
+  }, [user?.id]);
+
   // Log dashboard access when component mounts
   useEffect(() => {
     if (user?.id) {
