@@ -30,6 +30,9 @@ import {
   PhoneMissed,
   Reply,
   Mail,
+  ClipboardList,
+  ListChecks,
+  TrendingUp,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
