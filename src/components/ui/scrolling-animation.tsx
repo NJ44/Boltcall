@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react"
 import { Phone, AlarmClock, RefreshCcw, Megaphone, MessageSquare, Globe } from "lucide-react"
 
 interface Channel {
@@ -25,8 +26,33 @@ interface ScrollingAnimationProps {
 }
 
 export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const update = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      const center = rect.top + rect.height / 2
+      const distance = vh * 0.45
+      const p = 1 - Math.min(Math.max((center - vh * 0.5) / distance, 0), 1)
+      setProgress(p)
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [])
+
+  const radius = EXPAND_RADIUS * progress
+
   return (
-    <div className="py-20 md:py-28 flex flex-col items-center justify-center px-8">
+    <div ref={sectionRef} className="py-20 md:py-28 flex flex-col items-center justify-center px-8">
       <div className="relative">
         {/* Outer ring */}
         <div className="w-[500px] h-[500px] md:w-[600px] md:h-[600px] rounded-full flex items-center justify-center border-2 border-white/10">
@@ -42,10 +68,12 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
                   return (
                     <button
                       key={channel.title}
+                      type="button"
                       onClick={() => onNavigate?.(channel.href)}
-                      className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer z-0 gap-1"
+                      className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer z-0 gap-1 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 will-change-transform"
                       style={{
-                        transform: `translate(${EXPAND_RADIUS * Math.cos(angle)}px, ${EXPAND_RADIUS * Math.sin(angle)}px)`,
+                        transform: `translate(${radius * Math.cos(angle)}px, ${radius * Math.sin(angle)}px)`,
+                        transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
                       }}
                     >
                       <Icon className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
