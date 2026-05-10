@@ -183,6 +183,50 @@ const Comparisons: React.FC = () => {
           <p className="text-gray-600 mt-2">Head-to-head breakdowns against the top platforms in the space.</p>
         </motion.div>
 
+        {/* Featured Comparisons quick links - direct routes for every surviving compare page */}
+        <div className="mb-10 bg-blue-50/40 border border-blue-100 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Featured Comparisons</h3>
+          <p className="text-sm text-gray-600 mb-4">Why teams switch to Boltcall vs each platform.</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 text-sm">
+            <div>
+              <Link to="/compare/boltcall-vs-gohighlevel" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Boltcall vs GoHighLevel
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">Speed-to-lead instead of an all-in-one CRM stack.</p>
+            </div>
+            <div>
+              <Link to="/compare/boltcall-vs-smith-ai" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Boltcall vs Smith.ai
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">AI 24/7 with no per-call fees vs human virtual receptionists.</p>
+            </div>
+            <div>
+              <Link to="/compare/boltcall-vs-birdeye" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Boltcall vs BirdEye
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">Booked jobs over reputation dashboards.</p>
+            </div>
+            <div>
+              <Link to="/compare/boltcall-vs-podium" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Boltcall vs Podium
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">Instant phone answering, not just two-way texting.</p>
+            </div>
+            <div>
+              <Link to="/comparisons/receptionist-vs-boltcall" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Human Receptionist vs Boltcall
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">Never sick, never on break, answers in under 11 seconds.</p>
+            </div>
+            <div>
+              <Link to="/comparisons/answering-services-vs-boltcall" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
+                Answering Services vs Boltcall
+              </Link>
+              <p className="text-gray-600 text-xs mt-1">Books appointments live instead of just taking messages.</p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {competitors.map((competitor, index) => (
             <motion.article
