@@ -71,16 +71,25 @@ export async function requireAuth(event: HandlerEvent): Promise<AuthResult> {
 /**
  * Returns the list of Retell agent_ids owned by a user (workspace).
  * Used to scope retell-agents/retell-calls listings to a single tenant.
+ *
+ * Schema reality: `agents.retell_agent_id` is the canonical top-level
+ * column. Some legacy rows nested the same id inside `api_keys`, so we
+ * union both to avoid silently dropping pre-migration agents.
  */
 export async function getUserAgentIds(userId: string): Promise<string[]> {
   const supabase = getSupabase();
   const { data } = await supabase
     .from('agents')
-    .select('api_keys')
+    .select('retell_agent_id, api_keys')
     .eq('user_id', userId);
-  return (data || [])
-    .map((row: any) => row.api_keys?.retell_agent_id)
-    .filter((id: unknown): id is string => typeof id === 'string' && id.length > 0);
+  const ids = new Set<string>();
+  for (const row of data || []) {
+    const direct = (row as any).retell_agent_id;
+    if (typeof direct === 'string' && direct.length > 0) ids.add(direct);
+    const nested = (row as any).api_keys?.retell_agent_id;
+    if (typeof nested === 'string' && nested.length > 0) ids.add(nested);
+  }
+  return Array.from(ids);
 }
 
 /**

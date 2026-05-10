@@ -28,19 +28,22 @@ async function syncRetell(userId: string): Promise<{
 
   const client = new Retell({ apiKey });
 
-  // Get user's agent IDs from Supabase (retell_agent_id is inside api_keys JSONB)
+  // Get user's agent IDs — direct column primary, legacy JSONB fallback
   const { data: agents, error: agentError } = await supabase
     .from('agents')
-    .select('api_keys')
+    .select('retell_agent_id, api_keys')
     .eq('user_id', userId);
 
   if (agentError || !agents?.length) {
     return { calls_synced: 0, minutes_consumed: 0, tokens_deducted: 0, error: agentError?.message || 'No agents found' };
   }
 
-  const agentIds = agents
-    .map((a: any) => a.api_keys?.retell_agent_id)
-    .filter(Boolean) as string[];
+  const agentIdSet = new Set<string>();
+  for (const a of agents as any[]) {
+    if (typeof a.retell_agent_id === 'string' && a.retell_agent_id) agentIdSet.add(a.retell_agent_id);
+    if (typeof a.api_keys?.retell_agent_id === 'string' && a.api_keys.retell_agent_id) agentIdSet.add(a.api_keys.retell_agent_id);
+  }
+  const agentIds = Array.from(agentIdSet);
 
   // Find last sync timestamp: look at the most recent token_transaction for this user with category='ai_voice_minute'
   const { data: lastTx } = await supabase
