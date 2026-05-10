@@ -312,6 +312,69 @@ const PricingPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Frequently Asked Questions */}
+      <section className="bg-gray-50 border-t border-gray-100 py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">Pricing FAQ</h2>
+          <p className="text-gray-500 text-center mb-10 text-sm">Everything buyers ask before picking a Boltcall plan.</p>
+
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">How does Boltcall compare to other lead-response tools?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Boltcall is purpose-built for speed-to-lead — every inbound lead gets a reply in under a minute and is booked on your calendar. We've published detailed head-to-head breakdowns, including <Link to="/compare/boltcall-vs-gohighlevel" className="text-indigo-600 hover:text-indigo-700 underline">Boltcall vs GoHighLevel</Link>, <Link to="/compare/boltcall-vs-smith-ai" className="text-indigo-600 hover:text-indigo-700 underline">Boltcall vs Smith.ai</Link>, and <Link to="/compare/boltcall-vs-birdeye" className="text-indigo-600 hover:text-indigo-700 underline">Boltcall vs BirdEye</Link>. You can browse <Link to="/comparisons" className="text-indigo-600 hover:text-indigo-700 underline">all comparisons</Link> for the full feature, pricing, and ROI matrix.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I try Boltcall before committing to a plan?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Yes — every plan is backed by a 30-day money-back guarantee, but most buyers like to validate fit first. Start with our <Link to="/seo-audit" className="text-indigo-600 hover:text-indigo-700 underline">free SEO audit</Link> or full <Link to="/seo-aeo-audit" className="text-indigo-600 hover:text-indigo-700 underline">SEO + AEO audit</Link> to see where your site is leaking leads, run a <Link to="/business-audit" className="text-indigo-600 hover:text-indigo-700 underline">business audit</Link> to benchmark your funnel, score your speed with the <Link to="/lead-response-scorecard" className="text-indigo-600 hover:text-indigo-700 underline">lead response scorecard</Link>, or take the <Link to="/ai-readiness-scorecard" className="text-indigo-600 hover:text-indigo-700 underline">AI readiness scorecard</Link>. If you want a deeper dollar-figure projection, the <Link to="/ai-revenue-audit" className="text-indigo-600 hover:text-indigo-700 underline">AI revenue audit</Link> shows exactly what Boltcall would recover for your business, and the <Link to="/lead-magnet/ai-receptionist-buyers-guide" className="text-indigo-600 hover:text-indigo-700 underline">AI Receptionist Buyer's Guide</Link> walks you through every question to ask before signing with any vendor.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Does Boltcall pay for itself?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Most businesses recover the full cost within the first week. The average missed call to a local service business represents $300–$1,500 in lost revenue. At $897/month for the Pro plan, recovering even a handful of additional appointments per month generates 5–10× the subscription cost. We break down the math with real customer case studies on our <Link to="/blog" className="text-indigo-600 hover:text-indigo-700 underline">blog</Link>.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">What is included in every Boltcall plan?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Every plan includes 24/7 AI call answering, appointment booking into your calendar, instant SMS follow-up, automated appointment reminders that cut no-shows by 40%+, post-appointment Google review requests, and a monthly revenue report.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I upgrade, cancel, or refer Boltcall?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Yes to all three. You can upgrade from Starter to Pro or Pro to Ultimate with one click from your dashboard, there are no long-term contracts, and you can cancel any time. Agencies, consultants, and SaaS founders can also earn recurring revenue by joining the Boltcall <Link to="/partners" className="text-indigo-600 hover:text-indigo-700 underline">Partner Program</Link>.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">What is the difference between Starter and Pro?</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Starter includes the core AI receptionist, missed call text-back, instant lead reply, and appointment reminders. Pro adds a full lead follow-up system, SMS conversations, automated post-job follow-ups, a website chat widget, custom AI voice and script, CRM integration, and Google review request automation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What's Next / Try Boltcall */}
+      <section className="bg-white border-t border-gray-100 py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Not Ready to Pick a Plan? Try Boltcall First.</h2>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The fastest way to see if Boltcall fits is to <Link to="/book-a-call" className="text-indigo-600 hover:text-indigo-700 underline font-medium">book a strategy call</Link> with our team — we'll walk through your current lead flow and show exactly what we'd automate. Prefer to self-serve? Start with the <Link to="/lead-response-scorecard" className="text-indigo-600 hover:text-indigo-700 underline">lead response scorecard</Link>, the <Link to="/ai-revenue-audit" className="text-indigo-600 hover:text-indigo-700 underline">AI revenue audit</Link>, or the <Link to="/lead-magnet/ai-receptionist-buyers-guide" className="text-indigo-600 hover:text-indigo-700 underline">AI Receptionist Buyer's Guide</Link>. Still researching? Read every <Link to="/comparisons" className="text-indigo-600 hover:text-indigo-700 underline">competitor comparison</Link>, browse our <Link to="/blog" className="text-indigo-600 hover:text-indigo-700 underline">blog</Link>, or skim the <Link to="/speed-to-lead" className="text-indigo-600 hover:text-indigo-700 underline">speed-to-lead guide</Link>.
+          </p>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
