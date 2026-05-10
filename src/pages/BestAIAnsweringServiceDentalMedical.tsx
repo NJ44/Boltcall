@@ -330,7 +330,7 @@ const BestAIAnsweringServiceDentalMedical: React.FC = () => {
       </div>
 
 
-      {{/* Use Cases */}}
+      {/* Use Cases */}
       <section className="py-14 bg-gray-50 border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">Real-World Use Cases</h2>
