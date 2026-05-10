@@ -139,18 +139,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/speed-test/login</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/speed-test/report</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/speed-test/offer</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -161,12 +149,6 @@
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/lead-magnet/thank-you</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://boltcall.org/lead-magnet/claude-code-overnight-kit</loc>
@@ -199,22 +181,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/ai-revenue-calculator/results</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/lead-response-scorecard</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/lead-response-scorecard/results</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://boltcall.org/seo-audit</loc>
@@ -235,22 +205,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/ai-audit/thank-you</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/seo-aeo-audit</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/seo-aeo-audit/thank-you</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://boltcall.org/conversion-rate-optimizer</loc>
@@ -293,12 +251,6 @@
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/solar-speed-playbook/thank-you</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://boltcall.org/solar-benchmark</loc>
@@ -349,18 +301,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/tools/chiropractor-patient-recovery-calculator</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/tools/auto-repair-missed-call-calculator</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/tools/dentist-chair-calculator</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -368,12 +308,6 @@
   </url>
   <url>
     <loc>https://boltcall.org/tools/hvac-overflow-calculator</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/tools/lawyer-intake-calculator</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -397,18 +331,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/tools/insurance-lead-response-scorecard</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/tools/cleaning-service-booking-calculator</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/tools/solar-profit-calculator</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -422,12 +344,6 @@
   </url>
   <url>
     <loc>https://boltcall.org/tools/solar-sales-closer</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/tools/landscaping-seasonal-revenue-calculator</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -523,12 +439,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/blog/instant-lead-reply-guide</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/blog/hvac-ai-lead-response</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -547,12 +457,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/blog/how-instant-lead-reply-works</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/blog/how-to-schedule-text</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -565,31 +469,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/blog/benefits-of-outsourced-reception-services</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/phone-call-scripts</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/blog/understanding-live-answering-service-costs</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/tips-for-professional-telephone-etiquette</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/answering-service-scheduling</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -631,12 +511,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/blog/ai-chatbot-vs-live-chat-phone-answering</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/blog/best-ai-receptionist-small-business</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -668,12 +542,6 @@
   </url>
   <url>
     <loc>https://boltcall.org/blog/ai-receptionist-for-plumbers</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-worth-it-roi</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -733,48 +601,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-hvac-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-dentist-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-plumber-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-lawyer-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-medspa-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-solar-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/blog/ai-receptionist-vet-faq</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/blog/how-to-set-up-ai-phone-answering-vet-clinic</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -787,31 +613,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/comparisons/call-centers-vs-boltcall</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/comparisons/receptionist-vs-boltcall</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://boltcall.org/comparisons/voicemail-vs-boltcall</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://boltcall.org/comparisons/answering-services-vs-boltcall</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/comparisons/crm-vs-boltcall</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -830,18 +638,6 @@
   </url>
   <url>
     <loc>https://boltcall.org/compare/boltcall-vs-birdeye</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/compare/boltcall-vs-emitrr</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://boltcall.org/compare/boltcall-vs-calomation</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

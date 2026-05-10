@@ -2,6 +2,30 @@ http://boltcall.org/*      https://boltcall.org/:splat      301!
 http://www.boltcall.org/*  https://boltcall.org/:splat      301!
 https://www.boltcall.org/* https://boltcall.org/:splat      301!
 https://boltcall.netlify.app/* https://boltcall.org/:splat  301!
+
+# Phase 2 prune (2026-05-10): consolidate duplicate clusters and dead-end
+# comparison pages. See Marketing/output/2026-05-10/triage-100-urls.csv.
+# Place 301s BEFORE /sitemap.xml and the catch-all so they take precedence.
+
+# Duplicate cluster: AI receptionist worth-it / ROI
+/blog/ai-receptionist-worth-it-roi  /blog/is-ai-receptionist-worth-it  301!
+
+# Duplicate cluster: AI chatbot vs live-chat
+/blog/ai-chatbot-vs-live-chat-phone-answering  /blog/ai-chatbot-vs-live-chat-phone-comparison  301!
+
+# Duplicate cluster: instant lead reply (3 -> 1)
+/blog/instant-lead-reply-guide       /blog/setup-instant-lead-reply  301!
+/blog/how-instant-lead-reply-works   /blog/setup-instant-lead-reply  301!
+
+# Abstract category comparison hubs -> /comparisons
+/comparisons/call-centers-vs-boltcall  /comparisons  301!
+/comparisons/crm-vs-boltcall           /comparisons  301!
+/comparisons/voicemail-vs-boltcall     /comparisons  301!
+
+# Low-volume direct comparisons -> /comparisons
+/compare/boltcall-vs-calomation  /comparisons  301!
+/compare/boltcall-vs-emitrr      /comparisons  301!
+
 /sitemap.xml  /sitemap.xml  200!
 /robots.txt   /robots.txt   200!
 /index.amp.html  /index.amp.html  200!
