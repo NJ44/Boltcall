@@ -161,11 +161,15 @@ export const handler: Handler = async (event) => {
       // Fire call_completed webhook for non-missed calls
       if (call.call_status === 'ended' && (call.duration_ms || 0) > 0) {
         const supabaseForWebhook = getSupabase();
+        // Look up agent owner by direct retell_agent_id column first, then
+        // fall back to legacy api_keys.retell_agent_id JSONB path. Newer
+        // rows have api_keys = {}, so the JSONB-only filter would miss them.
         const { data: agentOwner } = await supabaseForWebhook
           .from('agents')
           .select('user_id')
-          .filter('api_keys->>retell_agent_id', 'eq', agentId)
-          .single();
+          .or(`retell_agent_id.eq.${agentId},api_keys->>retell_agent_id.eq.${agentId}`)
+          .limit(1)
+          .maybeSingle();
         if (agentOwner?.user_id) {
           // Lead answered — cancel any active no-answer follow-up enrollments for this number
           const answeredPhone = isOutbound ? call.to_number : call.from_number;
@@ -249,12 +253,13 @@ export const handler: Handler = async (event) => {
 
     const supabase = getSupabase();
 
-    // Step 1: Look up agent owner (retell_agent_id is stored inside api_keys JSONB)
+    // Step 1: Look up agent owner — direct column primary, legacy JSONB fallback
     const { data: agentRow, error: agentError } = await supabase
       .from('agents')
       .select('user_id')
-      .filter('api_keys->>retell_agent_id', 'eq', agentId)
-      .single();
+      .or(`retell_agent_id.eq.${agentId},api_keys->>retell_agent_id.eq.${agentId}`)
+      .limit(1)
+      .maybeSingle();
 
     if (agentError || !agentRow) {
       console.error('[retell-webhook] Could not find agent owner for', agentId, agentError);
