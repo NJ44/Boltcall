@@ -47,6 +47,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
       { label: 'Business Audit', href: '/business-audit' },
       { label: 'AI Visibility Check', href: '/ai-visibility-check' },
       { label: 'Website Health Check', href: '/speed-test' },
+      { label: 'Speed Test Offer', href: '/speed-test/offer' },
       { label: 'AI Readiness Scorecard', href: '/ai-readiness-scorecard' },
       { label: 'Lead Response Scorecard', href: '/lead-response-scorecard' },
       { label: 'AI Revenue Audit', href: '/ai-revenue-audit' },

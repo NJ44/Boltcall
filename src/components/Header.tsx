@@ -49,6 +49,18 @@ const Header: React.FC = () => {
     { label: 'Lead Response Scorecard', href: '/lead-response-scorecard', icon: Target },
     { label: 'Conversion Rate Optimizer', href: '/conversion-rate-optimizer', icon: Gauge },
     { label: 'Funnel Optimizer', href: '/funnel-optimizer', icon: Filter },
+    { label: 'AI Visibility Check', href: '/ai-visibility-check', icon: Gauge },
+    { label: 'AI Readiness Scorecard', href: '/ai-readiness-scorecard', icon: Target },
+    { label: 'Rank on Google Offer', href: '/rank-on-google-offer', icon: Target },
+    { label: 'Voice Agent Setup', href: '/voice-agent-setup', icon: Phone },
+    { label: 'Speed Test Offer', href: '/speed-test/offer', icon: Zap },
+    { label: 'MedSpa Rebooking Calculator', href: '/tools/medspa-rebooking-calculator', icon: Calculator },
+    { label: 'Real Estate Speed Scorecard', href: '/tools/real-estate-speed-scorecard', icon: Target },
+    { label: 'Speed-to-Lead for Solar', href: '/solar', icon: Sparkles },
+    { label: "AI Receptionist Buyer's Guide", href: '/lead-magnet/ai-receptionist-buyers-guide', icon: Book },
+    { label: 'Claude Code Overnight Kit', href: '/lead-magnet/claude-code-overnight-kit', icon: Book },
+    { label: 'Free Website Offer', href: '/free-website', icon: Globe },
+    { label: 'Giveaway', href: '/giveaway', icon: Sparkles },
   ];
 
 

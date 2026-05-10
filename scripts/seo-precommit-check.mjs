@@ -114,14 +114,22 @@ function loadSourceCorpus() {
 function countInboundLinks(routePath) {
   if (routePath === '/') return Infinity; // root is linked everywhere
   const escapedPath = routePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  // Match to="/foo", to='/foo', href="/foo", href='/foo'.
-  // The path must be terminated by the same quote, or by /, ?, # (still
-  // counts as a link to /foo even if a query/anchor is appended).
-  const re = new RegExp(`(?:to|href)=(?:"|')${escapedPath}(?:["'?#/]|\\\\)`, 'g');
+  // Match four patterns of inbound link references:
+  //   1. to="/foo"        — direct JSX literal     (Pricing, Comparisons, etc.)
+  //   2. href="/foo"      — anchor JSX literal
+  //   3. href: '/foo'     — array-driven (Footer's footerLinks pattern)
+  //   4. path: '/foo'     — route-config arrays
+  // All variants accept either single or double quotes. The path must be
+  // terminated by the closing quote, or by /, ?, # (so /foo?utm=... still
+  // counts as a link to /foo). Backslash terminator covers JSX escapes.
+  const directLink = new RegExp(`(?:to|href)=(?:"|')${escapedPath}(?:["'?#/]|\\\\)`, 'g');
+  const arrayHref = new RegExp(`(?:href|path|slug|url)\\s*:\\s*(?:"|')${escapedPath}(?:["'?#/]|\\\\)`, 'g');
   let count = 0;
   for (const { content } of loadSourceCorpus()) {
-    const matches = content.match(re);
-    if (matches) count += matches.length;
+    const direct = content.match(directLink);
+    const array = content.match(arrayHref);
+    if (direct) count += direct.length;
+    if (array) count += array.length;
   }
   return count;
 }

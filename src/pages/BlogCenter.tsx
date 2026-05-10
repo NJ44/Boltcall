@@ -423,6 +423,26 @@ const blogPosts: BlogPost[] = [
   // Add more blog posts here as they are created
 ];
 
+// Companion resources rendered below the post grid as a "More from Boltcall"
+// rail. Each entry adds one inbound source-code link reference per route,
+// counted by scripts/seo-precommit-check.mjs and scripts/audit-keep-urls.mjs.
+// Add new free tools, lead magnets, or hubs here when they ship.
+const moreFromBoltcall: { label: string; href: string; tagline: string }[] = [
+  { label: 'AI Visibility Check', href: '/ai-visibility-check', tagline: 'Score how AI-search-ready your site is.' },
+  { label: 'Funnel Optimizer', href: '/funnel-optimizer', tagline: 'Find the leak in your lead funnel.' },
+  { label: 'Voice Agent Setup', href: '/voice-agent-setup', tagline: 'Walkthrough for your first AI voice agent.' },
+  { label: 'Rank on Google Offer', href: '/rank-on-google-offer', tagline: 'Done-for-you SEO + AEO push.' },
+  { label: 'Free Website Offer', href: '/free-website', tagline: 'Get a Boltcall-built site at no cost.' },
+  { label: 'Giveaway', href: '/giveaway', tagline: 'Current Boltcall giveaway.' },
+  { label: 'Speed Test Offer', href: '/speed-test/offer', tagline: 'See your speed-to-lead score, then unlock the upgrade offer.' },
+  { label: "AI Receptionist Buyer's Guide", href: '/lead-magnet/ai-receptionist-buyers-guide', tagline: 'Vendor checklist + pricing benchmarks.' },
+  { label: 'Claude Code Overnight Kit', href: '/lead-magnet/claude-code-overnight-kit', tagline: 'Build agents while you sleep.' },
+  { label: 'Speed-to-Lead for Solar', href: '/solar', tagline: 'How solar installers win on first response.' },
+  { label: 'Setup Instant Lead Reply', href: '/blog/setup-instant-lead-reply', tagline: 'Step-by-step blueprint.' },
+  { label: 'AI Chatbot vs Live-Chat (Phone Comparison)', href: '/blog/ai-chatbot-vs-live-chat-phone-comparison', tagline: 'Which channel wins for your stage.' },
+  { label: 'Build a Gemini Gem Business Assistant', href: '/blog/create-gemini-gem-business-assistant', tagline: 'Custom Gemini assistant in 20 minutes.' },
+];
+
 const BlogCenter: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Receptionist Insights & Guides | Boltcall';
@@ -716,6 +736,26 @@ const BlogCenter: React.FC = () => {
             <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm">
               See Full Pricing Details <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* More from Boltcall — companion resources rail */}
+      <section className="py-10 px-4 bg-white border-t border-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">More from Boltcall</h2>
+          <p className="text-gray-600 text-sm mb-6">Free tools, lead magnets, and deep dives that pair with the posts above.</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {moreFromBoltcall.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              >
+                <div className="font-semibold text-gray-900 text-sm mb-1">{item.label}</div>
+                <div className="text-xs text-gray-600">{item.tagline}</div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
