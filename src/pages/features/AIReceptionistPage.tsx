@@ -628,6 +628,158 @@ const AIReceptionistPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Related Resources Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Continue Reading */}
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+              <span>Continue reading</span>
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Want to go deeper? Learn{' '}
+              <Link to="/blog/how-ai-receptionist-works" className="text-blue-600 underline hover:text-blue-700">
+                how an AI receptionist works
+              </Link>
+              , compare the{' '}
+              <Link to="/blog/best-ai-receptionist-tools" className="text-blue-600 underline hover:text-blue-700">
+                best AI receptionist tools
+              </Link>
+              , and weigh{' '}
+              <Link to="/blog/ai-vs-human-receptionist" className="text-blue-600 underline hover:text-blue-700">
+                AI vs human receptionist
+              </Link>
+              .
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mb-12">
+              <Link
+                to="/blog/is-ai-receptionist-worth-it"
+                className="block bg-white rounded-lg p-5 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">
+                  Is an AI receptionist worth it?
+                </h3>
+                <p className="text-sm text-gray-600">The honest cost vs. value breakdown.</p>
+              </Link>
+              <Link
+                to="/blog/ai-receptionist-cost-pricing"
+                className="block bg-white rounded-lg p-5 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">
+                  AI receptionist cost and pricing
+                </h3>
+                <p className="text-sm text-gray-600">What you'll actually pay each month.</p>
+              </Link>
+              <Link
+                to="/blog/5-signs-you-need-ai-receptionist"
+                className="block bg-white rounded-lg p-5 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">
+                  5 signs you need an AI receptionist
+                </h3>
+                <p className="text-sm text-gray-600">Quick diagnostic for busy owners.</p>
+              </Link>
+              <Link
+                to="/blog/best-ai-receptionist-home-services"
+                className="block bg-white rounded-lg p-5 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">
+                  Best AI receptionist for home services
+                </h3>
+                <p className="text-sm text-gray-600">HVAC, plumbing, roofing, electrical.</p>
+              </Link>
+              <Link
+                to="/blog/best-ai-answering-service-dental-medical-practice"
+                className="block bg-white rounded-lg p-5 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition md:col-span-2"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">
+                  Best AI answering service for dental and medical practices
+                </h3>
+                <p className="text-sm text-gray-600">HIPAA-aware patterns and intake flows.</p>
+              </Link>
+            </div>
+
+            {/* Related Features */}
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+              <span>Pairs well with</span>
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4 mb-12">
+              <Link
+                to="/features/lead-reactivation"
+                className="block bg-blue-50/40 rounded-lg p-5 border border-blue-100 hover:border-blue-300 transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">Lead Reactivation</h3>
+                <p className="text-sm text-gray-600">Win back the leads that ghosted.</p>
+              </Link>
+              <Link
+                to="/features/website-widget"
+                className="block bg-blue-50/40 rounded-lg p-5 border border-blue-100 hover:border-blue-300 transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">Website Chat & Voice Widget</h3>
+                <p className="text-sm text-gray-600">Convert site visitors into booked calls.</p>
+              </Link>
+              <Link
+                to="/features/instant-form-reply"
+                className="block bg-blue-50/40 rounded-lg p-5 border border-blue-100 hover:border-blue-300 transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">Instant Form Reply</h3>
+                <p className="text-sm text-gray-600">Reach new leads in under 60 seconds.</p>
+              </Link>
+              <Link
+                to="/features/sms-booking-assistant"
+                className="block bg-blue-50/40 rounded-lg p-5 border border-blue-100 hover:border-blue-300 transition"
+              >
+                <h3 className="text-base font-semibold text-gray-900 mb-1">SMS Booking Assistant</h3>
+                <p className="text-sm text-gray-600">Text-first booking that closes the loop.</p>
+              </Link>
+            </div>
+
+            {/* Comparisons + Resources */}
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+              <span>Shopping around?</span>
+            </h2>
+            <p className="text-gray-600 mb-6">
+              <Link to="/comparisons" className="text-blue-600 underline hover:text-blue-700">
+                Compare AI receptionists
+              </Link>{' '}
+              side-by-side, or jump straight to{' '}
+              <Link to="/compare/boltcall-vs-smith-ai" className="text-blue-600 underline hover:text-blue-700">
+                Boltcall vs Smith.ai
+              </Link>{' '}
+              and{' '}
+              <Link to="/compare/boltcall-vs-gohighlevel" className="text-blue-600 underline hover:text-blue-700">
+                Boltcall vs GoHighLevel
+              </Link>
+              . Not ready to commit? Grab the{' '}
+              <Link to="/lead-magnet/ai-receptionist-buyers-guide" className="text-blue-600 underline hover:text-blue-700">
+                AI Receptionist Buyer's Guide
+              </Link>{' '}
+              or run a{' '}
+              <Link to="/seo-audit" className="text-blue-600 underline hover:text-blue-700">
+                Free SEO Audit
+              </Link>{' '}
+              first. When you're ready, see{' '}
+              <Link to="/pricing" className="text-blue-600 underline hover:text-blue-700">
+                Pricing
+              </Link>{' '}
+              or{' '}
+              <Link to="/book-a-call" className="text-blue-600 underline hover:text-blue-700">
+                Book a Call
+              </Link>
+              .
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

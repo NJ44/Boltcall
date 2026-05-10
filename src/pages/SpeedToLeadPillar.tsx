@@ -305,6 +305,24 @@ const SpeedToLeadPillar: React.FC = () => {
               </li>
             ))}
           </ul>
+          <p className="text-gray-700 text-lg leading-relaxed">
+            Two of these failure modes have specialized playbooks. For the after-hours problem, see{' '}
+            <Link to="/blog/never-miss-a-call-after-business-hours" className="text-blue-600 hover:underline">
+              never miss a call after business hours
+            </Link>
+            {' '}and the breakdown of the{' '}
+            <Link to="/blog/best-after-hours-answering-service" className="text-blue-600 hover:underline">
+              best after-hours answering service
+            </Link>
+            {' '}options. For paid-traffic businesses bleeding leads at night, read our guide to{' '}
+            <Link to="/blog/home-service-google-ads-lead-follow-up" className="text-blue-600 hover:underline">
+              Google Ads lead follow-up for home services
+            </Link>
+            {' '}and{' '}
+            <Link to="/blog/after-hours-lead-response-home-services" className="text-blue-600 hover:underline">
+              after-hours lead response for home services
+            </Link>.
+          </p>
         </motion.section>
 
         {/* Section 5 */}
@@ -319,7 +337,18 @@ const SpeedToLeadPillar: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-5">How to Fix Your Response Time</h2>
           <p className="text-gray-700 text-lg mb-5 leading-relaxed">
             The only way to guarantee 5-minute response times, 24/7, is automation. Human staff cannot be available
-            every minute of every day. AI can.
+            every minute of every day. AI can. Start with{' '}
+            <Link to="/blog/setup-instant-lead-reply" className="text-blue-600 hover:underline">
+              how to set up instant lead reply
+            </Link>
+            , then layer in an{' '}
+            <Link to="/blog/ai-agent-for-small-business-24-7-call-answering" className="text-blue-600 hover:underline">
+              AI agent for 24/7 call answering
+            </Link>
+            {' '}or an{' '}
+            <Link to="/blog/ai-answering-service-small-business" className="text-blue-600 hover:underline">
+              AI answering service for small business
+            </Link>.
           </p>
 
           <div className="grid md:grid-cols-2 gap-5 mb-8">
@@ -385,6 +414,93 @@ const SpeedToLeadPillar: React.FC = () => {
               </Link>
             ))}
           </div>
+        </motion.section>
+
+        {/* Topic Cluster */}
+        <motion.section
+          id="topic-cluster"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-14"
+        >
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Continue Reading: The Speed-to-Lead Topic Cluster</h2>
+          <p className="text-gray-700 mb-6">
+            Deep dives on speed-to-lead and lead response across industries, concepts, and tooling:
+          </p>
+
+          {/* Industry deep dives */}
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">By Industry</h3>
+          <div className="grid md:grid-cols-2 gap-3 mb-7">
+            {[
+              { href: '/blog/hvac-ai-lead-response', title: 'HVAC AI lead response' },
+              { href: '/blog/ai-appointment-scheduling-hvac', title: 'AI appointment scheduling for HVAC' },
+              { href: '/blog/ai-receptionist-for-plumbers', title: 'AI receptionist for plumbers' },
+              { href: '/blog/whatsapp-appointment-booking-plumbers', title: 'WhatsApp appointment booking for plumbers' },
+              { href: '/blog/roofing-company-stop-losing-leads-missed-calls', title: 'Stop losing leads from missed calls (roofing)' },
+              { href: '/blog/ai-phone-answering-dentists', title: 'AI phone answering for dentists' },
+              { href: '/blog/best-ai-answering-service-dental-medical-practice', title: 'Best AI answering service for dental and medical practices' },
+              { href: '/blog/best-ai-receptionist-home-services', title: 'Best AI receptionist for home services' },
+              { href: '/blog/how-to-set-up-ai-phone-answering-vet-clinic', title: 'AI phone answering for vet clinics' },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="flex items-start gap-2.5 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors group"
+              >
+                <ArrowRight className="w-4 h-4 text-blue-500 flex-shrink-0 mt-1 group-hover:text-blue-600" />
+                <div className="font-medium text-gray-900 group-hover:text-blue-700 text-sm">{item.title}</div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Concept deep dives */}
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">AI Receptionist Concepts</h3>
+          <div className="grid md:grid-cols-2 gap-3 mb-7">
+            {[
+              { href: '/blog/how-ai-receptionist-works', title: 'How an AI receptionist works' },
+              { href: '/blog/ai-vs-human-receptionist', title: 'AI vs human receptionist' },
+              { href: '/blog/is-ai-receptionist-worth-it', title: 'Is an AI receptionist worth it?' },
+              { href: '/blog/ai-receptionist-cost-pricing', title: 'AI receptionist cost and pricing' },
+              { href: '/blog/best-ai-receptionist-tools', title: 'Best AI receptionist tools' },
+              { href: '/blog/5-signs-you-need-ai-receptionist', title: '5 signs you need an AI receptionist' },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="flex items-start gap-2.5 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors group"
+              >
+                <ArrowRight className="w-4 h-4 text-blue-500 flex-shrink-0 mt-1 group-hover:text-blue-600" />
+                <div className="font-medium text-gray-900 group-hover:text-blue-700 text-sm">{item.title}</div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Free tools and guides */}
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Free Tools and Guides</h3>
+          <p className="text-gray-700 leading-relaxed">
+            Ready to put speed-to-lead into practice? Download the{' '}
+            <Link to="/lead-magnet/ai-receptionist-buyers-guide" className="text-blue-600 hover:underline">
+              AI Receptionist Buyer's Guide
+            </Link>
+            , then benchmark your current setup with the{' '}
+            <Link to="/lead-response-scorecard" className="text-blue-600 hover:underline">
+              Lead Response Scorecard
+            </Link>
+            {' '}or the{' '}
+            <Link to="/ai-readiness-scorecard" className="text-blue-600 hover:underline">
+              AI Readiness Scorecard
+            </Link>. If your inbound channel is search, run a free{' '}
+            <Link to="/seo-audit" className="text-blue-600 hover:underline">
+              SEO audit
+            </Link>
+            {' '}or the combined{' '}
+            <Link to="/seo-aeo-audit" className="text-blue-600 hover:underline">
+              SEO + AEO audit
+            </Link>
+            {' '}to make sure leads can find you in the first place.
+          </p>
         </motion.section>
 
         {/* FAQ */}

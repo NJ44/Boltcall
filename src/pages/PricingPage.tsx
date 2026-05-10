@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { updateMetaDescription } from '../lib/utils';
 import { usePricingVisitorTrack } from '../hooks/usePricingVisitorTrack';
 import { useSchemaInjector } from '../hooks/useSchemaInjector';
@@ -191,7 +192,7 @@ const PricingPage: React.FC = () => {
               The average missed call to a local service business represents $300 to $1,500 in lost revenue when you account for the full customer lifetime value. A plumber who misses an emergency call at 9 pm loses not just one repair job but potentially a $3,000-per-year repeat customer. A dental practice that sends new patients to voicemail loses a $3,200 lifetime value relationship. When you multiply those numbers across the 40 to 60 calls the average small business misses every month, the math becomes stark.
             </p>
             <p>
-              Boltcall's AI receptionist answers every call — during business hours, after hours, on weekends, and on holidays — and converts a significant percentage of those callers into booked appointments. At $897 per month for the Pro plan, recovering even a handful of additional jobs or appointments per month typically generates 5 to 10 times the subscription cost. Most of our customers see positive ROI within 48 hours of going live.
+              Boltcall's AI receptionist answers every call — during business hours, after hours, on weekends, and on holidays — and converts a significant percentage of those callers into booked appointments. At $897 per month for the Pro plan, recovering even a handful of additional jobs or appointments per month typically generates 5 to 10 times the subscription cost. Most of our customers see positive ROI within 48 hours of going live. If you want to see how your current response time stacks up before committing, run our free <Link to="/lead-response-scorecard" className="text-indigo-600 hover:text-indigo-700 underline">lead response scorecard</Link> or read our <Link to="/speed-to-lead" className="text-indigo-600 hover:text-indigo-700 underline">speed-to-lead guide</Link>.
             </p>
             <p>
               Beyond call answering, every plan includes automated appointment reminders that reduce no-shows by an average of 40%, SMS follow-up sequences that re-engage leads who expressed interest but didn't book, and post-appointment review requests that build your Google rating over time. These features compound each other — more calls answered means more appointments booked, better reminders mean fewer empty slots, and better reviews mean more inbound calls. Boltcall is not a single tool; it is a complete revenue recovery system.

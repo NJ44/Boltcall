@@ -29,14 +29,6 @@ const Comparisons: React.FC = () => {
 
   const comparisons = [
     {
-      title: 'Traditional Call Centers vs <span class="text-blue-600">Boltcall</span>',
-      description: 'Compare costs, response times, availability, and quality between traditional call centers and Boltcall\'s AI solution.',
-      href: '/comparisons/call-centers-vs-boltcall',
-      category: 'Call Centers',
-      date: 'February 10, 2025',
-      readTime: '8 min read'
-    },
-    {
       title: 'Human Receptionist vs <span class="text-blue-600">Boltcall</span>',
       description: 'See how Boltcall compares to hiring a human receptionist in terms of cost, reliability, and capabilities.',
       href: '/comparisons/receptionist-vs-boltcall',
@@ -45,27 +37,11 @@ const Comparisons: React.FC = () => {
       readTime: '7 min read'
     },
     {
-      title: 'Voicemail vs <span class="text-blue-600">Boltcall</span>',
-      description: 'Discover why Boltcall\'s instant response beats traditional voicemail systems for lead conversion.',
-      href: '/comparisons/voicemail-vs-boltcall',
-      category: 'Voicemail',
-      date: 'February 10, 2025',
-      readTime: '6 min read'
-    },
-    {
       title: 'Answering Services vs <span class="text-blue-600">Boltcall</span>',
       description: 'Compare professional answering services with Boltcall\'s AI-powered solution for your business.',
       href: '/comparisons/answering-services-vs-boltcall',
       category: 'Answering Services',
       date: 'February 10, 2025',
-      readTime: '7 min read'
-    },
-    {
-      title: 'CRM Instant Lead Reply vs <span class="text-blue-600">Boltcall</span>',
-      description: 'Compare regular CRM automated responses with Boltcall\'s AI-powered instant lead reply system.',
-      href: '/comparisons/crm-vs-boltcall',
-      category: 'Lead Response',
-      date: 'February 25, 2025',
       readTime: '7 min read'
     }
   ];
@@ -94,22 +70,6 @@ const Comparisons: React.FC = () => {
       category: 'Reputation Platform',
       date: 'April 8, 2026',
       readTime: '7 min read'
-    },
-    {
-      title: 'Boltcall vs <span class="text-blue-600">Emitrr</span>',
-      description: 'Compare Boltcall with Emitrr\'s customer interaction platform for appointment scheduling and communication.',
-      href: '/compare/boltcall-vs-emitrr',
-      category: 'Communication Platform',
-      date: 'April 8, 2026',
-      readTime: '6 min read'
-    },
-    {
-      title: 'Boltcall vs <span class="text-blue-600">Calomation</span>',
-      description: 'See how Boltcall\'s AI receptionist compares to Calomation\'s automation tools for local businesses.',
-      href: '/compare/boltcall-vs-calomation',
-      category: 'Automation Platform',
-      date: 'April 8, 2026',
-      readTime: '6 min read'
     },
     {
       title: 'Boltcall vs <span class="text-blue-600">Smith.ai</span>',
@@ -307,6 +267,32 @@ const Comparisons: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Steps CTA */}
+      <section className="py-10 bg-white border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+            Ready to See Boltcall in Action?
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Compare plans or talk to our team about your business.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Link
+              to="/pricing"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold transition-colors"
+            >
+              Boltcall Pricing
+            </Link>
+            <Link
+              to="/book-a-call"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-colors"
+            >
+              Book a Call
+            </Link>
           </div>
         </div>
       </section>

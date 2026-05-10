@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Phone, Calendar, Shield, Brain, Bell, CheckCircle, XCircle } from 'lucide-react';
 import Header from '../components/Header';
@@ -536,6 +537,156 @@ const SolarIndustryHub = () => {
                   </span>
                 </motion.a>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* More Solar Resources — internal linking hub */}
+        <section className="py-16 lg:py-24 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div {...fadeIn} className="text-center mb-12">
+              <h2 className="text-2xl md:text-4xl font-bold text-[#0B1220] mb-4">
+                More Solar Resources
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Deep-dives, calculators, and buyer guides built for solar installers responding to leads.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Solar Deep-Dives */}
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Solar Deep-Dives
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/solar-benchmark" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Speed-to-Lead Benchmark
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/solar-benchmark-2026" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      2026 Solar Speed Benchmark Report
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/solar-speed-playbook" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Speed-to-Lead Playbook
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/solar-speed-score" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Speed Score Quiz
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Solar Calculators */}
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Solar Calculators
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/tools/solar-profit-calculator" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Profit Calculator
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/tools/solar-quote-generator" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Quote Generator
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/tools/solar-sales-closer" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Solar Sales Closer
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Buyer Guides & Scorecards */}
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Buyer Guides & Scorecards
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/lead-magnet/ai-receptionist-buyers-guide" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      AI Receptionist Buyer&apos;s Guide
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/lead-response-scorecard" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Lead Response Scorecard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/ai-revenue-audit" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      AI Revenue Audit
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Pillar + Comparisons + What's Next */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  The Speed-to-Lead Method
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/speed-to-lead" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Speed-to-Lead Guide
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/speed-to-lead/statistics" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Speed-to-Lead Statistics
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Compare Boltcall
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/comparisons" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      All Comparisons
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/compare/boltcall-vs-gohighlevel" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Boltcall vs GoHighLevel
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  What&apos;s next
+                </h3>
+                <ul className="space-y-3">
+                  <li>
+                    <Link to="/pricing" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Pricing & Plans
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/book-a-call" className="text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium">
+                      Book a Call
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
