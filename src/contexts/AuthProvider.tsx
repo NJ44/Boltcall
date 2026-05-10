@@ -5,6 +5,7 @@
  * is NOT in the critical-path bundle for marketing pages.
  */
 import React, { useReducer, useEffect } from 'react';
+import posthog from 'posthog-js';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
 import {
   login as supabaseLogin,
@@ -67,8 +68,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: { subscription } } = onAuthStateChange((user) => {
       if (user) {
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        posthog.identify(user.id, { email: user.email, name: user.name, company: user.company });
       } else {
         dispatch({ type: 'LOGOUT' });
+        posthog.reset();
       }
     });
 
