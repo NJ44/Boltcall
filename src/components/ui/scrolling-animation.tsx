@@ -26,7 +26,7 @@ interface ScrollingAnimationProps {
 
 export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   return (
-    <div className="h-screen flex flex-col items-center justify-center p-8">
+    <div className="py-20 md:py-28 flex flex-col items-center justify-center px-8">
       <div className="relative">
         {/* Outer ring */}
         <div className="w-[500px] h-[500px] md:w-[600px] md:h-[600px] rounded-full flex items-center justify-center border-2 border-white/10">
