@@ -278,7 +278,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.35 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Comparisons</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.comparisons')}</p>
                 <ul className="space-y-2">
                   {footerLinks.comparisons.map((link, index) => (
                     <li key={index}>
