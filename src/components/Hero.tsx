@@ -2,6 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, LayoutGroup } from 'framer-motion';
 import { Phone, Calendar, MessageSquare, Users, Star, Megaphone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const SMOOTH_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const FADE_DURATION = 0.7;
@@ -12,6 +13,9 @@ const ModalVideo = React.lazy(() => import('./ModalVideo'));
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const { t } = useTranslation('marketing');
+
+  const rotatingWords = t('hero.rotatingWords', { returnObjects: true }) as string[];
 
   return (
     <>
@@ -20,8 +24,8 @@ const Hero: React.FC = () => {
         className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-hidden z-[1] bg-white"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
       >
-        {/* Parallax floating icon boxes */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
+        {/* Parallax floating icon boxes — kept dir="ltr" since they are purely decorative */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none" dir="ltr">
           <Floating sensitivity={-0.5} className="h-full">
 
             {/* Top-left — Phone */}
@@ -117,7 +121,7 @@ const Hero: React.FC = () => {
           </Floating>
         </div>
 
-        {/* Subtle center grid — smaller squares, very light */}
+        {/* Subtle center grid */}
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-60"
           style={{
@@ -142,12 +146,12 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.10 }}
             >
-              <span className="speakable-intro">NEVER MISS</span>
+              <span className="speakable-intro">{t('hero.neverMiss')}</span>
               <LayoutGroup>
                 <motion.span layout className="flex items-center whitespace-pre">
-                  <span>A </span>
+                  {t('hero.a') && <span>{t('hero.a')}</span>}
                   <TextRotate
-                    texts={["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"]}
+                    texts={rotatingWords}
                     mainClassName="text-blue-600 py-0 pb-1 md:pb-2 rounded-xl"
                     staggerDuration={0.04}
                     staggerFrom="last"
@@ -164,7 +168,7 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.25 }}
             >
-              The Speed To Lead System for local businesses
+              {t('hero.subtitle')}
             </motion.p>
 
             <motion.div
@@ -177,13 +181,13 @@ const Hero: React.FC = () => {
                 to="/signup"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
               >
-                Start For Free
+                {t('hero.startFree')}
               </Link>
               <button
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
               >
-                See How It Works
+                {t('hero.seeHowItWorks')}
               </button>
             </motion.div>
 

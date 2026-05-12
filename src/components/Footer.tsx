@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 // X (formerly Twitter) Logo Component - Custom SVG since lucide-react doesn't have X icon
 const XLogo: React.FC<{ className?: string; strokeWidth?: number }> = ({ className = "w-4 h-4", strokeWidth = 2.5 }) => (
   <svg
@@ -22,6 +23,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => {
   const isDark = theme === 'dark';
+  const { t } = useTranslation('marketing');
 
   const bgClass = isDark ? 'bg-black' : 'bg-white';
   const textClass = isDark ? 'text-white' : 'text-neutral-900';
@@ -153,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Features</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.features')}</p>
                 <ul className="space-y-2">
                   {footerLinks.features.map((link, index) => (
                     <li key={index}>
@@ -177,7 +179,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.15 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Free Tools</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.freeTools')}</p>
                 <ul className="space-y-2">
                   {footerLinks.freeTools.map((link, index) => (
                     <li key={index}>
@@ -201,7 +203,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Calculators</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.calculators')}</p>
                 <ul className="space-y-2">
                   {footerLinks.calculators.map((link, index) => (
                     <li key={index}>
@@ -225,7 +227,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.25 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Learn</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.learn')}</p>
                 <ul className="space-y-2">
                   {footerLinks.learn.map((link, index) => (
                     <li key={index}>
@@ -252,7 +254,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Industries & Offers</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.industries')}</p>
                 <ul className="space-y-2">
                   {footerLinks.industries.map((link, index) => (
                     <li key={index}>
@@ -276,7 +278,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.35 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Comparisons</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.comparisons')}</p>
                 <ul className="space-y-2">
                   {footerLinks.comparisons.map((link, index) => (
                     <li key={index}>
@@ -300,7 +302,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Company</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.company')}</p>
                 <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
@@ -339,7 +341,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © 2026 Boltcall. All rights reserved.
+              {t('footer.copyright')}
             </motion.div>
 
             <motion.div

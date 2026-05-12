@@ -1,0 +1,161 @@
+{
+  "header": {
+    "features": "Features",
+    "about": "About",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "resources": "Resources",
+    "content": "Content",
+    "freeTools": "Free Tools",
+    "login": "Login",
+    "getStarted": "Get Started",
+    "startNow": "Start now",
+    "dashboard": "Dashboard",
+    "newStrikeAi": "New: Strike AI",
+    "nowAvailable": "Now Available",
+    "strikeDesc": "Strike, our intelligent AI assistant, is now available. Get instant answers and assistance powered by advanced AI.",
+    "tryStrikeAi": "Try Strike AI",
+    "featuresItems": {
+      "aiReceptionist": "AI Receptionist",
+      "instantFormReply": "Instant Form Reply",
+      "smsBookingAssistant": "SMS Booking Assistant",
+      "automatedReminders": "Automated Reminders",
+      "aiFollowUpSystem": "AI Follow-Up System",
+      "websiteWidget": "Website Widget",
+      "leadReactivation": "Lead Reactivation",
+      "smartWebsite": "Smart Website"
+    },
+    "resourcesItems": {
+      "comparisons": "Comparisons",
+      "blog": "Blog",
+      "aiGuide": "AI Guide",
+      "newsletter": "Newsletter",
+      "freeAiCourse": "Free AI Course"
+    },
+    "freeToolsItems": {
+      "leadResponseSpeedTest": "Lead Response Speed Test",
+      "aiRevenueAudit": "AI Revenue Audit",
+      "leadResponseScorecard": "Lead Response Scorecard",
+      "conversionRateOptimizer": "Conversion Rate Optimizer",
+      "funnelOptimizer": "Funnel Optimizer",
+      "aiVisibilityCheck": "AI Visibility Check",
+      "aiReadinessScorecard": "AI Readiness Scorecard",
+      "rankOnGoogleOffer": "Rank on Google Offer",
+      "voiceAgentSetup": "Voice Agent Setup",
+      "speedTestOffer": "Speed Test Offer",
+      "medSpaRebookingCalculator": "MedSpa Rebooking Calculator",
+      "realEstateSpeedScorecard": "Real Estate Speed Scorecard",
+      "speedToLeadForSolar": "Speed-to-Lead for Solar",
+      "aiReceptionistBuyersGuide": "AI Receptionist Buyer's Guide",
+      "claudeCodeOvernightKit": "Claude Code Overnight Kit",
+      "freeWebsiteOffer": "Free Website Offer",
+      "giveaway": "Giveaway"
+    }
+  },
+  "hero": {
+    "neverMiss": "NEVER MISS",
+    "a": "A ",
+    "rotatingWords": ["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"],
+    "subtitle": "The Speed To Lead System for local businesses",
+    "startFree": "Start For Free",
+    "seeHowItWorks": "See How It Works"
+  },
+  "howItWorks": {
+    "label": "How It Works",
+    "heading1": "Close leads in ",
+    "heading2": "lightning speed.",
+    "description": "BoltCall transforms how you capture and convert leads. Our AI-powered system works 24/7 to ensure you never miss an opportunity, responding instantly to every inquiry and booking qualified appointments automatically.",
+    "phases": {
+      "receptionist": {
+        "title": "AI Receptionist",
+        "description": "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
+        "checklist": ["24/7 call answering", "Lead qualification", "Appointment scheduling", "Call transcription"]
+      },
+      "adsReplies": {
+        "title": "Instant Ads Replies",
+        "description": "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
+        "checklist": ["Instant response to ads", "Personalized messaging", "Lead capture forms", "Follow-up automation"]
+      },
+      "smsBooking": {
+        "title": "SMS Booking",
+        "description": "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
+        "checklist": ["SMS lead capture", "Automated scheduling", "Appointment reminders", "Calendar integration"]
+      }
+    }
+  },
+  "faq": {
+    "heading1": "Frequently Asked",
+    "heading2": "Questions",
+    "items": [
+      {
+        "q": "What exactly does Boltcall do?",
+        "a": "Boltcall is an AI receptionist that answers your calls 24/7, books appointments, captures leads, sends follow-up texts, and reminds customers about upcoming visits. It works even when you're busy or closed."
+      },
+      {
+        "q": "Can it transfer calls to a real person?",
+        "a": "Yes. You set the rules — transfer during business hours, for VIP customers, or urgent calls. If no one picks up, it takes a message and books a callback."
+      },
+      {
+        "q": "Does it sound like a real person?",
+        "a": "Yes. You choose the voice and tone — friendly, calm, or professional. Callers often can't tell it's AI."
+      },
+      {
+        "q": "Can I keep my current phone number?",
+        "a": "Yes. You can forward your existing number to Boltcall, or get a new local number in the app."
+      },
+      {
+        "q": "How long does setup take?",
+        "a": "About 5 minutes. Enter your business details, pick a voice, and your AI receptionist is live. No technical skills needed."
+      },
+      {
+        "q": "Does it connect to my CRM or calendar?",
+        "a": "Yes. Boltcall integrates with HubSpot, Google Sheets, Zapier, Cal.com, and more. Every lead and booking syncs automatically to the tools you already use."
+      }
+    ]
+  },
+  "finalCta": {
+    "default": {
+      "headline": "Fast. Simple. Scalable.",
+      "description": "Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.",
+      "button": "Start the free setup"
+    },
+    "calculator": {
+      "headline": "Stop Losing Revenue to Missed Calls.",
+      "description": "See how much you're leaving on the table. Set up your AI receptionist in 5 minutes. It's free.",
+      "button": "Start the free setup"
+    },
+    "howTo": {
+      "headline": "See It Working in 5 Minutes.",
+      "description": "Set up your AI receptionist now. It answers calls, books appointments, and follows up automatically.",
+      "button": "Try it free"
+    },
+    "comparison": {
+      "headline": "Ready to Switch?",
+      "description": "Try Boltcall free. No contract, no commitment. See the difference in your first week.",
+      "button": "Start free"
+    },
+    "blog": {
+      "headline": "Fast. Simple. Scalable.",
+      "description": "Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.",
+      "button": "Start the free setup"
+    }
+  },
+  "footer": {
+    "sections": {
+      "features": "Features",
+      "freeTools": "Free Tools",
+      "calculators": "Calculators",
+      "learn": "Learn",
+      "industries": "Industries & Offers",
+      "comparisons": "Comparisons",
+      "company": "Company"
+    },
+    "copyright": "© 2026 Boltcall. All rights reserved."
+  },
+  "giveawayBar": {
+    "breakOurAi": "Break Our AI",
+    "crack": "Crack the code in 60 seconds. Win a",
+    "freeWebsite": "free website",
+    "tryNow": "Try Now"
+  }
+}
