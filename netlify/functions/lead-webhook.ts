@@ -124,27 +124,29 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
         continue;
       }
 
-      // Look up the page access token and associated user from facebook_page_connections
+      // Look up the access token + associated user from facebook_page_connections.
+      // Column is `access_token`, not `page_access_token` — the previous name
+      // didn't exist in the schema and caused every FB leadgen lookup to error.
       const { data: connection, error: connErr } = await supabase
         .from('facebook_page_connections')
-        .select('page_access_token, workspace_id, user_id')
+        .select('access_token, workspace_id, user_id')
         .eq('page_id', page_id)
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (connErr || !connection) {
         errors.push(`No facebook_page_connections found for page_id=${page_id}`);
         continue;
       }
 
-      const userId = connection.user_id || connection.workspace_id;
+      const userId = (connection as any).user_id || (connection as any).workspace_id;
       if (!userId) {
         errors.push(`No user_id or workspace_id found for page_id=${page_id}`);
         continue;
       }
 
       // Fetch the actual lead details from Facebook
-      const leadDetails = await fetchFacebookLeadDetails(leadgen_id, connection.page_access_token);
+      const leadDetails = await fetchFacebookLeadDetails(leadgen_id, (connection as any).access_token);
       if (!leadDetails) {
         errors.push(`Failed to fetch lead details for leadgen_id=${leadgen_id}`);
         continue;
