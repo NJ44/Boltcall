@@ -302,7 +302,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Company</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.company')}</p>
                 <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
