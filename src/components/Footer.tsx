@@ -23,6 +23,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => {
   const isDark = theme === 'dark';
+  const { t } = useTranslation('marketing');
 
   const bgClass = isDark ? 'bg-black' : 'bg-white';
   const textClass = isDark ? 'text-white' : 'text-neutral-900';
