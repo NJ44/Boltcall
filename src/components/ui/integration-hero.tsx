@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 const ICONS_ROW1 = [
   { src: "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png", alt: "HubSpot" },
   { src: "/pipedrive_logo.png", alt: "Pipedrive" },
@@ -19,6 +21,7 @@ const repeatedIcons = (icons: { src: string; alt: string }[], repeat = 4) =>
   Array.from({ length: repeat }).flatMap(() => icons);
 
 export default function IntegrationHero() {
+  const { t } = useTranslation('marketing');
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-brand-blue">
       {/* Light grid background */}
@@ -27,10 +30,10 @@ export default function IntegrationHero() {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-4xl lg:text-6xl font-bold tracking-tight text-white">
-          Integrate with favorite tools
+          {t('integrationHero.heading')}
         </h2>
         <p className="mt-4 text-lg text-blue-100 max-w-xl mx-auto">
-          Connect your CRM, calendar, and automation tools — all in one place.
+          {t('integrationHero.description')}
         </p>
 
         {/* Carousel */}

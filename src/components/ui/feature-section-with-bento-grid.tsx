@@ -1,4 +1,4 @@
-
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -19,6 +19,7 @@ import {
 import CountUp from "react-countup";
 
 function Feature() {
+  const { t } = useTranslation('marketing');
   const [isChartVisible, setIsChartVisible] = useState(false);
 
   const chartData = [
@@ -53,9 +54,9 @@ function Feature() {
             >
               {/* Left side - Text content */}
               <div className="flex flex-col text-left max-w-xs">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased closing rates</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">{t('features.closingRates.title')}</h3>
                 <p className="text-muted-foreground text-base mb-4">
-                  If you talk to a new customer in 60 seconds, you get 4 times more customers. Being fast is very important.
+                  {t('features.closingRates.description')}
                 </p>
               </div>
 
@@ -90,7 +91,7 @@ function Feature() {
                       <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
                         {isChartVisible ? <CountUp end={391} duration={5} /> : '0'}%
                       </h3>
-                      <p className="text-gray-500 text-sm">Sales conversions</p>
+                      <p className="text-gray-500 text-sm">{t('features.salesConversions')}</p>
                     </div>
                   </div>
                 </div>
@@ -111,9 +112,9 @@ function Feature() {
                     <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
                   </CardVisual>
                   <CardBody>
-                    <CardTitle>Increased Revenue</CardTitle>
+                    <CardTitle>{t('features.revenue.title')}</CardTitle>
                     <CardDescription>
-                      When you answer fast, you get more customers. This makes you more money.
+                      {t('features.revenue.description')}
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>
@@ -135,9 +136,9 @@ function Feature() {
               
               {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
-                <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Save time</h3>
+                <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">{t('features.saveTime.title')}</h3>
                 <p className="text-muted-foreground text-base max-w-xs">
-                  BoltCall does the boring work for you. You can focus on making your business bigger.
+                  {t('features.saveTime.description')}
                 </p>
               </div>
             </motion.div>
@@ -151,9 +152,9 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left max-w-sm">
-                <h3 className="text-lg md:text-2xl font-semibold tracking-tight mb-2 text-black">Customer satisfaction</h3>
+                <h3 className="text-lg md:text-2xl font-semibold tracking-tight mb-2 text-black">{t('features.customerSatisfaction.title')}</h3>
                 <p className="text-muted-foreground text-sm md:text-base">
-                  Make your customers happy. Answer them right away. Talk to them in a nice way. They will trust you and come back.
+                  {t('features.customerSatisfaction.description')}
                 </p>
               </div>
               <div className="flex-1 flex items-center justify-center">

@@ -157,5 +157,43 @@
     "crack": "Crack the code in 60 seconds. Win a",
     "freeWebsite": "free website",
     "tryNow": "Try Now"
+  },
+  "stickyScroll": {
+    "label": "PRODUCT",
+    "heading1": "Why Businesses",
+    "heading2": "Choose",
+    "heading3": "BoltCall"
+  },
+  "features": {
+    "closingRates": {
+      "title": "Increased closing rates",
+      "description": "If you talk to a new customer in 60 seconds, you get 4 times more customers. Being fast is very important."
+    },
+    "salesConversions": "Sales conversions",
+    "revenue": {
+      "title": "Increased Revenue",
+      "description": "When you answer fast, you get more customers. This makes you more money."
+    },
+    "saveTime": {
+      "title": "Save time",
+      "description": "BoltCall does the boring work for you. You can focus on making your business bigger."
+    },
+    "customerSatisfaction": {
+      "title": "Customer satisfaction",
+      "description": "Make your customers happy. Answer them right away. Talk to them in a nice way. They will trust you and come back."
+    }
+  },
+  "integrationHero": {
+    "heading": "Integrate with favorite tools",
+    "description": "Connect your CRM, calendar, and automation tools — all in one place."
+  },
+  "bentoCard": {
+    "preview": "Platform Preview",
+    "tagline": "Every lead answered. Every booking locked in. Automatically."
+  },
+  "pricing": {
+    "heading1": "Pricing That",
+    "heading2": "Scales",
+    "heading3": "With You"
   }
 }
