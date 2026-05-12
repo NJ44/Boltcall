@@ -341,7 +341,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © 2026 Boltcall. All rights reserved.
+              {t('footer.copyright')}
             </motion.div>
 
             <motion.div
