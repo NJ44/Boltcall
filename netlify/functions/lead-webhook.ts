@@ -222,12 +222,28 @@ async function triggerInstantResponseCall(
   const retellApiKey = process.env.RETELL_API_KEY;
   if (!retellApiKey) return;
 
+  // Look up the user's agent — direct retell_agent_id column primary, legacy
+  // api_keys JSONB nesting as fallback. Newer rows have api_keys = {} so the
+  // JSONB-only read would silently miss every modern agent.
   const [{ data: agentRow }, { data: phoneRow }] = await Promise.all([
-    supabase.from('agents').select('api_keys').eq('user_id', userId).limit(1).single(),
-    supabase.from('phone_numbers').select('phone_number').eq('user_id', userId).eq('status', 'active').limit(1).single(),
+    supabase
+      .from('agents')
+      .select('retell_agent_id, api_keys')
+      .eq('user_id', userId)
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from('phone_numbers')
+      .select('phone_number')
+      .eq('user_id', userId)
+      .eq('status', 'active')
+      .limit(1)
+      .maybeSingle(),
   ]);
 
-  const agentId = (agentRow?.api_keys as any)?.retell_agent_id;
+  const agentId: string | undefined =
+    (agentRow as any)?.retell_agent_id ||
+    (agentRow?.api_keys as any)?.retell_agent_id;
   const fromNumber = phoneRow?.phone_number;
 
   if (!agentId || !fromNumber) {
