@@ -6,11 +6,6 @@ import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const PHASE_KEYS = ['receptionist', 'adsReplies', 'smsBooking'] as const;
-const PHASE_AVATARS = [
-  '/avatars/Gemini_Generated_Image_2vtge12vtge12vtg-Photoroom.png',
-  '/avatars/Gemini_Generated_Image_oicfeoicfeoicfeo-Photoroom.png',
-  '/avatars/Gemini_Generated_Image_oneppkoneppkonep-Photoroom.png',
-];
 
 const HowItWorks: React.FC = () => {
   const { t } = useTranslation('marketing');
