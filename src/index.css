@@ -42,6 +42,18 @@ html[dir="rtl"] .phone-input-wrapper .PhoneInput {
   flex-direction: row-reverse;
 }
 
+/* RTL: fix nav underline animation start point */
+html[dir="rtl"] .nav-underline::after {
+  left: auto;
+  right: 0;
+}
+
+/* RTL: ensure text alignment for mobile nav */
+html[dir="rtl"] nav button,
+html[dir="rtl"] nav a {
+  text-align: right;
+}
+
 :root {
   color-scheme: light only;
 }
