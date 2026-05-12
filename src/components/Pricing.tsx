@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
+import { useTranslation } from 'react-i18next';
 import { PricingTable } from './ui/pricing-table';
 import WhisperText from './ui/whisper-text';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation('marketing');
 
   // Self-serve plans (Starter / Pro / Ultimate) start the free trial via /setup;
   // payment is handled inside the dashboard once the user is signed in.
@@ -79,7 +81,7 @@ const Pricing: React.FC = () => {
       <div className="text-center mb-1 mt-12 md:mt-16">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-[1.2]">
           <WhisperText
-            text="Pricing That"
+            text={t('pricing.heading1')}
             className="text-4xl md:text-5xl font-bold text-gray-900 inline-block"
             delay={187}
             duration={0.625}
@@ -88,7 +90,7 @@ const Pricing: React.FC = () => {
             triggerStart="top 80%"
           />{' '}
           <WhisperText
-            text="Scales"
+            text={t('pricing.heading2')}
             className="text-4xl md:text-5xl font-bold text-blue-500 inline-block"
             delay={187}
             duration={0.625}
@@ -97,7 +99,7 @@ const Pricing: React.FC = () => {
             triggerStart="top 80%"
           />{' '}
           <WhisperText
-            text="With You"
+            text={t('pricing.heading3')}
             className="text-4xl md:text-5xl font-bold text-gray-900 inline-block"
             delay={187}
             duration={0.625}

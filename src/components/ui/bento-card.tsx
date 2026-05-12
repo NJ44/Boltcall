@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { GlassDefs, GlassBox } from "./glass-box";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -81,6 +82,7 @@ const TABS: TabConfig[] = [
 ];
 
 const BentoCard = () => {
+  const { t } = useTranslation('marketing');
   const [activeTab, setActiveTab] = useState(TABS[0]);
 
   const content = useMemo(() => {
@@ -103,13 +105,21 @@ const BentoCard = () => {
         className="w-full max-w-5xl transition-all duration-500 hover:-translate-y-1 m-0 relative"
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
+        {/* Coloured glow so liquid glass has a luminous surface to refract */}
+        <div
+          className="absolute -inset-6 rounded-3xl pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse 85% 65% at 50% 30%, rgba(147,197,253,0.22) 0%, rgba(99,102,241,0.14) 42%, rgba(168,85,247,0.08) 70%, transparent 100%)",
+            filter: "blur(28px)",
+          }}
+        />
       <GlassBox variant="liquid" clip="lg" rounded="rounded-3xl" className="w-full">
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-300/90 uppercase tracking-widest font-semibold">
-            Platform Preview
+            {t('bentoCard.preview')}
           </h2>
           <p className="text-lg sm:text-2xl text-white font-semibold leading-snug max-w-[520px]">
-            Every lead answered. Every booking locked in. Automatically.
+            {t('bentoCard.tagline')}
           </p>
         </div>
 
