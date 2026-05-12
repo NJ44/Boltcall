@@ -203,7 +203,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <p className={`text-base font-semibold mb-3 ${textClass}`}>Calculators</p>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>{t('footer.sections.calculators')}</p>
                 <ul className="space-y-2">
                   {footerLinks.calculators.map((link, index) => (
                     <li key={index}>
