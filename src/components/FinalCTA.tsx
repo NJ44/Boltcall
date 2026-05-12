@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { Users, Phone, Calendar } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export interface FinalCTAProps {
   headline?: string;
@@ -10,46 +11,43 @@ export interface FinalCTAProps {
   buttonText?: string;
   buttonHref?: string;
   icons?: [LucideIcon, LucideIcon, LucideIcon];
+  /** Translation preset key (e.g. 'calculator', 'howTo', 'comparison', 'blog'). Overrides defaults. */
+  presetKey?: 'default' | 'calculator' | 'howTo' | 'comparison' | 'blog';
 }
 
-// ── Presets for different page types ────────────────────────────────────────
+// ── Presets for different page types (English hardcoded — used on untranslated pages) ──
 export const CALCULATOR_CTA: FinalCTAProps = {
-  headline: 'Stop Losing Revenue to Missed Calls.',
-  description: "See how much you're leaving on the table. Set up your AI receptionist in 5 minutes. It's free.",
-  buttonText: 'Start the free setup',
-  buttonHref: '/signup',
+  presetKey: 'calculator',
 };
 
 export const HOW_TO_CTA: FinalCTAProps = {
-  headline: 'See It Working in 5 Minutes.',
-  description: 'Set up your AI receptionist now. It answers calls, books appointments, and follows up automatically.',
-  buttonText: 'Try it free',
-  buttonHref: '/signup',
+  presetKey: 'howTo',
 };
 
 export const COMPARISON_CTA: FinalCTAProps = {
-  headline: 'Ready to Switch?',
-  description: 'Try Boltcall free. No contract, no commitment. See the difference in your first week.',
-  buttonText: 'Start free',
-  buttonHref: '/signup',
+  presetKey: 'comparison',
 };
 
 export const BLOG_CTA: FinalCTAProps = {
-  headline: 'Fast. Simple. Scalable.',
-  description: 'Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.',
-  buttonText: 'Start the free setup',
-  buttonHref: '/signup',
+  presetKey: 'blog',
 };
 
 const FinalCTA: React.FC<FinalCTAProps> = ({
-  headline = 'Fast. Simple. Scalable.',
-  description = 'Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.',
-  buttonText = 'Start the free setup',
+  headline,
+  description,
+  buttonText,
   buttonHref = '/signup',
   icons,
+  presetKey,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation('marketing');
   const [Icon1, Icon2, Icon3] = icons || [Users, Phone, Calendar];
+
+  const key = presetKey || 'default';
+  const resolvedHeadline = headline ?? t(`finalCta.${key}.headline`);
+  const resolvedDescription = description ?? t(`finalCta.${key}.description`);
+  const resolvedButtonText = buttonText ?? t(`finalCta.${key}.button`);
 
   return (
     <Section id="contact" background="white">
@@ -67,13 +65,13 @@ const FinalCTA: React.FC<FinalCTAProps> = ({
                 <Icon3 className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
             </div>
-            <h2 className="text-gray-900 font-medium mt-4 text-2xl md:text-4xl">{headline}</h2>
-            <p className="text-base text-gray-600 mt-2 whitespace-pre-line">{description}</p>
+            <h2 className="text-gray-900 font-medium mt-4 text-2xl md:text-4xl">{resolvedHeadline}</h2>
+            <p className="text-base text-gray-600 mt-2 whitespace-pre-line">{resolvedDescription}</p>
             <button
               onClick={() => navigate(buttonHref!)}
               className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
             >
-              {buttonText}
+              {resolvedButtonText}
             </button>
           </div>
         </div>
