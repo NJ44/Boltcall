@@ -33,8 +33,6 @@ interface AuthSwitchProps {
   onAuthenticated?: (info: { mode: "login" | "signup"; email: string }) => void | Promise<void>;
   /** Optional initial email value (e.g., prefilled from a wizard step). */
   prefillEmail?: string;
-  /** When true, hides the chrome (logo, gradient panel) for embedded use inside another flow. */
-  embedded?: boolean;
 }
 
 const GoogleIcon = () => (
