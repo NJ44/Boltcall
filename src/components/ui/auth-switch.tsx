@@ -156,7 +156,11 @@ export default function AuthSwitch({
       setError("");
       setLoginFailed(false);
       await login(data);
-      navigate(redirectTo);
+      if (onAuthenticated) {
+        await onAuthenticated({ mode: "login", email: data.email });
+      } else {
+        navigate(redirectTo);
+      }
     } catch {
       setError("Invalid email or password.");
       setLoginFailed(true);
@@ -170,7 +174,11 @@ export default function AuthSwitch({
       setIsLoading(true);
       setError("");
       await signup({ name: '', email: data.email, password: data.password, company: "" });
-      navigate(redirectTo);
+      if (onAuthenticated) {
+        await onAuthenticated({ mode: "signup", email: data.email });
+      } else {
+        navigate(redirectTo);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create account.");
     } finally {
