@@ -199,12 +199,7 @@ const SetupInner: React.FC = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!user?.id) {
-      setError('Please log in first.');
-      return;
-    }
-
+  const runProvisioning = async (uid: string) => {
     setError('');
     setIsSubmitting(true);
 
@@ -227,7 +222,7 @@ const SetupInner: React.FC = () => {
     let businessProfile: Awaited<ReturnType<typeof createUserWorkspaceAndProfile>>['businessProfile'];
 
     try {
-      ({ workspace, businessProfile } = await createUserWorkspaceAndProfile(user.id, {
+      ({ workspace, businessProfile } = await createUserWorkspaceAndProfile(uid, {
         business_name: businessName,
         owner_name: fullName || undefined,
         website_url: undefined,
@@ -241,17 +236,19 @@ const SetupInner: React.FC = () => {
       console.error('Setup error — workspace/profile creation failed:', err);
       setError(err?.message || 'Setup failed. Please try again.');
       setIsSubmitting(false);
+      // If we were mid-signup transition, fall back to wizard so user can retry
+      setPhase('wizard');
       return;
     }
 
-    localStorage.setItem('boltcall_setup_complete', user.id);
+    localStorage.setItem('boltcall_setup_complete', uid);
     navigate('/setup/loading');
 
     let locationId: string | undefined;
     try {
       const location = await LocationService.create({
         business_profile_id: businessProfile.id,
-        user_id: user.id,
+        user_id: uid,
         name: businessName,
         slug: null,
         phone: businessPhone.trim() || null,
@@ -287,7 +284,7 @@ const SetupInner: React.FC = () => {
       serviceAreas: [],
       openingHours: {},
       languages: ['en'],
-      clientId: user.id,
+      clientId: uid,
       businessProfileId: businessProfile.id,
       locationId,
       services: knowledgeBase.services,
