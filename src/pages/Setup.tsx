@@ -39,6 +39,7 @@ import {
 
 import { FUNCTIONS_BASE } from '../lib/api';
 import { supabase } from '../lib/supabase';
+import AuthSwitch from '../components/ui/auth-switch';
 
 const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
