@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
           <div className="relative z-10 text-center pt-32 md:pt-44 lg:pt-52 pb-12">
 
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
               style={{ fontFamily: "'Sora', sans-serif" }}
               animate={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: 24 }}
