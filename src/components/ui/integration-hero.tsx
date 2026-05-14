@@ -43,7 +43,7 @@ export default function IntegrationHero() {
             {repeatedIcons(ICONS_ROW1, 4).map((icon, i) => (
               <div
                 key={i}
-                className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
                 <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
               </div>
@@ -55,7 +55,7 @@ export default function IntegrationHero() {
             {repeatedIcons(ICONS_ROW2, 4).map((icon, i) => (
               <div
                 key={i}
-                className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
                 <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
               </div>
