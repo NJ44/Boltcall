@@ -112,7 +112,18 @@ export default function AuthSwitch({
   const redirectTo = mode === "signup" ? "/setup" : baseRedirect;
 
   const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
-  const signupForm = useForm<SignupFormData>({ resolver: zodResolver(signupSchema) });
+  const signupForm = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: { email: prefillEmail ?? "", password: "" },
+  });
+
+  // Re-apply prefill if it arrives async (e.g., parent state updates)
+  useEffect(() => {
+    if (prefillEmail) {
+      signupForm.setValue("email", prefillEmail);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefillEmail]);
 
   const isLogin = mode === "login";
 
