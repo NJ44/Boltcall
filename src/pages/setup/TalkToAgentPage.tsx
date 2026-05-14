@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PhoneOff, ArrowRight } from 'lucide-react';
+import type { RetellWebClient } from 'retell-client-js-sdk';
 import { supabase } from '../../lib/supabase';
 import { FUNCTIONS_BASE } from '../../lib/api';
 import { authedFetch } from '../../lib/authedFetch';
