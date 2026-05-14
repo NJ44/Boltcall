@@ -39,25 +39,25 @@ export default function IntegrationHero() {
         {/* Carousel */}
         <div className="mt-12 overflow-hidden relative pb-2">
           {/* Row 1 */}
-          <div className="flex gap-10 whitespace-nowrap animate-integration-scroll-left">
+          <div className="flex gap-5 sm:gap-10 whitespace-nowrap animate-integration-scroll-left">
             {repeatedIcons(ICONS_ROW1, 4).map((icon, i) => (
               <div
                 key={i}
-                className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
+                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-6 w-6 sm:h-10 sm:w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
 
           {/* Row 2 */}
-          <div className="flex gap-10 whitespace-nowrap mt-6 animate-integration-scroll-right">
+          <div className="flex gap-5 sm:gap-10 whitespace-nowrap mt-6 animate-integration-scroll-right">
             {repeatedIcons(ICONS_ROW2, 4).map((icon, i) => (
               <div
                 key={i}
-                className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
+                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-6 w-6 sm:h-10 sm:w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>

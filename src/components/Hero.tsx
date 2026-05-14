@@ -36,8 +36,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.55 }}
               >
                 <div className="-rotate-[3deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Phone className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Phone className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -51,8 +51,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.70 }}
               >
                 <div className="-rotate-12 hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Users className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Users className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -66,8 +66,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.85 }}
               >
                 <div className="-rotate-[4deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <MessageSquare className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <MessageSquare className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -81,8 +81,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.00 }}
               >
                 <div className="rotate-[6deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Calendar className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Calendar className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -96,8 +96,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.15 }}
               >
                 <div className="rotate-[14deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Star className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Star className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -111,8 +111,8 @@ const Hero: React.FC = () => {
                 transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.30 }}
               >
                 <div className="-rotate-[5deg] hover:scale-105 transition-transform duration-200">
-                  <div className="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Megaphone className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Megaphone className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
           <div className="relative z-10 text-center pt-32 md:pt-44 lg:pt-52 pb-12">
 
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
               style={{ fontFamily: "'Sora', sans-serif" }}
               animate={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: 24 }}
