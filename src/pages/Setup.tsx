@@ -322,6 +322,49 @@ const SetupInner: React.FC = () => {
     }).catch((e) => console.error('Setup launch failed:', e));
   };
 
+  // Called when user clicks "Continue" on Review step.
+  // - If already authenticated → provision immediately (existing behavior)
+  // - If not → save what we have to the store and transition to the signup phase
+  const handleReviewContinue = async () => {
+    if (user?.id) {
+      await runProvisioning(user.id);
+      return;
+    }
+    // Snapshot wizard data into store so it survives the auth transition
+    updateAccount({ fullName, workEmail });
+    updateBusinessProfile({
+      businessName,
+      mainCategory: industry.toLowerCase(),
+      country,
+      languages: 'en',
+      serviceAreas: [],
+      openingHours: {},
+    });
+    setPhase('signup');
+  };
+
+  const handleSignupSuccess = async () => {
+    // Fetch the freshly created user (useAuth hook may not have rerendered yet)
+    const { data: { user: freshUser } } = await supabase.auth.getUser();
+    if (!freshUser?.id) {
+      setError('Sign up did not complete. Please try again.');
+      setPhase('wizard');
+      return;
+    }
+    await runProvisioning(freshUser.id);
+  };
+
+  // Embedded signup screen — replaces the wizard once user reaches the auth gate.
+  if (phase === 'signup') {
+    return (
+      <AuthSwitch
+        defaultMode="signup"
+        prefillEmail={workEmail}
+        onAuthenticated={handleSignupSuccess}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-white">
       <header className="w-full py-6">
