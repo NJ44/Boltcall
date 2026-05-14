@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone } from 'lucide-react';
 import Header from '../components/Header';
@@ -521,6 +522,21 @@ const BlogAIReceptionistDentists: React.FC = () => {
               <TableOfContents headings={headings} />
             </div>
           </aside>
+        </div>
+      </div>
+
+      {/* Related Articles */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gray-100">
+        <h2 className="text-xl font-bold text-gray-900 mb-5">Related guides for healthcare practices</h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Link to="/blog/ai-receptionist-for-chiropractors" className="p-5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group">
+            <p className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">AI Receptionist for Chiropractors</p>
+            <p className="text-sm text-gray-600">Stop losing new patients to voicemail with 24/7 AI call handling and automatic booking.</p>
+          </Link>
+          <Link to="/blog/best-ai-answering-service-dental-medical-practice" className="p-5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group">
+            <p className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Best AI Answering Service for Dental &amp; Medical</p>
+            <p className="text-sm text-gray-600">The top AI answering services for dental and medical practices in 2026.</p>
+          </Link>
         </div>
       </div>
 

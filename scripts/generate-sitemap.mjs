@@ -125,6 +125,7 @@ const ROUTES = [
   { path: "/blog/after-hours-lead-response-home-services",           priority: "0.8", changefreq: "weekly" },
   { path: "/blog/never-miss-a-call-after-business-hours",            priority: "0.8", changefreq: "weekly" },
   { path: "/blog/whatsapp-appointment-booking-plumbers",             priority: "0.8", changefreq: "weekly" },
+  { path: "/blog/ai-receptionist-for-chiropractors",                priority: "0.8", changefreq: "weekly" },
 
   // Blog FAQ / Industry AEO How-To
   { path: "/blog/how-to-set-up-ai-phone-answering-vet-clinic",       priority: "0.8", changefreq: "weekly" },

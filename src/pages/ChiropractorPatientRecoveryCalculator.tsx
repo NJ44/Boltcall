@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Activity, CalendarX2, PhoneOff, TrendingUp,
@@ -968,6 +969,23 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Articles */}
+      <section className="py-12 bg-white border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Related guides for chiropractic practices</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Link to="/blog/ai-receptionist-for-chiropractors" className="p-5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group">
+              <p className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">AI Receptionist for Chiropractors</p>
+              <p className="text-sm text-gray-600">How to stop losing new patients to voicemail with 24/7 AI call handling.</p>
+            </Link>
+            <Link to="/blog/never-miss-a-call-after-business-hours" className="p-5 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group">
+              <p className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Never Miss a Call After Hours</p>
+              <p className="text-sm text-gray-600">The complete guide to after-hours call handling for local service businesses.</p>
+            </Link>
           </div>
         </div>
       </section>

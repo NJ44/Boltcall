@@ -20,6 +20,14 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Receptionist for Chiropractors: Stop Losing New Patients to Missed Calls',
+    slug: '/blog/ai-receptionist-for-chiropractors',
+    excerpt: 'Chiropractic practices lose up to 35% of new patient calls to voicemail. Learn how AI receptionists answer 24/7, book appointments automatically, and stop new patients from choosing a competitor.',
+    date: 'May 14, 2026',
+    readTime: '9 min read',
+    category: 'Chiropractic|AI Receptionist|Industry Guide',
+  },
+  {
     title: 'How HVAC Companies Book More Service Calls with <span className="text-blue-600">AI Lead Response</span>',
     slug: '/blog/hvac-ai-lead-response',
     excerpt: 'How HVAC companies use AI lead response to book more service calls. Speed-to-lead strategies that top HVAC businesses use to win every job during peak season.',
