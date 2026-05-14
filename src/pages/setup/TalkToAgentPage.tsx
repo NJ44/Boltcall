@@ -44,7 +44,7 @@ const TalkToAgentPage: React.FC = () => {
   useEffect(() => () => cleanup(), [cleanup]);
 
   // Poll amplitude from analyzer at ~60fps
-  const startAmplitudeLoop = useCallback((client: any) => {
+  const startAmplitudeLoop = useCallback((client: RetellWebClient) => {
     const tick = () => {
       try {
         const volume = client.analyzerComponent?.calculateVolume?.() ?? 0;
