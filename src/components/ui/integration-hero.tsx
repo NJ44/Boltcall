@@ -51,7 +51,7 @@ export default function IntegrationHero() {
           </div>
 
           {/* Row 2 */}
-          <div className="flex gap-10 whitespace-nowrap mt-6 animate-integration-scroll-right">
+          <div className="flex gap-5 sm:gap-10 whitespace-nowrap mt-6 animate-integration-scroll-right">
             {repeatedIcons(ICONS_ROW2, 4).map((icon, i) => (
               <div
                 key={i}
