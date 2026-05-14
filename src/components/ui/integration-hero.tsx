@@ -39,7 +39,7 @@ export default function IntegrationHero() {
         {/* Carousel */}
         <div className="mt-12 overflow-hidden relative pb-2">
           {/* Row 1 */}
-          <div className="flex gap-10 whitespace-nowrap animate-integration-scroll-left">
+          <div className="flex gap-5 sm:gap-10 whitespace-nowrap animate-integration-scroll-left">
             {repeatedIcons(ICONS_ROW1, 4).map((icon, i) => (
               <div
                 key={i}
