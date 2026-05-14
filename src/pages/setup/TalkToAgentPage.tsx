@@ -21,7 +21,7 @@ const TalkToAgentPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [callSeconds, setCallSeconds] = useState(0);
 
-  const clientRef = useRef<any>(null);
+  const clientRef = useRef<RetellWebClient | null>(null);
   const rafRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startedAtRef = useRef<number>(0);
