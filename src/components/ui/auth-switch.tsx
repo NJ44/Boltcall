@@ -25,6 +25,16 @@ type SignupFormData = z.infer<typeof signupSchema>;
 interface AuthSwitchProps {
   defaultMode?: "login" | "signup";
   defaultRedirect?: string;
+  /**
+   * If provided, called after successful signup instead of navigating to `defaultRedirect`.
+   * Lets the parent component chain post-auth work (workspace creation, agent provisioning, etc.)
+   * without a route bounce.
+   */
+  onAuthenticated?: (info: { mode: "login" | "signup"; email: string }) => void | Promise<void>;
+  /** Optional initial email value (e.g., prefilled from a wizard step). */
+  prefillEmail?: string;
+  /** When true, hides the chrome (logo, gradient panel) for embedded use inside another flow. */
+  embedded?: boolean;
 }
 
 const GoogleIcon = () => (
