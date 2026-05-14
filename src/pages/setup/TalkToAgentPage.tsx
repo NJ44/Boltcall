@@ -129,7 +129,7 @@ const TalkToAgentPage: React.FC = () => {
         setPhase('ended');
       });
 
-      client.on('error', (err: any) => {
+      client.on('error', (err: unknown) => {
         console.error('Retell call error:', err);
         cleanup();
         setOrbState('error');
@@ -139,12 +139,12 @@ const TalkToAgentPage: React.FC = () => {
       });
 
       await client.startCall({ accessToken: access_token });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Talk-to-agent start failed:', err);
       cleanup();
       setOrbState('error');
       setPhase('error');
-      setErrorMessage(err?.message || 'Could not start the call.');
+      setErrorMessage(err instanceof Error ? err.message : 'Could not start the call.');
     }
   }, [user?.id, startAmplitudeLoop, cleanup]);
 
