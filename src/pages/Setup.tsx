@@ -130,6 +130,8 @@ const SetupInner: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // 'wizard' = collecting data, 'signup' = embedded auth (only used when unauthenticated)
+  const [phase, setPhase] = useState<'wizard' | 'signup'>('wizard');
 
   // Step 0: Personal Profile
   const [fullName, setFullName] = useState('');
