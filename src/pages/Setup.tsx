@@ -39,6 +39,7 @@ import {
 
 import { FUNCTIONS_BASE } from '../lib/api';
 import { supabase } from '../lib/supabase';
+import AuthSwitch from '../components/ui/auth-switch';
 
 const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
@@ -129,6 +130,8 @@ const SetupInner: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // 'wizard' = collecting data, 'signup' = embedded auth (only used when unauthenticated)
+  const [phase, setPhase] = useState<'wizard' | 'signup'>('wizard');
 
   // Step 0: Personal Profile
   const [fullName, setFullName] = useState('');
@@ -196,12 +199,7 @@ const SetupInner: React.FC = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!user?.id) {
-      setError('Please log in first.');
-      return;
-    }
-
+  const runProvisioning = async (uid: string) => {
     setError('');
     setIsSubmitting(true);
 
@@ -224,7 +222,7 @@ const SetupInner: React.FC = () => {
     let businessProfile: Awaited<ReturnType<typeof createUserWorkspaceAndProfile>>['businessProfile'];
 
     try {
-      ({ workspace, businessProfile } = await createUserWorkspaceAndProfile(user.id, {
+      ({ workspace, businessProfile } = await createUserWorkspaceAndProfile(uid, {
         business_name: businessName,
         owner_name: fullName || undefined,
         website_url: undefined,
@@ -238,17 +236,19 @@ const SetupInner: React.FC = () => {
       console.error('Setup error — workspace/profile creation failed:', err);
       setError(err?.message || 'Setup failed. Please try again.');
       setIsSubmitting(false);
+      // If we were mid-signup transition, fall back to wizard so user can retry
+      setPhase('wizard');
       return;
     }
 
-    localStorage.setItem('boltcall_setup_complete', user.id);
+    localStorage.setItem('boltcall_setup_complete', uid);
     navigate('/setup/loading');
 
     let locationId: string | undefined;
     try {
       const location = await LocationService.create({
         business_profile_id: businessProfile.id,
-        user_id: user.id,
+        user_id: uid,
         name: businessName,
         slug: null,
         phone: businessPhone.trim() || null,
@@ -284,7 +284,7 @@ const SetupInner: React.FC = () => {
       serviceAreas: [],
       openingHours: {},
       languages: ['en'],
-      clientId: user.id,
+      clientId: uid,
       businessProfileId: businessProfile.id,
       locationId,
       services: knowledgeBase.services,
@@ -321,6 +321,49 @@ const SetupInner: React.FC = () => {
       });
     }).catch((e) => console.error('Setup launch failed:', e));
   };
+
+  // Called when user clicks "Continue" on Review step.
+  // - If already authenticated → provision immediately (existing behavior)
+  // - If not → save what we have to the store and transition to the signup phase
+  const handleReviewContinue = async () => {
+    if (user?.id) {
+      await runProvisioning(user.id);
+      return;
+    }
+    // Snapshot wizard data into store so it survives the auth transition
+    updateAccount({ fullName, workEmail });
+    updateBusinessProfile({
+      businessName,
+      mainCategory: industry.toLowerCase(),
+      country,
+      languages: 'en',
+      serviceAreas: [],
+      openingHours: {},
+    });
+    setPhase('signup');
+  };
+
+  const handleSignupSuccess = async () => {
+    // Fetch the freshly created user (useAuth hook may not have rerendered yet)
+    const { data: { user: freshUser } } = await supabase.auth.getUser();
+    if (!freshUser?.id) {
+      setError('Sign up did not complete. Please try again.');
+      setPhase('wizard');
+      return;
+    }
+    await runProvisioning(freshUser.id);
+  };
+
+  // Embedded signup screen — replaces the wizard once user reaches the auth gate.
+  if (phase === 'signup') {
+    return (
+      <AuthSwitch
+        defaultMode="signup"
+        prefillEmail={workEmail}
+        onAuthenticated={handleSignupSuccess}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-white">
@@ -567,8 +610,12 @@ const SetupInner: React.FC = () => {
                   {currentStep === reviewStepIndex && (
                     <>
                       <CardHeader>
-                        <CardTitle>Ready to launch</CardTitle>
-                        <CardDescription>Review your info and go live</CardDescription>
+                        <CardTitle>{user?.id ? 'Ready to launch' : 'One step away'}</CardTitle>
+                        <CardDescription>
+                          {user?.id
+                            ? 'Review your info and go live'
+                            : 'Review your info — then create your account to meet your agent live'}
+                        </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
@@ -650,14 +697,18 @@ const SetupInner: React.FC = () => {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     type="button"
-                    onClick={currentStep === steps.length - 1 ? handleSubmit : nextStep}
+                    onClick={currentStep === steps.length - 1 ? handleReviewContinue : nextStep}
                     disabled={!isStepValid() || isSubmitting}
                     className="flex items-center gap-1 rounded-2xl"
                   >
                     {currentStep === steps.length - 1 ? (
-                      isSubmitting
-                        ? <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
-                        : <><Zap className="h-4 w-4" /> Launch</>
+                      isSubmitting ? (
+                        <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
+                      ) : user?.id ? (
+                        <><Zap className="h-4 w-4" /> Launch</>
+                      ) : (
+                        <>Create my account <ChevronRight className="h-4 w-4" /></>
+                      )
                     ) : (
                       <>Next <ChevronRight className="h-4 w-4" /></>
                     )}

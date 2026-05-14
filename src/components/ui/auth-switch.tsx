@@ -25,6 +25,14 @@ type SignupFormData = z.infer<typeof signupSchema>;
 interface AuthSwitchProps {
   defaultMode?: "login" | "signup";
   defaultRedirect?: string;
+  /**
+   * If provided, called after successful signup instead of navigating to `defaultRedirect`.
+   * Lets the parent component chain post-auth work (workspace creation, agent provisioning, etc.)
+   * without a route bounce.
+   */
+  onAuthenticated?: (info: { mode: "login" | "signup"; email: string }) => void | Promise<void>;
+  /** Optional initial email value (e.g., prefilled from a wizard step). */
+  prefillEmail?: string;
 }
 
 const GoogleIcon = () => (
@@ -81,6 +89,8 @@ const PillInput = ({
 export default function AuthSwitch({
   defaultMode = "login",
   defaultRedirect = "/dashboard",
+  onAuthenticated,
+  prefillEmail,
 }: AuthSwitchProps) {
   const [mode, setMode] = useState<"login" | "signup">(defaultMode);
   const [isLoading, setIsLoading] = useState(false);
@@ -99,7 +109,18 @@ export default function AuthSwitch({
   const redirectTo = mode === "signup" ? "/setup" : baseRedirect;
 
   const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
-  const signupForm = useForm<SignupFormData>({ resolver: zodResolver(signupSchema) });
+  const signupForm = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: { email: prefillEmail ?? "", password: "" },
+  });
+
+  // Re-apply prefill if it arrives async (e.g., parent state updates)
+  useEffect(() => {
+    if (prefillEmail) {
+      signupForm.setValue("email", prefillEmail);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefillEmail]);
 
   const isLogin = mode === "login";
 
@@ -132,7 +153,11 @@ export default function AuthSwitch({
       setError("");
       setLoginFailed(false);
       await login(data);
-      navigate(redirectTo);
+      if (onAuthenticated) {
+        await onAuthenticated({ mode: "login", email: data.email });
+      } else {
+        navigate(redirectTo);
+      }
     } catch {
       setError("Invalid email or password.");
       setLoginFailed(true);
@@ -146,7 +171,11 @@ export default function AuthSwitch({
       setIsLoading(true);
       setError("");
       await signup({ name: '', email: data.email, password: data.password, company: "" });
-      navigate(redirectTo);
+      if (onAuthenticated) {
+        await onAuthenticated({ mode: "signup", email: data.email });
+      } else {
+        navigate(redirectTo);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create account.");
     } finally {

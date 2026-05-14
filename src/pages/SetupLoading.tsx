@@ -160,7 +160,7 @@ const SetupLoading: React.FC = () => {
 
           // Navigate after fade-out transition completes
           setTimeout(() => {
-            navigate('/dashboard/getting-started?setupCompleted=true', { replace: true });
+            navigate('/setup/talk-to-agent', { replace: true });
           }, 800);
         }, 600);
       }

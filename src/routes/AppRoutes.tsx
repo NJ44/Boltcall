@@ -22,6 +22,7 @@ import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
 // Setup is eagerly loaded — lazy+Suspense(fallback=null) caused blank screen on first visit
 import Setup from '../pages/Setup';
 import SetupLoading from '../pages/SetupLoading';
+const TalkToAgentPage = React.lazy(() => import('../pages/setup/TalkToAgentPage'));
 // Lazy — imports framer-motion; keeping it eager pulled that library into the
 // initial bundle, inflating TBT by ~200 KiB of parse work on every page load.
 const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverMissCallAfterHours'));
@@ -396,8 +397,10 @@ const NavigationWrapper: React.FC = () => {
             <Route path="services" element={<Navigate to="/dashboard/settings/general" replace />} />
           </Route>
         </Route>
-        <Route path="/setup" element={<ProtectedRoute><DashboardProviders><Setup /></DashboardProviders></ProtectedRoute>} />
+        {/* /setup is intentionally PUBLIC — wizard collects data pre-signup; auth happens in the final step */}
+        <Route path="/setup" element={<Setup />} />
         <Route path="/setup/loading" element={<ProtectedRoute><DashboardProviders><SetupLoading /></DashboardProviders></ProtectedRoute>} />
+        <Route path="/setup/talk-to-agent" element={<ProtectedRoute><DashboardProviders><TalkToAgentPage /></DashboardProviders></ProtectedRoute>} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
