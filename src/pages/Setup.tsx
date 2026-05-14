@@ -610,8 +610,12 @@ const SetupInner: React.FC = () => {
                   {currentStep === reviewStepIndex && (
                     <>
                       <CardHeader>
-                        <CardTitle>Ready to launch</CardTitle>
-                        <CardDescription>Review your info and go live</CardDescription>
+                        <CardTitle>{user?.id ? 'Ready to launch' : 'One step away'}</CardTitle>
+                        <CardDescription>
+                          {user?.id
+                            ? 'Review your info and go live'
+                            : 'Review your info — then create your account to meet your agent live'}
+                        </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
