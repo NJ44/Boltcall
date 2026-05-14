@@ -397,8 +397,10 @@ const NavigationWrapper: React.FC = () => {
             <Route path="services" element={<Navigate to="/dashboard/settings/general" replace />} />
           </Route>
         </Route>
-        <Route path="/setup" element={<ProtectedRoute><DashboardProviders><Setup /></DashboardProviders></ProtectedRoute>} />
+        {/* /setup is intentionally PUBLIC — wizard collects data pre-signup; auth happens in the final step */}
+        <Route path="/setup" element={<Setup />} />
         <Route path="/setup/loading" element={<ProtectedRoute><DashboardProviders><SetupLoading /></DashboardProviders></ProtectedRoute>} />
+        <Route path="/setup/talk-to-agent" element={<ProtectedRoute><DashboardProviders><TalkToAgentPage /></DashboardProviders></ProtectedRoute>} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
