@@ -91,7 +91,6 @@ export default function AuthSwitch({
   defaultRedirect = "/dashboard",
   onAuthenticated,
   prefillEmail,
-  embedded = false,
 }: AuthSwitchProps) {
   const [mode, setMode] = useState<"login" | "signup">(defaultMode);
   const [isLoading, setIsLoading] = useState(false);
