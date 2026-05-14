@@ -693,14 +693,18 @@ const SetupInner: React.FC = () => {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     type="button"
-                    onClick={currentStep === steps.length - 1 ? handleSubmit : nextStep}
+                    onClick={currentStep === steps.length - 1 ? handleReviewContinue : nextStep}
                     disabled={!isStepValid() || isSubmitting}
                     className="flex items-center gap-1 rounded-2xl"
                   >
                     {currentStep === steps.length - 1 ? (
-                      isSubmitting
-                        ? <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
-                        : <><Zap className="h-4 w-4" /> Launch</>
+                      isSubmitting ? (
+                        <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
+                      ) : user?.id ? (
+                        <><Zap className="h-4 w-4" /> Launch</>
+                      ) : (
+                        <>Create my account <ChevronRight className="h-4 w-4" /></>
+                      )
                     ) : (
                       <>Next <ChevronRight className="h-4 w-4" /></>
                     )}
