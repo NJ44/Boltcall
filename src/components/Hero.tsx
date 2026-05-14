@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
               >
                 <div className="-rotate-[3deg] hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Phone className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <Phone className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
               >
                 <div className="-rotate-12 hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Users className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <Users className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
               >
                 <div className="-rotate-[4deg] hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <MessageSquare className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <MessageSquare className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
               >
                 <div className="rotate-[6deg] hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Calendar className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <Calendar className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
               >
                 <div className="rotate-[14deg] hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Star className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <Star className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
               >
                 <div className="-rotate-[5deg] hover:scale-105 transition-transform duration-200">
                   <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-2xl md:rounded-3xl shadow-xl bg-white border border-gray-100">
-                    <Megaphone className="w-5 h-5 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                    <Megaphone className="w-6 h-6 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                   </div>
                 </div>
               </motion.div>
