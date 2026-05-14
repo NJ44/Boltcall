@@ -45,7 +45,7 @@ export default function IntegrationHero() {
                 key={i}
                 className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
+                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-6 w-6 sm:h-10 sm:w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -57,7 +57,7 @@ export default function IntegrationHero() {
                 key={i}
                 className="h-10 w-10 sm:h-16 sm:w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
+                <img src={icon.src} alt={icon.alt} width={40} height={40} className="h-6 w-6 sm:h-10 sm:w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
