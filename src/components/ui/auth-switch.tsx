@@ -91,6 +91,9 @@ const PillInput = ({
 export default function AuthSwitch({
   defaultMode = "login",
   defaultRedirect = "/dashboard",
+  onAuthenticated,
+  prefillEmail,
+  embedded = false,
 }: AuthSwitchProps) {
   const [mode, setMode] = useState<"login" | "signup">(defaultMode);
   const [isLoading, setIsLoading] = useState(false);
