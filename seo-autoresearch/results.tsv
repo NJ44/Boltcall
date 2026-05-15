@@ -1,1 +1,7 @@
 commit	page	score_before	score_after	status	description
+e2867a9	/blog/ai-phone-answering-dentists	56	79	keep	Added AEO answer block (is-an def), FAQPage schema, 5× FAQ H3 question headings
+e2867a9	/blog/ai-phone-answering-plumbers	61	79	keep	Added FAQPage schema, 5× FAQ H3 question headings, /pricing internal link
+e2867a9	/blog/complete-guide-to-seo	59	77	keep	Added AEO answer block (means def), FAQPage schema, 5× FAQ H3 question headings
+e2867a9	/blog/complete-guide-to-ai-for-local-businesses	54	72	keep	Fixed TL;DR to include "is an" phrasing; changed FAQ from details/summary to H3 headings
+e2867a9	/blog/why-local-service-businesses-lose-customers-not-answering-calls	0	88	keep	NEW PAGE — AEO draft published; full schema set, 5× FAQ H3s, AEO block, 1500+ words
+e2867a9	/blog/what-happens-plumber-misses-customer-call-urgent-service	0	88	keep	NEW PAGE — AEO draft published; full schema set, 5× FAQ H3s, AEO block, 1500+ words
