@@ -601,81 +601,21 @@ const SetupInner: React.FC = () => {
                     </>
                   )}
 
-                  {/* ─── REVIEW & LAUNCH ─── */}
-                  {currentStep === reviewStepIndex && (
-                    <>
-                      <CardHeader>
-                        <CardTitle>{user?.id ? 'Ready to launch' : 'One step away'}</CardTitle>
-                        <CardDescription>
-                          {user?.id
-                            ? 'Review your info and go live'
-                            : 'Review your info — then create your account to meet your agent live'}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
-                          <div className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                              <User className="h-3.5 w-3.5 text-primary" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium">{fullName}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {workEmail} &middot; {COUNTRY_OPTIONS.find((o) => o.value === country)?.label}
-                              </p>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
-                          <div className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                              <Building2 className="h-3.5 w-3.5 text-primary" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium">{businessName}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {INDUSTRY_OPTIONS.find((o) => o.value === industry)?.label}
-                              </p>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        {isProPlus && (city || addressLine1 || businessPhone) && (
-                          <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
-                            <div className="flex items-center gap-3">
-                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                                <MapPin className="h-3.5 w-3.5 text-primary" />
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium">
-                                  {[addressLine1, city, stateRegion].filter(Boolean).join(', ') || 'Location added'}
-                                </p>
-                                {businessPhone && (
-                                  <p className="text-xs text-muted-foreground">{businessPhone}</p>
-                                )}
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-
-                        <motion.p variants={fadeInUp} className="text-xs text-muted-foreground leading-relaxed">
-                          Your AI receptionist will go live immediately. You can configure voice, knowledge base, and call flow anytime from the dashboard.
-                        </motion.p>
-
-                        {error && (
-                          <motion.div
-                            variants={fadeInUp}
-                            className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2"
-                          >
-                            <p className="text-sm text-destructive">{error}</p>
-                          </motion.div>
-                        )}
-                      </CardContent>
-                    </>
-                  )}
                 </motion.div>
               </AnimatePresence>
+
+              {/* Error display — visible from any step (was previously only in the Review step) */}
+              {error && (
+                <div className="px-6 pb-2">
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2"
+                  >
+                    <p className="text-sm text-destructive">{error}</p>
+                  </motion.div>
+                </div>
+              )}
 
               <CardFooter className="flex justify-between pt-6 pb-4">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
