@@ -116,16 +116,13 @@ const SetupInner: React.FC = () => {
         { id: 'personal', title: 'Personal Profile' },
         { id: 'business', title: 'Business Profile' },
         { id: 'location', title: 'Location' },
-        { id: 'launch', title: 'Review & Launch' },
       ]
     : [
         { id: 'personal', title: 'Personal Profile' },
         { id: 'business', title: 'Business Profile' },
-        { id: 'launch', title: 'Review & Launch' },
       ];
 
   const locationStepIndex = isProPlus ? 2 : -1;
-  const reviewStepIndex = isProPlus ? 3 : 2;
 
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState('');
