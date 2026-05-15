@@ -68,9 +68,27 @@ const BlogSEO: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "Complete Guide to SEO", "item": "https://boltcall.org/blog/complete-guide-to-seo"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-seo';
+    faqScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'What is SEO for local businesses?', acceptedAnswer: { '@type': 'Answer', text: 'SEO for local businesses is the process of optimizing your website and Google Business Profile so customers find you first when they search for your services. It means ranking on page 1 for searches like "plumber near me" or "best dentist in [city]."' } },
+        { '@type': 'Question', name: 'How long does SEO take to work for a local business?', acceptedAnswer: { '@type': 'Answer', text: 'Most local businesses see meaningful ranking improvements within 3–6 months of consistent SEO work. Google Business Profile optimization can show results faster — sometimes within weeks.' } },
+        { '@type': 'Question', name: 'What is the most important SEO factor for local businesses?', acceptedAnswer: { '@type': 'Answer', text: 'Google Business Profile optimization is the highest-leverage SEO action for local businesses. Followed by consistent NAP citations, customer reviews, and local keyword content on your website.' } },
+        { '@type': 'Question', name: 'Does having more reviews help with local SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Google uses review quantity, recency, and ratings as a local ranking signal. Businesses with 50+ reviews and a 4.5+ star average consistently outrank competitors with fewer reviews.' } },
+        { '@type': 'Question', name: 'How does Boltcall help with local SEO?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall helps local businesses capture and convert every inbound lead — which indirectly boosts SEO through lower bounce rates, more conversions, and automated Google review collection after each appointment.' } },
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-seo')?.remove();
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
     };
@@ -123,14 +141,21 @@ const BlogSEO: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="prose prose-lg max-w-none mb-12"
+          className="prose prose-lg max-w-none mb-8"
         >
           <p className="text-xl text-gray-700 leading-relaxed font-medium">
-            Your potential customers are searching for your services right now. The question is: 
-            will they find you or your competitor? SEO isn't just about ranking higher—it's about 
+            Your potential customers are searching for your services right now. The question is:
+            will they find you or your competitor? SEO isn't just about ranking higher—it's about
             being visible when it matters most. Here's why it's critical for your business.
           </p>
         </motion.div>
+
+        {/* AEO Answer Block */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-xl px-5 py-4 mb-10">
+          <p className="text-gray-800 text-base leading-relaxed">
+            SEO for local businesses is the practice of optimizing your website and online presence so customers searching for your services find you before a competitor. It means appearing on page 1 for searches like "plumber near me" or "best dentist in [city]" — driving free, high-intent traffic that converts into booked jobs.
+          </p>
+        </div>
 
         {/* Table of Contents */}
         <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
@@ -536,6 +561,33 @@ const BlogSEO: React.FC = () => {
           <TableOfContents headings={headings} />
         </div>
       </div>
+
+      {/* FAQ Section */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions About Local SEO</h2>
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">What is SEO for local businesses?</h3>
+            <p className="text-gray-600 leading-relaxed">SEO for local businesses is the process of optimizing your website and Google Business Profile so customers find you first when they search for your services. It means ranking on page 1 for searches like "plumber near me" or "best dentist in [city]."</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How long does SEO take to work for a local business?</h3>
+            <p className="text-gray-600 leading-relaxed">Most local businesses see meaningful ranking improvements within 3–6 months of consistent SEO work. Google Business Profile optimization can show results faster — sometimes within 4–8 weeks.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">What is the most important SEO factor for local businesses?</h3>
+            <p className="text-gray-600 leading-relaxed">Google Business Profile optimization is the highest-leverage SEO action for most local businesses. After that: consistent NAP citations across directories, customer reviews, and location-specific keyword content on your website.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Does having more reviews help with local SEO?</h3>
+            <p className="text-gray-600 leading-relaxed">Yes. Google uses review quantity, recency, and ratings as a local ranking signal. Businesses with 50+ reviews and 4.5+ stars consistently outrank competitors with fewer reviews — even with less backlink authority.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How does Boltcall help with local SEO?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall helps local businesses capture and convert every inbound lead — which indirectly boosts SEO through higher engagement, lower bounce rates, and automated Google review collection sent after each completed appointment.</p>
+          </div>
+        </div>
+      </section>
 
       {/* SEO Strategy Comparison Table */}
       <section className="bg-white py-12 border-t border-gray-100">

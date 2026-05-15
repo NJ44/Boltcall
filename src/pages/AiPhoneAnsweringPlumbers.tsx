@@ -57,9 +57,27 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI Phone Answering for Plumbers", "item": "https://boltcall.org/blog/ai-phone-answering-plumbers"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-plumbers';
+    faqScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'How does AI phone answering work for plumbers?', acceptedAnswer: { '@type': 'Answer', text: 'AI answers calls 24/7 using natural language trained on plumbing terminology. It qualifies emergencies, captures job details, books appointments, and texts the plumber — all without a dispatcher.' } },
+        { '@type': 'Question', name: 'What does AI phone answering cost for a plumbing business?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall starts at $99–$249/month flat — no per-call fees. Compare that to a human receptionist at $3,500+/month or an answering service at $800/month with generic scripts.' } },
+        { '@type': 'Question', name: 'Can AI handle plumbing emergency calls at night?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. AI answers immediately 24/7, triages the emergency level, provides basic guidance like finding the shutoff valve, and alerts the on-call plumber within seconds.' } },
+        { '@type': 'Question', name: 'Will customers know they are speaking with an AI?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall identifies itself as a virtual assistant. Most customers prefer immediate AI response over voicemail, especially for emergencies. Businesses typically see improved reviews after deployment.' } },
+        { '@type': 'Question', name: 'How quickly can a plumbing business get started?', acceptedAnswer: { '@type': 'Answer', text: 'Most plumbing businesses are live within 24 hours. Boltcall handles setup — you provide your service area, pricing, and FAQs. No technical skills required.' } },
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-plumbers')?.remove();
       document.head.removeChild(script);
     };
   }, []);
@@ -557,6 +575,33 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
                 <div className="text-xs text-gray-500">{item.desc}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How does AI phone answering work for plumbers?</h3>
+            <p className="text-gray-600 leading-relaxed">AI answers calls 24/7 using natural language trained on plumbing terminology. It qualifies emergencies, captures job details, books appointments, and texts the plumber — all without a dispatcher or human receptionist.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">What does AI phone answering cost for a plumbing business?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall starts at $99–$249/month flat with no per-call fees. Compare that to a human receptionist at $3,500+/month or an answering service at $800/month with generic, non-plumbing-specific scripts. <a href="/pricing" className="text-blue-600 hover:underline">See full pricing here.</a></p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Can AI handle plumbing emergency calls at night?</h3>
+            <p className="text-gray-600 leading-relaxed">Yes. AI answers immediately 24/7, triages emergency level, provides basic guidance like locating the main shutoff valve, and alerts the on-call plumber via text within seconds of the call ending.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Will customers know they are speaking with an AI?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall identifies itself as a virtual assistant. Most customers prefer immediate AI response over voicemail — especially in emergencies. Businesses typically see improved Google reviews after deployment.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How quickly can a plumbing business get started?</h3>
+            <p className="text-gray-600 leading-relaxed">Most plumbing businesses are live within 24 hours. You provide your service area, pricing, and FAQs — Boltcall handles the technical setup with no technical skills required.</p>
           </div>
         </div>
       </section>

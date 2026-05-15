@@ -206,6 +206,8 @@ const AiPhoneAnsweringDentists = React.lazy(() => import('../pages/AiPhoneAnswer
 const AiPhoneAnsweringPlumbers = React.lazy(() => import('../pages/AiPhoneAnsweringPlumbers'));
 const WhatIsAIReceptionistGuide = React.lazy(() => import('../pages/WhatIsAIReceptionistGuide'));
 const BestAiReceptionistSmallBusiness = React.lazy(() => import('../pages/BestAiReceptionistSmallBusiness'));
+const WhyLocalServiceBusinessesLoseCustomers = React.lazy(() => import('../pages/WhyLocalServiceBusinessesLoseCustomers'));
+const WhatHappensPlumberMissesCall = React.lazy(() => import('../pages/WhatHappensPlumberMissesCall'));
 const ChatbotVsLiveChatVsPhoneAnswering = React.lazy(() => import('../pages/ChatbotVsLiveChatVsPhoneAnswering'));
 const AIVsHumanReceptionistBlog = React.lazy(() => import('../pages/AIVsHumanReceptionistBlog'));
 const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiReceptionistCostPricingGuide'));
@@ -469,6 +471,8 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-vs-human-receptionist" element={<AIVsHumanReceptionistBlog />} />
             <Route path="/blog/ai-chatbot-vs-live-chat-phone-answering" element={<ChatbotVsLiveChatVsPhoneAnswering />} />
             <Route path="/blog/best-ai-receptionist-small-business" element={<BestAiReceptionistSmallBusiness />} />
+            <Route path="/blog/why-local-service-businesses-lose-customers-not-answering-calls" element={<WhyLocalServiceBusinessesLoseCustomers />} />
+            <Route path="/blog/what-happens-plumber-misses-customer-call-urgent-service" element={<WhatHappensPlumberMissesCall />} />
             <Route path="/blog/ai-phone-answering-plumbers" element={<AiPhoneAnsweringPlumbers />} />
             {/* <Route path="/blog/is-ai-receptionist-worth-it" element={<IsAiReceptionistWorthIt />} /> */}
             {/* <Route path="/blog/google-reviews-automation-local-business" element={<GoogleReviewsAutomationGuide />} /> */}

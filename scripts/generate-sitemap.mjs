@@ -111,6 +111,8 @@ const ROUTES = [
   { path: "/blog/ai-receptionist-cost-pricing",                      priority: "0.8", changefreq: "weekly" },
   { path: "/blog/ai-vs-human-receptionist",                          priority: "0.8", changefreq: "weekly" },
   { path: "/blog/best-ai-receptionist-small-business",               priority: "0.8", changefreq: "weekly" },
+  { path: "/blog/why-local-service-businesses-lose-customers-not-answering-calls", priority: "0.8", changefreq: "weekly" },
+  { path: "/blog/what-happens-plumber-misses-customer-call-urgent-service", priority: "0.8", changefreq: "weekly" },
   { path: "/blog/ai-phone-answering-plumbers",                       priority: "0.8", changefreq: "weekly" },
   { path: "/blog/ai-phone-answering-dentists",                       priority: "0.8", changefreq: "weekly" },
   { path: "/blog/best-after-hours-answering-service",                priority: "0.8", changefreq: "weekly" },

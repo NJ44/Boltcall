@@ -51,10 +51,27 @@ const AiPhoneAnsweringDentists: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-dentists';
+    faqScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Does AI phone answering actually work for dental practices?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Modern AI systems handle dental appointment scheduling, insurance questions, and emergency routing. Dental practices report 62% fewer missed calls within the first month of use.' } },
+        { '@type': 'Question', name: 'How much does AI phone answering cost for a dental office?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall starts at $99–$179 per month flat with no per-call fees — versus $2,800–$3,500 per month for a human receptionist, with no benefits, sick days, or training costs.' } },
+        { '@type': 'Question', name: 'Will patients know they are talking to an AI?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall discloses that calls are handled by a virtual assistant. Most patients prefer immediate AI response over voicemail. Google review scores typically improve after deployment.' } },
+        { '@type': 'Question', name: 'What dental software does AI phone answering integrate with?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall integrates with Dentrix, Eaglesoft, Open Dental, Carestream Dental, and other major practice management systems, plus Google Calendar and Cal.com.' } },
+        { '@type': 'Question', name: 'How quickly can a dental practice get started with AI phone answering?', acceptedAnswer: { '@type': 'Answer', text: 'Most dental practices are fully live within 24–48 hours. You provide practice info, services, and FAQs — Boltcall handles technical setup with no IT team required.' } },
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     return () => {
       document.getElementById('person-schema')?.remove();
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('article-schema-dentists')?.remove();
+      document.getElementById('faq-schema-dentists')?.remove();
     };
   }, []);
 
@@ -79,6 +96,11 @@ const AiPhoneAnsweringDentists: React.FC = () => {
           <p className="text-gray-500 text-sm">
             Updated April 2026 &bull; 8 min read
           </p>
+          <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-xl px-5 py-4 mt-6">
+            <p className="text-gray-800 text-base leading-relaxed">
+              AI phone answering for dental practices is an automated system that answers every patient call 24/7, schedules appointments into your practice calendar, sends reminders, and routes dental emergencies — eliminating missed calls and reducing no-shows without adding staff costs.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -282,6 +304,33 @@ const AiPhoneAnsweringDentists: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Does AI phone answering actually work for dental practices?</h3>
+            <p className="text-gray-600 leading-relaxed">Yes. Modern AI systems handle dental appointment scheduling, insurance questions, and emergency routing. Dental practices report 62% fewer missed calls within the first month of use.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How much does AI phone answering cost for a dental office?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall starts at $99–$179 per month flat with no per-call fees — versus $2,800–$3,500 per month for a human receptionist, with no benefits, sick days, or training costs.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Will patients know they are talking to an AI?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall discloses that calls are handled by a virtual assistant. Most patients prefer immediate AI response over voicemail. Google review scores typically improve after deployment, not decline.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">What dental software does AI phone answering integrate with?</h3>
+            <p className="text-gray-600 leading-relaxed">Boltcall integrates with Dentrix, Eaglesoft, Open Dental, Carestream Dental, and other major practice management systems, plus Google Calendar and Cal.com for practices not on dedicated dental software.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">How quickly can a dental practice get started with AI phone answering?</h3>
+            <p className="text-gray-600 leading-relaxed">Most dental practices are fully live within 24–48 hours. You provide your practice info, services, insurance plans, and FAQs — Boltcall handles technical setup with no IT team required.</p>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

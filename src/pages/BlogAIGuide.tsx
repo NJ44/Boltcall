@@ -347,13 +347,7 @@ const BlogAIGuide: React.FC = () => {
 
               <p className="text-sm text-blue-100">
 
-                <span className="font-bold text-white">TL;DR:</span> AI can answer your calls, book
-
-                appointments, and follow up with leads automatically — 24/7. This three-part guide
-
-                walks you through understanding AI, picking the right tools, and going live in under
-
-                30 minutes.
+                <span className="font-bold text-white">What is AI for local businesses?</span> AI for local businesses is an automated layer that handles calls, appointment booking, and lead follow-up 24/7 — without a human receptionist. This three-part guide walks you through understanding AI tools, choosing the right one, and going live in under 30 minutes.
 
               </p>
 
@@ -652,12 +646,12 @@ const BlogAIGuide: React.FC = () => {
       <section id="faq" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Frequently Asked Questions</h2>
         <p className="text-gray-500 text-center mb-8 text-sm">Common questions about AI for local businesses.</p>
-        <div className="space-y-3">
+        <div className="space-y-6">
           {[...faqs].map(({ q, a }) => (
-            <details key={q} className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden">
-              <summary className="font-semibold text-gray-900 px-5 py-4 cursor-pointer" style={{ listStyle: 'none' }}>{q}</summary>
-              <p className="text-gray-600 px-5 pb-4 text-sm">{a}</p>
-            </details>
+            <div key={q} className="bg-gray-50 border border-gray-200 rounded-xl px-5 py-4">
+              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
+              <p className="text-gray-600 text-sm">{a}</p>
+            </div>
           ))}
         </div>
       </section>
