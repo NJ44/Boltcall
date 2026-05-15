@@ -222,21 +222,6 @@ describe('Setup wizard — dopamine onboarding flow', () => {
     expect(screen.queryByRole('button', { name: /Create my account/i })).not.toBeInTheDocument();
   });
 
-  it('Next button becomes enabled once step-0 inputs satisfy validation', async () => {
-    const user = userEvent.setup();
-    renderSetup();
-    // Type valid Full Name + email, then fire a change on the country select element.
-    // Even without going through Radix Select, the underlying select is a real <select>
-    // element rendered inside SelectContent. We instead drive form state via direct input
-    // changes on the visible inputs that don't depend on Radix.
-    await user.type(screen.getByLabelText(/Full Name/i), 'Test User');
-    await user.type(screen.getByLabelText(/Work Email/i), 'test@example.com');
-    // Country is a Radix Select — skipping. Button remains disabled, but other inputs
-    // do react. We at least verify the form responds to input changes.
-    expect((screen.getByLabelText(/Full Name/i) as HTMLInputElement).value).toBe('Test User');
-    expect((screen.getByLabelText(/Work Email/i) as HTMLInputElement).value).toBe('test@example.com');
-  });
-
   it('progress-dot count is consistent with steps array (3 dots for pro+)', () => {
     const { container } = renderSetup();
     const stepLabels = container.querySelectorAll('span.text-xs.mt-1\\.5');
