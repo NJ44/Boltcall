@@ -60,7 +60,7 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const radius = expandRadius * progress
 
   return (
-    <div ref={sectionRef} className="py-20 md:py-28 flex flex-col items-center justify-center px-8 overflow-hidden">
+    <div ref={sectionRef} className="pt-20 md:pt-28 pb-48 md:pb-56 flex flex-col items-center justify-center px-8">
       <div className="relative">
         {/* Outer ring */}
         <div className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] rounded-full flex items-center justify-center border-2 border-white/10">

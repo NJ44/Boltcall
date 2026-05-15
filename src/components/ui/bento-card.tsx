@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { GlassDefs, GlassBox } from "./glass-box";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -100,12 +99,11 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
-      <GlassDefs />
       <div
         className="w-full max-w-5xl transition-all duration-500 hover:-translate-y-1 m-0 relative"
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
-      <GlassBox variant="liquid" clip="lg" rounded="rounded-3xl" className="w-full">
+      <div className="w-full rounded-3xl bg-gray-900 border border-white/10 shadow-2xl overflow-hidden">
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-300/90 uppercase tracking-widest font-semibold">
             {t('bentoCard.preview')}
@@ -180,7 +178,7 @@ const BentoCard = () => {
             </div>
           </div>
         </div>
-      </GlassBox>
+      </div>
       </div>
     </div>
   );

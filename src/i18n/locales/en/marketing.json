@@ -67,19 +67,19 @@
     "description": "BoltCall transforms how you capture and convert leads. Our AI-powered system works 24/7 to ensure you never miss an opportunity, responding instantly to every inquiry and booking qualified appointments automatically.",
     "phases": {
       "receptionist": {
-        "title": "AI Receptionist",
-        "description": "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
-        "checklist": ["24/7 call answering", "Lead qualification", "Appointment scheduling", "Call transcription"]
+        "title": "Capture the Lead",
+        "description": "Every call, text, web form, and ad lead is caught the moment it comes in — before a competitor gets the chance.",
+        "checklist": ["Instant call answer", "Web form capture", "Ad lead sync", "Zero missed contacts"]
       },
       "adsReplies": {
-        "title": "Instant Ads Replies",
-        "description": "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
-        "checklist": ["Instant response to ads", "Personalized messaging", "Lead capture forms", "Follow-up automation"]
+        "title": "Qualify & Engage",
+        "description": "Your AI asks the right questions, filters serious buyers, and keeps every prospect warm around the clock.",
+        "checklist": ["Smart qualification flow", "Instant follow-up texts", "24/7 availability", "Lead scoring"]
       },
       "smsBooking": {
-        "title": "SMS Booking",
-        "description": "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
-        "checklist": ["SMS lead capture", "Automated scheduling", "Appointment reminders", "Calendar integration"]
+        "title": "Book the Appointment",
+        "description": "Qualified leads get booked directly onto your calendar — no back-and-forth, no delays, no dropped balls.",
+        "checklist": ["Automatic scheduling", "Calendar integration", "Instant confirmations", "Reminder messages"]
       }
     }
   },
