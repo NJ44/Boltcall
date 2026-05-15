@@ -6,8 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
-  User,
-  Building2,
   MapPin,
 } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
