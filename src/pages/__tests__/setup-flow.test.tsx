@@ -189,8 +189,9 @@ describe('Setup wizard — dopamine onboarding flow', () => {
 
   it('renders the wizard without auth (route is public)', () => {
     renderSetup();
-    expect(screen.getByText(/Personal Profile/i)).toBeInTheDocument();
+    // Full Name input is the unique anchor for "wizard is rendered, step 0 is visible"
     expect(screen.getByLabelText(/Full Name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Work Email/i)).toBeInTheDocument();
   });
 
   it('does NOT include a Review & Launch step (label or copy)', () => {
