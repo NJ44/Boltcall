@@ -175,8 +175,6 @@ const SetupInner: React.FC = () => {
       case locationStepIndex:
         // Location is optional — any input is fine, even empty
         return true;
-      case reviewStepIndex:
-        return true;
       default:
         return true;
     }
