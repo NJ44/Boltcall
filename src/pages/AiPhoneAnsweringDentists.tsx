@@ -45,6 +45,57 @@ const AiPhoneAnsweringDentists: React.FC = () => {
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI Phone Answering for Dentists", "item": "https://boltcall.org/blog/ai-phone-answering-dentists"}]});
     document.head.appendChild(bcScript);
 
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-dentists';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does AI phone answering work for dental practices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI phone answering for dental practices works by using voice AI to answer patient calls instantly, collect intake information, book appointments, and route emergencies — all without human involvement. The system is trained on your specific services, insurance plans, and protocols."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will patients know they are talking to an AI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most practices configure Boltcall as a virtual receptionist and disclose it upfront. Studies show patients care more about getting a fast, helpful response than whether it comes from a human or AI — and AI-answered practices typically see Google review scores improve."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does AI phone answering for dentists cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI phone answering for dental practices costs $79–$179 per month with Boltcall — compared to $3,200+ per month for a full-time receptionist. Plans include unlimited calls, appointment booking, and automated reminders with no long-term contract."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI integrate with dental practice management software?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Leading AI phone answering systems integrate with dental practice management software to access schedules and appointment slots in real time — enabling seamless booking without manual data entry or staff intervention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when a dental patient calls with an emergency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a patient indicates a dental emergency, the AI immediately escalates — notifying the on-call dentist, offering the next available emergency slot, or routing to an after-hours line. No dental emergency goes unanswered with Boltcall."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     const personScript = document.createElement('script');
     personScript.type = 'application/ld+json';
     personScript.id = 'person-schema';
@@ -55,6 +106,7 @@ const AiPhoneAnsweringDentists: React.FC = () => {
       document.getElementById('person-schema')?.remove();
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('article-schema-dentists')?.remove();
+      document.getElementById('faq-schema-dentists')?.remove();
     };
   }, []);
 
@@ -84,6 +136,13 @@ const AiPhoneAnsweringDentists: React.FC = () => {
 
       {/* Article body */}
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        {/* AEO Answer Block */}
+        <section>
+          <p className="text-lg text-gray-700 leading-relaxed bg-blue-50 border-l-4 border-blue-500 pl-6 pr-4 py-4 rounded-r-xl">
+            AI phone answering for dental practices is a 24/7 automated system that answers patient calls instantly, books appointments, sends reminders, and routes emergencies without any staff involvement. Boltcall's AI receptionist ensures your dental practice never loses a patient to a missed call or voicemail again — saving the average practice $40,000+ in annual lost revenue.
+          </p>
+        </section>
 
         {/* Section 1 */}
         <section>
@@ -224,6 +283,37 @@ const AiPhoneAnsweringDentists: React.FC = () => {
 
       </article>
 
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How does AI phone answering work for dental practices?</h3>
+              <p className="text-gray-600 leading-relaxed">AI phone answering works by using voice AI to answer every call instantly — collecting patient information, booking appointments into your schedule, and routing emergencies to the on-call dentist. Boltcall is trained on your specific protocols, insurance plans, and services so it sounds like a natural extension of your front desk.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Will dental patients know they are talking to an AI?</h3>
+              <p className="text-gray-600 leading-relaxed">Most dental practices configure Boltcall as a "virtual receptionist" and disclose this upfront. Research shows patients care far more about a fast, helpful response than whether it comes from a human or AI. Practices using AI phone answering typically see Google review scores improve after deployment. Learn more on our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How much does AI phone answering for dentists cost?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall plans start at $79/month — a fraction of the $3,200+ monthly cost of a full-time receptionist. See full <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">pricing details</a> and compare plans. No long-term contract required, and you can get started in under 24 hours.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Can AI integrate with dental practice management software?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. Boltcall integrates with leading dental platforms to access schedules and book appointments in real time. Learn more about the <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist feature</a> and our integrations library. Setup takes less than 24 hours.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What happens when a dental patient calls with an emergency?</h3>
+              <p className="text-gray-600 leading-relaxed">When a patient indicates a dental emergency, Boltcall immediately escalates — notifying the on-call dentist, offering the next available emergency slot, or routing to your after-hours line. No emergency goes unanswered. Explore <a href="/features/automated-reminders" className="text-blue-600 underline hover:text-blue-800">automated follow-up features</a> that keep patients engaged after every call.</p>
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <a href="/signup" className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors">Start Free Trial — No Credit Card</a>
+          </div>
+        </div>
+      </section>
 
       {/* Trust + Social Proof */}
       <section className="py-10 bg-gray-50 border-t border-gray-100">

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, Users, Zap, DollarSign, CheckCircle, AlertTriangle } from 'lucide-react';
 import Header from '../components/Header';
-// Footer intentionally imported for future use when page is completed
-// import Footer from '../components/Footer';
+import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -60,8 +59,60 @@ const BestAfterHoursAnsweringService: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-after-hours';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the best after-hours answering service for small businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall is the best after-hours answering service for small businesses that need every lead captured instantly. It answers calls 24/7 within 2 seconds, books appointments, qualifies leads, and routes emergencies — at a flat monthly rate starting at $79."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does an after-hours answering service cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After-hours answering services range from $50 to $400+ per month. Traditional live answering services charge $1–$2 per minute plus setup fees. AI-powered services like Boltcall offer flat-rate plans from $79/month with unlimited calls and no per-minute charges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a live answering service and an AI answering service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A live answering service uses human operators who answer on behalf of your business — slower to scale and expensive per minute. An AI answering service like Boltcall answers in under 2 seconds, is available 24/7/365, and can book appointments automatically without any human intervention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an after-hours answering service book appointments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Traditional answering services take messages that must be processed the next day. Boltcall's AI answering service books confirmed appointments in real time during the call — so callers leave with a confirmed slot, not a promise of a callback."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which industries benefit most from after-hours answering services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Service businesses with high inbound call volume benefit most: plumbers, HVAC companies, dental offices, law firms, med spas, and home services. Any business where a caller can easily go to a competitor if they go to voicemail needs an after-hours answering service."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     return () => {
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-after-hours')?.remove();
       document.head.removeChild(script);
     };
   }, []);
@@ -562,6 +613,37 @@ const BestAfterHoursAnsweringService: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the best after-hours answering service for small businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall is the best after-hours answering service for small businesses that need every lead captured instantly. It answers calls 24/7 in under 2 seconds, books appointments, and routes emergencies — starting at $79/month. See full <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">pricing plans</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How much does an after-hours answering service cost?</h3>
+              <p className="text-gray-600 leading-relaxed">After-hours answering services range from $50 to $400+ per month. Traditional live answering services charge $1–$2 per minute. AI-powered services like Boltcall offer flat-rate plans from $79/month with unlimited calls and no per-minute charges. Compare options on our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the difference between a live and an AI answering service?</h3>
+              <p className="text-gray-600 leading-relaxed">A live answering service uses human operators — slower to scale and expensive per minute. An AI answering service like Boltcall answers in under 2 seconds, 24/7/365, and books appointments automatically. Learn how the <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist</a> works.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Can an after-hours answering service book appointments?</h3>
+              <p className="text-gray-600 leading-relaxed">Traditional answering services take messages processed the next day. Boltcall books confirmed appointments in real time during the call — callers leave with a confirmed slot, not a callback promise. See the <a href="/features/ai-follow-up-system" className="text-blue-600 underline hover:text-blue-800">AI follow-up system</a> that keeps leads warm.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Which industries benefit most from after-hours answering services?</h3>
+              <p className="text-gray-600 leading-relaxed">Service businesses with high inbound call volume benefit most: plumbers, HVAC, dental offices, law firms, med spas, and home services. Any business where a caller can easily go to a competitor needs an answering service. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Start free today</a> — no credit card required.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </>
   );
 };

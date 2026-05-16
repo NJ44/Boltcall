@@ -57,9 +57,62 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI Phone Answering for Plumbers", "item": "https://boltcall.org/blog/ai-phone-answering-plumbers"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-plumbers';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does AI phone answering work for plumbers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI phone answering for plumbers works by answering every call 24/7, qualifying the job (emergency vs. scheduled), collecting caller information, and booking the appointment directly into the plumber's schedule — without any human involvement. Boltcall handles the call so the plumber stays focused on the job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much revenue do plumbers lose to missed calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plumbers lose an estimated $50,000+ annually to missed calls. The average plumbing job is worth $350–$500, and industry data shows 1 in 3 calls to small plumbing businesses goes unanswered — meaning a busy plumber misses 2–4 jobs every single day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI handle plumbing emergency calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Boltcall's AI identifies emergency keywords (burst pipe, flooding, no hot water) and immediately routes the call to the on-call plumber or books an emergency same-day slot. No plumbing emergency goes unanswered — even at 2am."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly can a plumber set up AI phone answering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall can be set up in under 24 hours. The plumber provides their service area, job types, schedule, and pricing ranges. Boltcall trains on this information and starts answering calls the same day — no technical knowledge required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does AI phone answering cost for a plumbing business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall plans for plumbing businesses start at $79/month — less than the cost of a single missed job. Plans include unlimited calls, lead qualification, appointment booking, and automated follow-up. No long-term contract required."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
+
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-plumbers')?.remove();
       document.head.removeChild(script);
     };
   }, []);
@@ -581,6 +634,38 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How does AI phone answering work for plumbers?</h3>
+              <p className="text-gray-600 leading-relaxed">AI phone answering works by answering every call 24/7, qualifying the job (emergency vs. scheduled), collecting caller details, and booking the appointment into your schedule — without any human involvement. Boltcall handles the call so you stay focused on the job in front of you. Learn more about the <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist feature</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How much revenue do plumbers lose to missed calls?</h3>
+              <p className="text-gray-600 leading-relaxed">Plumbers lose an estimated $50,000+ annually to missed calls. The average plumbing job is worth $350–$500, and 1 in 3 calls to small plumbing businesses goes unanswered — meaning a busy plumber misses 2–4 jobs every single day. Read more on our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Can AI handle plumbing emergency calls?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. Boltcall identifies emergency keywords (burst pipe, flooding, no hot water) and immediately routes the call to the on-call plumber or books an emergency same-day slot. No plumbing emergency goes unanswered — even at 2am. See how <a href="/features/instant-form-reply" className="text-blue-600 underline hover:text-blue-800">instant lead reply</a> keeps every caller engaged.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How quickly can a plumber set up AI phone answering?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall can be set up in under 24 hours. Provide your service area, job types, and schedule — Boltcall trains on this information and starts answering calls the same day. No technical knowledge required. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Get started free</a> today.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What does AI phone answering cost for a plumbing business?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall plans start at $79/month — less than the cost of a single missed job. Plans include unlimited calls, lead qualification, appointment booking, and automated follow-up. See full <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">pricing details</a>. No long-term contract required.</p>
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <a href="/signup" className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors">Start Free Trial — No Credit Card</a>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

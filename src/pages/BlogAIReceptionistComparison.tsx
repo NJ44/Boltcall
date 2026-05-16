@@ -78,9 +78,61 @@ const BlogAIReceptionistComparison: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "Best AI Receptionist Tools", "item": "https://boltcall.org/blog/best-ai-receptionist-tools"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-comparison';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the best AI receptionist tool for small businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall is the best AI receptionist tool for small businesses that prioritize speed-to-lead. It answers every call within 2 seconds, books appointments automatically, and costs 10x less than a human receptionist — starting at $79/month."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do AI receptionist tools compare on pricing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI receptionist tools range from $50 to $500+ per month depending on call volume and features. Boltcall starts at $79/month with unlimited calls and appointment booking included. Most competitors charge per-minute or per-call fees that add up quickly for busy businesses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which AI receptionist is best for appointment booking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall leads for appointment booking because it integrates directly with your calendar and books confirmed appointments in real time during the call — not just collecting information to be processed later. This eliminates scheduling delays and reduces no-shows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do AI receptionist tools work after hours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All leading AI receptionist tools work 24/7, but quality varies significantly. Boltcall answers every call within 2 seconds at any hour and can book appointments, qualify leads, and route emergencies — not just take a message."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to set up an AI receptionist tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Setup time varies. Boltcall takes under 24 hours — you provide your business details and schedule, and the AI is ready to take calls the same day. Some enterprise tools require weeks of implementation and custom development."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-comparison')?.remove();
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
       speakableScript.remove();
@@ -643,6 +695,35 @@ const BlogAIReceptionistComparison: React.FC = () => {
           </div>
         </motion.div>
       </article>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the best AI receptionist tool for small businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall is the best AI receptionist tool for small businesses that prioritize speed-to-lead. It answers every call within 2 seconds, books appointments automatically, and costs a fraction of a human receptionist — starting at $79/month. See full <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">pricing plans</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How do AI receptionist tools compare on pricing?</h3>
+              <p className="text-gray-600 leading-relaxed">AI receptionist tools range from $50 to $500+ per month. Boltcall starts at $79/month with unlimited calls and appointment booking included. Most competitors charge per-minute fees that add up quickly. Compare <a href="/compare/boltcall-vs-podium" className="text-blue-600 underline hover:text-blue-800">Boltcall vs Podium</a> and <a href="/compare/boltcall-vs-gohighlevel" className="text-blue-600 underline hover:text-blue-800">Boltcall vs GoHighLevel</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Which AI receptionist is best for appointment booking?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall leads for appointment booking because it integrates directly with your calendar and books confirmed appointments in real time during the call. Learn about the <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist feature</a> and our calendar integrations.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Do AI receptionist tools work after hours?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. All leading AI receptionist tools work 24/7, but quality varies. Boltcall answers every call within 2 seconds at any hour and can book appointments, qualify leads, and route emergencies — not just take a message. Read more on our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How long does it take to set up an AI receptionist tool?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall takes under 24 hours to set up — provide your business details and the AI starts answering calls the same day. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Start your free trial</a> today with no credit card required.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
