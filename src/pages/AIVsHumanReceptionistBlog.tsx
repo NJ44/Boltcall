@@ -66,9 +66,61 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI vs Human Receptionist", "item": "https://boltcall.org/blog/ai-vs-human-receptionist"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-ai-vs-human';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between an AI receptionist and a human receptionist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An AI receptionist is a software system that answers calls 24/7 instantly, books appointments, and qualifies leads without human involvement. A human receptionist works set hours, handles one call at a time, and costs $35,000–$50,000+ per year. Boltcall's AI receptionist costs from $79/month and never misses a call."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an AI receptionist better than a human for small businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most small businesses, an AI receptionist delivers better outcomes than a human because it answers instantly 24/7, never misses a call, and costs 10x less. Human receptionists excel at complex emotional situations — Boltcall handles this by seamlessly transferring to a human when needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an AI receptionist book appointments like a human?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Boltcall's AI receptionist books confirmed appointments in real time during the call by integrating directly with your calendar — something many human receptionists still do manually via phone tag."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does an AI receptionist handle difficult callers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a caller is distressed, confused, or requests a human, Boltcall's AI immediately transfers the call to a human team member. The AI handles routine calls so humans can focus entirely on callers who need personal attention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What industries are switching from human to AI receptionists?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Local service businesses are switching fastest: dental offices, plumbing companies, HVAC contractors, law firms, med spas, and real estate agencies. Any business where speed-to-lead determines who wins the customer is a strong candidate for AI reception."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-ai-vs-human')?.remove();
       document.head.removeChild(script);
     };
   }, []);
@@ -683,6 +735,35 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the difference between an AI receptionist and a human receptionist?</h3>
+              <p className="text-gray-600 leading-relaxed">An AI receptionist is a software system that answers calls 24/7 instantly, books appointments, and qualifies leads without human involvement. A human receptionist works set hours, handles one call at a time, and costs $35,000–$50,000+ per year. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">Boltcall's AI receptionist</a> costs from $79/month and never misses a call.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Is an AI receptionist better than a human for small businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">For most small businesses, an AI receptionist delivers better outcomes because it answers instantly 24/7, never misses a call, and costs 10x less. Human receptionists excel at complex emotional situations — Boltcall handles this by seamlessly transferring to a human when needed. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Try it free</a> to see the difference.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Can an AI receptionist book appointments as well as a human?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. Boltcall's <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist</a> books confirmed appointments in real time during the call by integrating directly with your calendar — something many human receptionists still do manually via phone tag. See our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a> for more details.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How does an AI receptionist handle difficult or upset callers?</h3>
+              <p className="text-gray-600 leading-relaxed">When a caller is distressed, confused, or requests a human, Boltcall's AI immediately transfers the call to a human team member. The AI handles routine calls so humans can focus entirely on callers who need personal attention. Learn more in our <a href="/compare/boltcall-vs-podium" className="text-blue-600 underline hover:text-blue-800">Boltcall vs Podium comparison</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Which industries are switching from human to AI receptionists?</h3>
+              <p className="text-gray-600 leading-relaxed">Local service businesses are switching fastest: dental offices, plumbing companies, HVAC contractors, law firms, med spas, and real estate agencies. Any business where speed-to-lead determines who wins the customer is a strong candidate for AI reception. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">See pricing</a> for your industry.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </>
   );

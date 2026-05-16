@@ -82,9 +82,61 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI Receptionist Cost & Pricing Guide", "item": "https://boltcall.org/blog/ai-receptionist-cost-pricing-guide"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-cost-pricing';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does an AI receptionist cost per month?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI receptionist costs range from $50 to $500+ per month depending on call volume and features. Boltcall starts at $79/month with unlimited calls, appointment booking, and automated follow-up included — no per-minute charges or setup fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an AI receptionist cheaper than a human receptionist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A full-time human receptionist costs $35,000–$50,000 per year in salary plus benefits — $3,000–$4,500 per month. An AI receptionist from Boltcall costs $79–$249/month and handles more calls without sick days, turnover, or overtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there hidden fees with AI receptionist pricing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some AI receptionist services charge per minute, per call, or per booking on top of monthly fees. Boltcall uses flat-rate pricing with unlimited calls included — no hidden fees, no per-minute charges, and no long-term contract."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in an AI receptionist plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall's AI receptionist plans include: 24/7 call answering, appointment booking, lead qualification, automated SMS follow-up, call recordings, and a dashboard showing every call captured and booking made. Higher plans include CRM integrations and custom voice configuration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does AI receptionist pricing scale with business size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. AI receptionist pricing typically scales with the number of calls handled or the number of business locations. Boltcall offers plans for solo operators starting at $79/month up to multi-location enterprise plans — all with flat-rate pricing."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-cost-pricing')?.remove();
       document.head.removeChild(script);
       speakableScript.remove();
     };
@@ -697,6 +749,35 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How much does an AI receptionist cost per month?</h3>
+              <p className="text-gray-600 leading-relaxed">AI receptionist costs range from $50 to $500+ per month depending on call volume and features. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">Boltcall starts at $79/month</a> with unlimited calls, appointment booking, and automated follow-up included — no per-minute charges or setup fees.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Is an AI receptionist cheaper than a human receptionist?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. A full-time human receptionist costs $35,000–$50,000 per year in salary plus benefits — $3,000–$4,500 per month. An <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">AI receptionist from Boltcall</a> costs $79–$249/month and handles more calls without sick days, turnover, or overtime.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Are there hidden fees with AI receptionist pricing?</h3>
+              <p className="text-gray-600 leading-relaxed">Some AI receptionist services charge per minute, per call, or per booking on top of monthly fees. Boltcall uses flat-rate pricing with unlimited calls included — no hidden fees, no per-minute charges, and no long-term contract. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Start your free trial</a> to verify.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is included in an AI receptionist plan?</h3>
+              <p className="text-gray-600 leading-relaxed">Boltcall's AI receptionist plans include: 24/7 call answering, appointment booking, lead qualification, automated SMS follow-up, call recordings, and a dashboard showing every call captured and booking made. Higher plans include CRM integrations and custom voice configuration. See our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a> for plan comparisons.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Does AI receptionist pricing scale with business size?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. AI receptionist pricing typically scales with the number of calls handled or the number of business locations. Boltcall offers plans for solo operators starting at $79/month up to multi-location enterprise plans — all with flat-rate pricing. Learn more about our <a href="/features/ai-follow-up-system" className="text-blue-600 underline hover:text-blue-800">AI follow-up system</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     <Footer />
   </>
   );

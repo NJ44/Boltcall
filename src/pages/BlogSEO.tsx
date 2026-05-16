@@ -68,9 +68,61 @@ const BlogSEO: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "Complete Guide to SEO", "item": "https://boltcall.org/blog/complete-guide-to-seo"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-seo';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is SEO and how does it work for local businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SEO (search engine optimization) is the practice of improving a website's visibility in organic search results. For local businesses, SEO means appearing when potential customers search for services in their area — such as 'plumber near me' or 'dental office open now.' Boltcall helps local businesses capture those leads instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the most important SEO factors for local service businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most important SEO factors for local service businesses are: Google Business Profile optimization, local keyword targeting, on-page SEO (title tags, meta descriptions, headers), content quality, schema markup, and earning backlinks from local directories and industry sites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does SEO take to work for local businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Local SEO typically takes 3–6 months to show significant results, though Google Business Profile optimizations can produce visibility improvements within weeks. The key is consistent effort: regular content, review generation, and technical SEO maintenance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between SEO and AEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SEO (search engine optimization) focuses on ranking in traditional search results. AEO (answer engine optimization) focuses on appearing in AI-generated answers — from Google AI Overview, ChatGPT, and Perplexity. AEO requires structured content, FAQ schema, and direct answer blocks that AI engines can extract and cite."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does content SEO help local businesses get more leads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Content SEO helps local businesses attract leads by answering the questions their potential customers are already searching. A plumber who ranks for 'why is my water heater leaking' captures warm leads before competitors. Boltcall then converts those site visitors into booked appointments instantly."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-seo')?.remove();
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
     };
@@ -118,6 +170,13 @@ const BlogSEO: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
+        {/* AEO Answer Block */}
+        <section>
+          <p className="text-lg text-gray-700 leading-relaxed bg-blue-50 border-l-4 border-blue-500 pl-6 pr-4 py-4 rounded-r-xl">
+            SEO, or search engine optimization, is the practice of improving a website's visibility in search engine results pages (SERPs) to attract more organic traffic. For local service businesses, SEO means appearing when customers search for services nearby — turning online searches into booked appointments. Boltcall combines SEO-driven traffic with instant AI response to maximize every lead.
+          </p>
+        </section>
+
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -569,6 +628,35 @@ const BlogSEO: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is SEO and how does it work for local businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">SEO (search engine optimization) is the practice of improving a website's visibility in organic search results. For local businesses, SEO means appearing when potential customers search for services in their area — such as "plumber near me" or "dental office open now." <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">Boltcall</a> helps local businesses capture those leads instantly after they arrive.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What are the most important SEO factors for local service businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">The most important SEO factors for local service businesses are: Google Business Profile optimization, local keyword targeting, on-page SEO (title tags, meta descriptions, headers), content quality, schema markup, and earning backlinks from local directories and industry sites. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">See how Boltcall helps</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How long does local SEO take to work?</h3>
+              <p className="text-gray-600 leading-relaxed">Local SEO typically takes 3–6 months to show significant results, though Google Business Profile optimizations can produce visibility improvements within weeks. The key is consistent effort: regular content, review generation, and technical SEO maintenance. Visit our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a> for SEO guides.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the difference between SEO and AEO?</h3>
+              <p className="text-gray-600 leading-relaxed">SEO (search engine optimization) focuses on ranking in traditional search results. AEO (answer engine optimization) focuses on appearing in AI-generated answers — from Google AI Overview, ChatGPT, and Perplexity. AEO requires structured content, FAQ schema, and direct answer blocks that AI engines can extract and cite. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Get started with Boltcall</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How does content SEO help local businesses get more leads?</h3>
+              <p className="text-gray-600 leading-relaxed">Content SEO helps local businesses attract leads by answering the questions their potential customers are already searching. A plumber who ranks for "why is my water heater leaking" captures warm leads before competitors. Boltcall then converts those site visitors into booked appointments instantly. See our <a href="/features/instant-form-reply" className="text-blue-600 underline hover:text-blue-800">instant form reply feature</a>.</p>
+            </div>
           </div>
         </div>
       </section>

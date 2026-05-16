@@ -68,9 +68,61 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "Is AI Receptionist Worth It", "item": "https://boltcall.org/blog/is-ai-receptionist-worth-it"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-worth-it';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is an AI receptionist worth it for small businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An AI receptionist is worth it for small businesses that receive inbound calls and lose customers to voicemail. Boltcall customers report recovering 3–5 new jobs per week from calls that previously went unanswered — at a cost of $79/month, the ROI is typically 10:1 or better within the first month."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the ROI of an AI receptionist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ROI of an AI receptionist is typically 10:1 or better for service businesses. A single recovered job worth $300 covers most plans for the month. Businesses using Boltcall report capturing 2–5 additional customers per week who previously went to voicemail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the downsides of an AI receptionist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The main downsides of an AI receptionist are: it requires proper configuration to handle your specific use case, it may not handle highly complex or emotionally sensitive calls as well as a trained human, and some callers prefer human interaction. Boltcall addresses this with seamless human transfer and ongoing AI training."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to see results from an AI receptionist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most Boltcall customers see results within the first week — typically 2–5 additional bookings from calls that previously went to voicemail. Full ROI analysis is visible in the Boltcall dashboard showing calls captured, appointments booked, and revenue recovered."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I try an AI receptionist before committing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Boltcall offers a free trial so you can test the AI receptionist with your actual business calls before paying. Setup takes under 24 hours and no credit card is required to start."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-worth-it')?.remove();
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
     };
@@ -643,6 +695,35 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </table>
           </div>
           <p className="text-xs text-gray-400 mt-3 text-center">Revenue recovered estimate assumes 30% of missed calls convert to booked jobs at average job values.</p>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Is an AI receptionist worth it for small businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">An AI receptionist is worth it for small businesses that receive inbound calls and lose customers to voicemail. Boltcall customers report recovering 3–5 new jobs per week from calls that previously went unanswered — at a cost starting at $79/month, the ROI is typically 10:1 or better within the first month. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">See pricing</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is the ROI of an AI receptionist?</h3>
+              <p className="text-gray-600 leading-relaxed">The ROI of an AI receptionist is typically 10:1 or better for service businesses. A single recovered job worth $300 covers most plans for the month. Businesses using <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">Boltcall's AI receptionist</a> report capturing 2–5 additional customers per week who previously went to voicemail.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What are the downsides of an AI receptionist?</h3>
+              <p className="text-gray-600 leading-relaxed">The main downsides of an AI receptionist are: it requires proper configuration to handle your specific use case, it may not handle highly complex or emotionally sensitive calls as well as a trained human, and some callers prefer human interaction. Boltcall addresses this with seamless human transfer and ongoing AI training. Read our <a href="/blog/ai-vs-human-receptionist" className="text-blue-600 underline hover:text-blue-800">AI vs human receptionist comparison</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How long does it take to see results?</h3>
+              <p className="text-gray-600 leading-relaxed">Most Boltcall customers see results within the first week — typically 2–5 additional bookings from calls that previously went to voicemail. Full ROI analysis is visible in the Boltcall dashboard showing calls captured, appointments booked, and revenue recovered. Visit our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a> for more case studies.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Can I try an AI receptionist before committing?</h3>
+              <p className="text-gray-600 leading-relaxed">Yes. Boltcall offers a free trial so you can test the AI receptionist with your actual business calls before paying. Setup takes under 24 hours and no credit card is required to start. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Start your free trial today</a>.</p>
+            </div>
+          </div>
         </div>
       </section>
 

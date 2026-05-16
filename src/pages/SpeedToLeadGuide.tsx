@@ -77,9 +77,61 @@ const SpeedToLeadGuide: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Speed to Lead Guide", "item": "https://boltcall.org/speed-to-lead-guide"}]});
     document.head.appendChild(bcScript);
+
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema-speed-to-lead';
+    faqScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is speed-to-lead and why does it matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Speed-to-lead is the time between a prospect submitting an inquiry and a business making first contact. Research shows businesses that respond within 5 minutes are 100x more likely to convert the lead than those that respond within 30 minutes. For local service businesses, speed-to-lead is the single biggest determinant of who wins the job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast should a business respond to a new lead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Research consistently shows you should respond to new leads within 5 minutes — ideally within 60 seconds. Boltcall responds to every inbound call and web form submission instantly, 24/7, eliminating the speed-to-lead gap entirely."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good speed-to-lead time for local businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A good speed-to-lead time is under 5 minutes — but the businesses winning in competitive markets are responding in under 60 seconds. Boltcall answers every call within 2 seconds and responds to web form leads via SMS within 30 seconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does AI improve speed-to-lead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI improves speed-to-lead by eliminating the human delay entirely. Boltcall's AI answers every inbound call within 2 seconds and responds to web form submissions with a personalized SMS within 30 seconds — automatically, 24/7, without staff involvement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which local service businesses benefit most from fast lead response?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plumbers, HVAC companies, locksmiths, electricians, and other emergency service businesses benefit most from fast lead response — a caller with a burst pipe will book the first business that answers. Dental offices, law firms, and med spas also see significant revenue impact from sub-60-second response."
+          }
+        }
+      ]
+    });
+    document.head.appendChild(faqScript);
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
+      document.getElementById('faq-schema-speed-to-lead')?.remove();
       document.head.removeChild(script);
       speakableScript.remove();
     };
@@ -717,6 +769,35 @@ const SpeedToLeadGuide: React.FC = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is speed-to-lead and why does it matter for local businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">Speed-to-lead is the time between a prospect submitting an inquiry and a business making first contact. Research shows businesses that respond within 5 minutes are 100x more likely to convert the lead than those responding within 30 minutes. For local service businesses, speed-to-lead is the single biggest determinant of who wins the job. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">See how Boltcall solves this</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How fast should a business respond to a new lead?</h3>
+              <p className="text-gray-600 leading-relaxed">Research consistently shows you should respond to new leads within 5 minutes — ideally within 60 seconds. <a href="/features/ai-receptionist" className="text-blue-600 underline hover:text-blue-800">Boltcall</a> responds to every inbound call and web form submission instantly, 24/7, eliminating the speed-to-lead gap entirely. <a href="/signup" className="text-blue-600 underline hover:text-blue-800">Start for free</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">What is a good speed-to-lead time for service businesses?</h3>
+              <p className="text-gray-600 leading-relaxed">A good speed-to-lead time is under 5 minutes — but the businesses winning in competitive markets are responding in under 60 seconds. Boltcall answers every call within 2 seconds and responds to web form leads via SMS within 30 seconds. Read more on our <a href="/blog" className="text-blue-600 underline hover:text-blue-800">blog</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">How does AI improve speed-to-lead response?</h3>
+              <p className="text-gray-600 leading-relaxed">AI improves speed-to-lead by eliminating the human delay entirely. Boltcall's AI answers every inbound call within 2 seconds and responds to web form submissions with a personalized SMS within 30 seconds — automatically, 24/7, without staff involvement. See our <a href="/features/instant-form-reply" className="text-blue-600 underline hover:text-blue-800">instant form reply feature</a>.</p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-900 mb-3">Which industries benefit most from fast lead response?</h3>
+              <p className="text-gray-600 leading-relaxed">Plumbers, HVAC companies, locksmiths, electricians, and other emergency service businesses benefit most from fast lead response — a caller with a burst pipe will book the first business that answers. Dental offices, law firms, and med spas also see significant revenue impact from sub-60-second response. <a href="/pricing" className="text-blue-600 underline hover:text-blue-800">Get started today</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
