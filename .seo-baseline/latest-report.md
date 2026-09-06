@@ -1,10 +1,16 @@
-# SEO Weekly Audit — 2026-08-31T13:57:16.611Z
+# SEO Weekly Audit — 2026-09-06T22:14:19.681Z
 
-_First run — establishing baseline. No diff._
+**Regressions:** 4
+
+## Regressions vs previous baseline
+- pricing: LCP 2878ms → 5571ms (+2693ms)
+- about: H1 shortened 14 → 14 chars (semantic H1 regression?)
+- about: LCP 2894ms → 4553ms (+1659ms)
+- compare-gohighlevel: LCP 3774ms → 6017ms (+2243ms)
 
 ## Sitemap
-- URL count: 150
-- Newest lastmod: 2026-08-30
+- URL count: 147
+- Newest lastmod: 2026-09-04
 
 ## Robots / llms.txt
 - Robots: 200, sitemap declared: true
@@ -14,22 +20,22 @@ _First run — establishing baseline. No diff._
 ## Bad-route guards
 - /blog/definitely-not-a-real-slug-weekly-probe/ expected 404, actual 404 — OK
 - /features expected 301, actual 301 — OK
-- /how-it-works expected 301, actual 403 — FAIL
-- /faq expected 301, actual 403 — FAIL
+- /how-it-works expected 301, actual 301 — OK
+- /faq expected 301, actual 301 — OK
 
 ## Per-page snapshot
 | Page | Status | LCP (ms) | H1 chars | Schema blocks | Parse errs | WebSite×n | Org×n |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| home | 200 | 5306 | 160 | 11 | 0 | 1 | 2 |
-| pricing | 200 | 2878 | 38 | 19 | 0 | 1 | 1 |
-| about | 200 | 2894 | 14 | 11 | 0 | 1 | 1 |
-| industries-lawyer | 200 | 4325 | 75 | 9 | 0 | 1 | 0 |
-| features-ai-receptionist | 200 | 6783 | 38 | 9 | 0 | 1 | 0 |
-| compare-podium | 200 | 2859 | 69 | 12 | 0 | 1 | 0 |
-| compare-smith-ai | 200 | 4603 | 72 | 14 | 0 | 1 | 0 |
-| compare-gohighlevel | 200 | 3774 | 63 | 12 | 0 | 1 | 0 |
-| blog-index | 200 | 7207 | 29 | 13 | 0 | 1 | 1 |
-| blog-top10 | 200 | 4691 | 65 | 14 | 0 | 1 | 1 |
-| blog-law-firms | 200 | 2855 | 27 | 14 | 0 | 1 | 1 |
-| tools-lawyer-calc | 200 | 6600 | 41 | 10 | 0 | 1 | 0 |
-| integrations-squarespace | 200 | 5115 | 32 | 4 | 0 | 1 | 0 |
+| home | 200 | 3647 | 160 | 11 | 0 | 1 | 2 |
+| pricing | 200 | 5571 | 38 | 19 | 0 | 1 | 1 |
+| about | 200 | 4553 | 14 | 11 | 0 | 1 | 1 |
+| industries-lawyer | 200 | 2900 | 75 | 9 | 0 | 1 | 0 |
+| features-ai-receptionist | 200 | 4156 | 38 | 9 | 0 | 1 | 0 |
+| compare-podium | 200 | 2286 | 69 | 12 | 0 | 1 | 0 |
+| compare-smith-ai | 200 | 4620 | 72 | 14 | 0 | 1 | 0 |
+| compare-gohighlevel | 200 | 6017 | 63 | 12 | 0 | 1 | 0 |
+| blog-index | 200 | 3425 | 29 | 13 | 0 | 1 | 1 |
+| blog-top10 | 200 | 4633 | 65 | 14 | 0 | 1 | 1 |
+| blog-law-firms | 200 | 4296 | 27 | 14 | 0 | 1 | 1 |
+| tools-lawyer-calc | 200 | 4440 | 41 | 10 | 0 | 1 | 0 |
+| integrations-squarespace | 200 | 1459 | 32 | 4 | 0 | 1 | 0 |
