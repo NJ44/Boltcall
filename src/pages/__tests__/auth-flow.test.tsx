@@ -1,11 +1,15 @@
 /**
  * Auth user flow tests — login, signup, form validation, mode switching.
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
+
+// Production intentionally hides providers until Supabase OAuth is configured.
+vi.hoisted(() => { vi.stubEnv('VITE_OAUTH_ENABLED', 'false'); });
+afterAll(() => { vi.unstubAllEnvs(); });
 
 // ── Mocks ───────────────────────────────────────────────────────────────────
 
@@ -139,11 +143,11 @@ describe('Auth flow — Login', () => {
     });
   });
 
-  it('has OAuth buttons with correct titles', () => {
+  it('does not offer unconfigured OAuth providers on login', () => {
     renderAuth('login');
-    expect(screen.getByTitle('Google')).toBeInTheDocument();
-    expect(screen.getByTitle('Microsoft')).toBeInTheDocument();
-    expect(screen.getByTitle('Facebook')).toBeInTheDocument();
+    expect(screen.queryByTitle('Google')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Microsoft')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Facebook')).not.toBeInTheDocument();
   });
 
   it('has forgot password link', () => {
@@ -220,16 +224,12 @@ describe('Auth flow — Signup', () => {
     });
   });
 
-  it('stores the setup redirect before Google signup leaves for OAuth', async () => {
-    mockSignInWithGoogle.mockRejectedValue(new Error('OAuth redirect initiated'));
-    const { user } = renderAuth('signup', ['/signup?redirect=%2Fsetup']);
-
-    await user.click(screen.getByTitle('Google'));
-
-    await waitFor(() => {
-      expect(mockSavePendingAuthRedirect).toHaveBeenCalledWith('/setup');
-      expect(mockSignInWithGoogle).toHaveBeenCalled();
-    });
+  it('keeps setup signup on the email flow while OAuth is unconfigured', () => {
+    renderAuth('signup', ['/signup?redirect=%2Fsetup']);
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.queryByTitle('Google')).not.toBeInTheDocument();
+    expect(mockSignInWithGoogle).not.toHaveBeenCalled();
+    expect(mockSavePendingAuthRedirect).not.toHaveBeenCalled();
   });
 
 });
