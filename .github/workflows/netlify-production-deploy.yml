@@ -1,90 +1,111 @@
-name: Netlify Production Deploy
-
+name: Deploy Prepared Boltcall Release
+run-name: Release ${{ inputs.release_id }} request ${{ inputs.request_id }} manifest ${{ inputs.manifest_hash }}
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
-      full_prerender:
-        description: 'Run the slower full prerender build before deploying'
-        required: false
-        default: false
-        type: boolean
-
-concurrency:
-  group: netlify-production-deploy
-  cancel-in-progress: true
-
+      release_id:
+        description: Prepared immutable release identity
+        required: true
+        type: string
+      manifest_hash:
+        description: SHA256 of the exact reviewed manifest bytes
+        required: true
+        type: string
+      request_id:
+        description: Durable Atlas deployment request identity
+        required: true
+        type: string
 permissions:
   contents: read
-
+  actions: read
+concurrency:
+  group: netlify-production-deploy
+  cancel-in-progress: false
+env:
+  RELEASE_ID: ${{ inputs.release_id }}
+  MANIFEST_HASH: ${{ inputs.manifest_hash }}
+  REQUEST_ID: ${{ inputs.request_id }}
+  GH_TOKEN: ${{ github.token }}
 jobs:
-  deploy:
+  inspect:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
     runs-on: ubuntu-latest
-
+    timeout-minutes: 5
+    outputs:
+      release_url: ${{ steps.inspect.outputs.release_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-
-      - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      # continue-on-error: react-router/react-router-dom currently carry 5 high
-      # advisories (GHSA-wrjc-x8rr-h8h6 et al). Flip to blocking once upgraded.
-      - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
-        continue-on-error: true
-
-      - name: Build site
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          FULL_PRERENDER: ${{ github.event_name == 'workflow_dispatch' && inputs.full_prerender || 'false' }}
-        shell: bash
-        run: |
-          if [[ "$FULL_PRERENDER" == "true" ]]; then
-            echo "Running full prerender build"
-            npm run build:prerender
-          else
-            echo "Running fast production build"
-            npm run build:fast
-          fi
-
-      - name: Build functions
-        run: npx netlify functions:build --src netlify/functions --functions .netlify-fn-build
-
-      - name: Deploy to Netlify
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - id: inspect
+        run: node scripts/release-workflow.mjs inspect
+  owner-review:
+    needs: inspect
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ needs.inspect.outputs.release_url }}
+    steps:
+      - run: echo 'Owner accepted the exact prepared manifest shown in the inspection summary.'
+  deploy:
+    needs: [inspect, owner-review]
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm install --global netlify-cli@26.2.0
+      - name: Revalidate evidence and deploy retained site and functions
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: npx netlify deploy --prod --dir=dist --functions .netlify-fn-build --timeout 120 --message "GitHub Actions deploy ${GITHUB_SHA}"
-
-      - name: Smoke test live function
-        shell: bash
-        run: |
-          status=$(curl -sS -o /tmp/saas-v2-leads-response.txt -w '%{http_code}' \
-            https://boltcall.org/.netlify/functions/saas-v2-leads)
-
-          if [[ "$status" == "200" ]] && grep -qi '<!doctype html' /tmp/saas-v2-leads-response.txt; then
-            echo "Function smoke test hit the SPA fallback instead of the backend."
-            cat /tmp/saas-v2-leads-response.txt
-            exit 1
-          fi
-
-          case "$status" in
-            401|403|405)
-              echo "Function smoke test passed with HTTP $status"
-              ;;
-            *)
-              echo "Unexpected function smoke test status: $status"
-              cat /tmp/saas-v2-leads-response.txt
-              exit 1
-              ;;
-          esac
+        run: node scripts/release-workflow.mjs deploy
+      - name: Retain Netlify receipt even when smoke checks fail
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: boltcall-deployment-${{ github.run_id }}-${{ github.run_attempt }}
+          path: deployment-receipt.json
+          if-no-files-found: warn
+          retention-days: 90
+  owner-verification:
+    needs: [inspect, deploy]
+    runs-on: ubuntu-latest
+    environment:
+      name: production-verification
+      url: https://boltcall.org
+    steps:
+      - run: echo 'Owner accepted the product after browser testing. Final runtime verification follows.'
+  final-verification:
+    needs: [inspect, deploy, owner-verification]
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Verify accepted release against Netlify and public marker
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: node scripts/release-workflow.mjs verify
+      - name: Retain immutable final verification receipt
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: boltcall-verification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification-receipt.json
+          if-no-files-found: error
+          retention-days: 90

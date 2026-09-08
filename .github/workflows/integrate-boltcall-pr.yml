@@ -1,0 +1,68 @@
+name: Integrate Owner Reviewed Boltcall PR
+run-name: Integrate PR ${{ inputs.pr_number }} head ${{ inputs.source_sha }} request ${{ inputs.request_id }}
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Exact Boltcall pull request number
+        required: true
+        type: string
+      source_sha:
+        description: Exact reviewed PR head SHA
+        required: true
+        type: string
+      request_id:
+        description: Durable Atlas integration request identity
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+concurrency:
+  group: integrate-boltcall-pr-${{ inputs.pr_number }}
+  cancel-in-progress: false
+env:
+  PR_NUMBER: ${{ inputs.pr_number }}
+  SOURCE_SHA: ${{ inputs.source_sha }}
+  REQUEST_ID: ${{ inputs.request_id }}
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Inspect exact PR head and latest required CI
+        env:
+          INTEGRATION_PHASE: inspect
+        run: node scripts/release-workflow.mjs integrate
+  merge:
+    needs: inspect
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: production
+      url: https://github.com/Boltcall/Boltcall/pull/${{ inputs.pr_number }}
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Recheck source and CI after owner approval then merge exact head
+        env:
+          INTEGRATION_PHASE: merge
+        run: node scripts/release-workflow.mjs integrate
