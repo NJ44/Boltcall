@@ -1,4 +1,5 @@
 import { login, signup, logout, getCurrentUser, onAuthStateChange, resetPassword, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } from '../auth';
+import { TOS_VERSION } from '../tosAcceptance';
 
 // Mock the supabase client
 vi.mock('../supabase', () => {
@@ -121,6 +122,8 @@ describe('auth lib functions', () => {
           data: {
             name: 'John Doe',
             company: 'TestCorp',
+            tos_accepted_version: TOS_VERSION,
+            tos_accepted_at: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
           },
         },
       });

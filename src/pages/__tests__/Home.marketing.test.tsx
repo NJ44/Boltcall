@@ -98,14 +98,14 @@ describe('Home marketing page', () => {
       '@type': 'WebPage',
       name: 'Instant lead response',
       significantLink: [
-        'https://boltcall.org/speed-to-lead',
-        'https://boltcall.org/blog/top-10-ai-receptionist-agencies',
-        'https://boltcall.org/blog/hvac-ai-lead-response',
-        'https://boltcall.org/lead-response-scorecard',
+        'https://boltcall.org/industries/lawyer-answering-service',
+        'https://boltcall.org/blog/speed-to-lead-for-law-firms',
+        'https://boltcall.org/blog/ai-receptionist-for-law-firms',
+        'https://boltcall.org/tools/lawyer-intake-calculator',
         'https://boltcall.org/comparisons',
       ],
     });
-    expect(schemas[0].description).toContain('Boltcall is speed-to-lead software for local service businesses');
+    expect(schemas[0].description).toContain('Boltcall is speed-to-lead software for law firms');
   });
 
   it('does not render the removed automation integrations promo strip', () => {

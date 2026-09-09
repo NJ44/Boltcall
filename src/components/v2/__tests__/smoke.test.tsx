@@ -236,7 +236,7 @@ describe('V2OptInGate — smoke', () => {
     expect(screen.getByTestId('v2-child')).toBeInTheDocument();
   });
 
-  it('does not block signed-in users when v2_enabled = false', async () => {
+  it('requires existing classic workspaces to enable V2 before showing its content', async () => {
     mockSupabaseMaybeSingle.mockResolvedValue({ data: { v2_enabled: false }, error: null });
     await act(async () => {
       renderInRouter(
@@ -245,8 +245,8 @@ describe('V2OptInGate — smoke', () => {
         </V2OptInGate>
       );
     });
-    expect(screen.getByTestId('v2-child')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /enable v2/i })).not.toBeInTheDocument();
+    expect(screen.queryByTestId('v2-child')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /enable v2/i })).toBeInTheDocument();
   });
 });
 

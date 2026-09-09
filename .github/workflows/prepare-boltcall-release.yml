@@ -1,0 +1,92 @@
+name: Prepare Boltcall Release Evidence
+run-name: Prepare ${{ inputs.source_sha }}
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact source commit already merged into main
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: prepare-boltcall-release-${{ inputs.source_sha }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    outputs:
+      artifact_id: ${{ steps.payload.outputs.artifact-id }}
+      artifact_digest: ${{ steps.payload.outputs.artifact-digest }}
+      payload_sha256: ${{ steps.pack.outputs.payload_sha256 }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify selected source belongs to main
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          git fetch origin main
+          git merge-base --is-ancestor "$SOURCE_SHA" origin/main
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:run
+      - name: Build production site including prerender and SEO checks
+        run: npm run build:prerender
+      - name: Bundle serverless functions
+        run: npx --yes --package=netlify-cli@26.2.0 netlify functions:build --src netlify/functions --functions .netlify-fn-build
+      - name: Package tested site and function bundles
+        id: pack
+        run: |
+          set -euo pipefail
+          test -s dist/index.html
+          test -n "$(find .netlify-fn-build -type f -name '*.zip' -print -quit)"
+          test ! -e dist/release.json
+          tar -czf payload.tar.gz dist .netlify-fn-build netlify.toml
+          echo "payload_sha256=$(sha256sum payload.tar.gz | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - name: Retain immutable prepared payload
+        id: payload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: boltcall-payload-${{ github.run_id }}-${{ github.run_attempt }}
+          path: payload.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+  publish:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.repository == 'Boltcall/Boltcall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      # Privileged publication runs trusted workflow-main code, never the payload.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Publish write-once release manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          PAYLOAD_ARTIFACT_ID: ${{ needs.validate.outputs.artifact_id }}
+          PAYLOAD_ARTIFACT_DIGEST: sha256:${{ needs.validate.outputs.artifact_digest }}
+          PAYLOAD_SHA256: ${{ needs.validate.outputs.payload_sha256 }}
+        run: node scripts/release-workflow.mjs publish

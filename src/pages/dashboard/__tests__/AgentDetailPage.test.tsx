@@ -129,6 +129,16 @@ vi.mock('../../../lib/supabase', () => ({
         };
       }
 
+      if (table === 'transfer_rules') {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        };
+      }
+
       throw new Error(`Unexpected table: ${table}`);
     },
   },
