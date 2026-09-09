@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { runtimeContractBytes, runtimeContractEntry, verifyRuntimeContractArchive } from './release-runtime-contract.mjs';
 
 export const NETLIFY_CLI_VERSION = '26.2.0';
 export async function loadNetlifyToolchain(cliRoot = process.env.NETLIFY_CLI_ROOT) {
@@ -13,12 +14,12 @@ export async function loadNetlifyToolchain(cliRoot = process.env.NETLIFY_CLI_ROO
   const { resolveConfig } = await import(pathToFileURL(require.resolve('@netlify/config')));
   const { zipFunctions } = await import(pathToFileURL(require.resolve('@netlify/zip-it-and-ship-it')));
   const { normalizeFunctionsConfig } = await import(pathToFileURL(path.resolve(cliRoot, 'dist/lib/functions/config.js')));
-  return { resolveConfig, zipFunctions, normalizeFunctionsConfig };
+  return { resolveConfig, zipFunctions, normalizeFunctionsConfig, openZip: require('yauzl').open };
 }
 
 export async function bundlePreparedFunctions(root = process.cwd(), { cliRoot } = {}) {
   root = await fs.realpath(root);
-  const { resolveConfig, zipFunctions, normalizeFunctionsConfig } = await loadNetlifyToolchain(cliRoot);
+  const { resolveConfig, zipFunctions, normalizeFunctionsConfig, openZip } = await loadNetlifyToolchain(cliRoot);
   // Offline config resolution and static bundling never invoke application handlers.
   const { config, buildDir, configPath } = await resolveConfig({ cwd: root, repositoryRoot: root,
     config: path.join(root, 'netlify.toml'), context: 'production', mode: 'build', offline: true, logs: {} });
@@ -36,8 +37,33 @@ export async function bundlePreparedFunctions(root = process.cwd(), { cliRoot } 
   }
   const destination = path.join(root, '.netlify-fn-build');
   await fs.mkdir(destination);
-  await zipFunctions(path.join(root, 'netlify/functions'), destination, { basePath: root, config: functionsConfig });
-  return path.join(destination, 'manifest.json');
+  const sourceDirectory = path.join(root, 'netlify/functions');
+  const first = await zipFunctions(sourceDirectory, destination, { basePath: root, config: functionsConfig });
+  const manifestPath = path.join(destination, 'manifest.json');
+  const initial = JSON.parse(await fs.readFile(manifestPath));
+  const contracts = new Map();
+  await fs.mkdir(path.join(root, '.netlify-runtime-contracts'));
+  const finalConfig = {};
+  for (const fn of initial.functions) {
+    const bytes = runtimeContractBytes(fn), config = first.find(result => result.name === fn.name)?.config;
+    if (!config || contracts.has(fn.name)) throw Error('Prepared function configuration changed');
+    contracts.set(fn.name, bytes);
+    const file = path.join(root, runtimeContractEntry(fn.name));
+    await fs.writeFile(file, bytes, { flag: 'wx' });
+    finalConfig[fn.name] = { ...config, includedFiles: [...(config.includedFiles || []),
+      path.relative(config.includedFilesBasePath || root, file).replaceAll('\\', '/')] };
+  }
+  // Two bounded passes: capture effective metadata, then bind it into ZIP bytes
+  // through the bundler's supported includedFiles configuration before freezing.
+  await zipFunctions(sourceDirectory, destination, { basePath: root, config: finalConfig });
+  const final = JSON.parse(await fs.readFile(manifestPath));
+  if (final.functions.length !== contracts.size) throw Error('Prepared function inventory changed');
+  for (const fn of final.functions) {
+    const expected = contracts.get(fn.name);
+    if (!expected || !runtimeContractBytes(fn).equals(expected)) throw Error('Prepared function runtime changed between bundles');
+    await verifyRuntimeContractArchive(fn.path, runtimeContractEntry(fn.name), expected, openZip);
+  }
+  return manifestPath;
 }
 
 export async function materializeFunctionCache(root, { now = Date.now() } = {}) {

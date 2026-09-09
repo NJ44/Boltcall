@@ -8,7 +8,7 @@ import { command } from '../../release-workflow.mjs';
 
 // Exercise the actual CLI through the production draft wrapper. Its outbound API
 // is a loopback server; a preload blocks non-loopback HTTP/fetch destinations.
-export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation) {
+export async function withNetlifyCLI({ root, cliRoot, uploadFailure, functionCache }, operation) {
   const guard = path.join(root, 'network-guard.mjs');
   await fs.writeFile(guard, `import http from 'node:http';import https from 'node:https';import {syncBuiltinESMExports} from 'node:module';
     function allow(input){const host=typeof input==='string'?new URL(input).hostname:input instanceof URL?input.hostname:input.hostname||input.host||'localhost';if(!['localhost','127.0.0.1'].includes(host.split(':')[0]))throw Error('Nonlocal test network blocked');}
@@ -17,7 +17,7 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
   let deployId = 'f'.repeat(24), draft = true;
   const site = { id: SITE_ID, name: 'fixture-site', account_id: 'fixture-account', account_slug: 'fixture',
     url: PRODUCTION_URL, ssl_url: PRODUCTION_URL, build_settings: { stop_builds: true }, published_deploy: { id: 'a'.repeat(24), locked: false }, feature_flags: {}, capabilities: {}, processing_settings: {} };
-  const observed = { creates: [], updates: [], uploads: [], fileUploads: [], cancellations: [], unexpected: [] };
+  const observed = { creates: [], updates: [], uploads: [], fileUploads: [], cancellations: [], unexpected: [], functionMetadata: {} };
   let requiredFunctions = [], requiredFiles = [];
   const server = http.createServer(async (req, res) => {
     const chunks = [];
@@ -37,7 +37,11 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
       result = { ...site, id: deployId, site_id: SITE_ID };
     } else if (req.method === 'PUT' && body?.functions) {
       observed.updates.push(body);
-      requiredFunctions = Object.values(body.functions);
+      requiredFunctions = Object.values(body.functions).filter(digest => !functionCache?.has(digest));
+      observed.functionMetadata[deployId] = Object.fromEntries(Object.entries(body.functions).map(([name, digest]) => [name, {
+        n: name, d: digest, r: functionCache?.get(digest)?.r || 'nodejs24.x', im: functionCache?.get(digest)?.im || null,
+        bd: body.functions_config?.[name]?.build_data,
+      }]));
       requiredFiles = [...new Set(Object.values(body.files))];
       result = { id: deployId, site_id: SITE_ID, required: requiredFiles, required_functions: requiredFunctions };
     } else if (req.method === 'PUT' && url.pathname.includes('/files/')) {
@@ -48,6 +52,9 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
     } else if (req.method === 'PUT' && url.pathname.includes('/functions/')) {
       observed.uploads.push({ deployId, name: url.pathname.split('/').at(-1), parameters: Object.fromEntries(url.searchParams), digest: sha256(bytes) });
       if (uploadFailure) { res.writeHead(uploadFailure.status, { 'content-type': 'application/json' }).end(JSON.stringify({ message: uploadFailure.message, code: uploadFailure.code, ...uploadFailure.extra })); return; }
+      const metadata = { r: url.searchParams.get('runtime'), im: url.searchParams.get('invocation_mode') };
+      functionCache?.set(sha256(bytes), metadata);
+      Object.assign(observed.functionMetadata[deployId][url.pathname.split('/').at(-1)], metadata);
       requiredFunctions = requiredFunctions.filter(digest => digest !== sha256(bytes));
       result = {};
     } else if (req.method === 'POST' && url.pathname.endsWith(`/deploys/${deployId}/cancel`)) {
@@ -57,7 +64,8 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
       if (!draft && requiredFiles.length === 0 && requiredFunctions.length === 0) site.published_deploy.id = deployId;
       result = { id: deployId, site_id: SITE_ID, state: 'ready', url: site.url, ssl_url: site.ssl_url,
         deploy_url: `https://${deployId}--boltcall.netlify.app`, deploy_ssl_url: `https://${deployId}--boltcall.netlify.app`,
-        admin_url: 'https://fixture.invalid', required: requiredFiles, required_functions: requiredFunctions };
+        admin_url: 'https://fixture.invalid', required: requiredFiles, required_functions: requiredFunctions,
+        available_functions: Object.values(observed.functionMetadata[deployId] || {}) };
     } else {
       observed.unexpected.push(`${req.method} ${url.pathname}`);
       res.writeHead(404).end();

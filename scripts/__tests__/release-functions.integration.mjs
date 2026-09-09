@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
-import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCache, NETLIFY_CLI_VERSION } from '../release-functions.mjs';
+import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCache, NETLIFY_CLI_VERSION, loadNetlifyToolchain } from '../release-functions.mjs';
 import { sha256 } from '../release-control.mjs';
 import { uploadPreparedPayload } from '../release-workflow.mjs';
 import { withNetlifyCLI } from './helpers/netlify-cli-fixture.mjs';
@@ -43,12 +43,19 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
     const preparedBytes = await fs.readFile(preparedPath);
     const prepared = JSON.parse(preparedBytes);
     const expected = { scheduled: { schedule: '*/5 * * * *', timeout: 300 }, override: { schedule: '0 6 * * *', timeout: 30 } };
+    const { extractZip } = await import(pathToFileURL(path.join(cliRoot, 'dist/utils/zip.js')));
     for (const fn of prepared.functions) {
       assert.equal(fn.invocationMode, 'stream');
       assert.equal(fn.runtimeVersion, 'nodejs22.x');
       assert.equal(fn.buildData.runtimeAPIVersion, 2);
       assert.equal(fn.schedule, expected[fn.name].schedule);
       assert.equal(fn.timeout, expected[fn.name].timeout);
+      const extracted = path.join(root, 'inspected', fn.name);
+      await extractZip(fn.path, { dir: extracted });
+      assert.deepEqual(JSON.parse(await fs.readFile(path.join(extracted, '.netlify-runtime-contracts', `${fn.name}.json`))), {
+        schema_version: 1, runtime: 'nodejs22.x', runtime_api_version: 2,
+        invocation_mode: 'stream', timeout: expected[fn.name].timeout, bootstrap_version: fn.buildData.bootstrapVersion,
+      });
     }
     assert.equal(prepared.functions.length, 2);
     const digests = new Map(await Promise.all(prepared.functions.map(async fn => [fn.name, sha256(await fs.readFile(fn.path))])));
@@ -169,3 +176,115 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
 });
 
 function resultSchedules() { return [{ name: 'override', cron: '0 6 * * *' }, { name: 'scheduled', cron: '*/5 * * * *' }]; }
+
+test('runtime contract changes the ZIP identity that a cached wrong runtime would otherwise reuse', { timeout: 120000 }, async () => {
+  const cliRoot = process.env.NETLIFY_CLI_ROOT;
+  const { zipFunctions } = await loadNetlifyToolchain(cliRoot);
+  const { extractZip } = await import(pathToFileURL(path.join(cliRoot, 'dist/utils/zip.js')));
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'boltcall-runtime-cache-'));
+  const createSource = async (name, timeout) => {
+    const directory = path.join(root, name);
+    await fs.mkdir(path.join(directory, 'netlify/functions'), { recursive: true });
+    await fs.mkdir(path.join(directory, 'assets'));
+    await fs.mkdir(path.join(directory, 'dist'));
+    await fs.writeFile(path.join(directory, 'assets/fixture.txt'), 'required ordinary include');
+    await fs.writeFile(path.join(directory, 'dist/index.html'), 'fixture');
+    await fs.writeFile(path.join(directory, 'package.json'), '{"type":"module"}');
+    await fs.writeFile(path.join(directory, 'netlify.toml'), `[functions]\ndirectory="netlify/functions"\nnode_bundler="esbuild"\nincluded_files=["assets/*.txt"]\n[functions.echo]\ntimeout=${timeout}\n`);
+    await fs.writeFile(path.join(directory, 'netlify/functions/echo.js'), 'throw Error("Never execute during preparation");\nexport default async()=>new Response("same code");\n');
+    return directory;
+  };
+  try {
+    await fs.writeFile(path.join(root, 'package.json'), '{"type":"module"}');
+    const source = await createSource('source', 300);
+    await fs.copyFile(path.join(source, 'netlify.toml'), path.join(root, 'netlify.toml'));
+    const oldPayload = path.join(root, 'old-payload');
+    await fs.mkdir(path.join(oldPayload, '.netlify-fn-build'), { recursive: true });
+    await fs.cp(path.join(source, 'dist'), path.join(oldPayload, 'dist'), { recursive: true });
+    await fs.copyFile(path.join(source, 'netlify.toml'), path.join(oldPayload, 'netlify.toml'));
+    await zipFunctions(path.join(source, 'netlify/functions'), path.join(oldPayload, '.netlify-fn-build'), {
+      basePath: source, config: { '*': { nodeBundler: 'esbuild', nodeVersion: 'nodejs22.x', timeout: 300, includedFiles: ['assets/*.txt'], includedFilesBasePath: source } },
+    });
+    const oldDigest = sha256(await fs.readFile(path.join(oldPayload, '.netlify-fn-build/echo.zip')));
+    // Simulate Netlify's observed digest cache: code bytes retain earlier Node24/non-stream metadata.
+    const functionCache = new Map([[oldDigest, { r: 'nodejs24.x', im: null }]]);
+    const receiptFile = path.join(root, 'deployment-receipt.json');
+    const initial = { site_id: SITE_ID, previous_deploy_id: 'a'.repeat(24), stage: 'preview_requested' };
+    await fs.writeFile(receiptFile, JSON.stringify(initial));
+    await withNetlifyCLI({ root, cliRoot, functionCache }, async ({ run, observed }) => {
+      await uploadPreparedPayload({ directory: oldPayload, checkoutDirectory: root, run });
+      assert.equal(observed.updates[0].functions_config.echo.build_data.runtimeAPIVersion, 2);
+      assert.equal(observed.uploads.length, 0, 'Changing transport metadata cannot replace an already cached digest');
+      assert.equal(observed.functionMetadata['f'.repeat(24)].echo.r, 'nodejs24.x');
+      assert.equal(observed.functionMetadata['f'.repeat(24)].echo.im, null);
+    });
+    assert.equal(sha256(await fs.readFile(path.join(oldPayload, '.netlify-fn-build/echo.zip'))), oldDigest);
+    const preparedPath = await bundlePreparedFunctions(source, { cliRoot });
+    const prepared = JSON.parse(await fs.readFile(preparedPath));
+    const digest = sha256(await fs.readFile(prepared.functions[0].path));
+    assert.notEqual(digest, oldDigest, 'Runtime identity must be part of the actual archive bytes');
+    const inspect = async fn => {
+      const extracted = path.join(root, `inspected-${fn.timeout}`);
+      await extractZip(fn.path, { dir: extracted });
+      assert.equal(await fs.readFile(path.join(extracted, 'assets/fixture.txt'), 'utf8'), 'required ordinary include');
+      assert.equal(JSON.parse(await fs.readFile(path.join(extracted, '.netlify-runtime-contracts/echo.json'))).timeout, fn.timeout);
+    };
+    await inspect(prepared.functions[0]);
+    await fs.writeFile(receiptFile, JSON.stringify(initial));
+    await withNetlifyCLI({ root, cliRoot, functionCache }, async ({ run, observed }) => {
+      const preview = await uploadPreparedPayload({ directory: source, checkoutDirectory: root, run });
+      const previewReceipt = JSON.parse(await fs.readFile(receiptFile));
+      await fs.writeFile(receiptFile, JSON.stringify({ ...previewReceipt, stage: 'production_requested' }));
+      const production = await uploadPreparedPayload({ directory: source, checkoutDirectory: root, mode: 'production', cachePath: preview.cachePath, run });
+      assert.equal(observed.uploads.length, 1, 'Only the new contract hash requires upload; production reuses its correct metadata');
+      assert.equal(observed.uploads[0].parameters.runtime, 'nodejs22.x');
+      assert.equal(observed.uploads[0].parameters.invocation_mode, 'stream');
+      assert.equal(observed.uploads[0].parameters.timeout, '300');
+      for (const id of [preview.result.deploy_id, production.result.deploy_id]) {
+        assert.equal(observed.functionMetadata[id].echo.d, digest);
+        assert.equal(observed.functionMetadata[id].echo.r, 'nodejs22.x');
+        assert.equal(observed.functionMetadata[id].echo.im, 'stream');
+      }
+      for (const field of ['files', 'functions', 'functions_config', 'function_schedules']) assert.deepEqual(observed.updates[0][field], observed.updates[1][field]);
+      assert.equal(JSON.parse(await fs.readFile(receiptFile)).upload_fingerprint, previewReceipt.upload_fingerprint);
+    });
+    // Repeat in the same checkout: esbuild embeds source-path comments, so
+    // differently named checkouts need not yield the same pre-existing code bytes.
+    for (const timeout of [300, 301]) {
+      for (const name of ['.netlify-fn-build', '.netlify-runtime-contracts', '.netlify']) {
+        const generated = path.join(source, name);
+        assert.equal(path.dirname(generated), source);
+        await fs.rm(generated, { recursive: true, force: true });
+      }
+      if (timeout === 301) await fs.writeFile(path.join(source, 'netlify.toml'), (await fs.readFile(path.join(source, 'netlify.toml'), 'utf8')).replace('timeout=300', 'timeout=301'));
+      const rebuilt = JSON.parse(await fs.readFile(await bundlePreparedFunctions(source, { cliRoot })));
+      const rebuiltDigest = sha256(await fs.readFile(rebuilt.functions[0].path));
+      if (timeout === 300) assert.equal(rebuiltDigest, digest, 'Same source and metadata produce identical ZIP hashes');
+      else assert.notEqual(rebuiltDigest, digest, 'A timeout-only change changes the real ZIP hash');
+      await inspect(rebuilt.functions[0]);
+    }
+  } finally {
+    assert.equal(path.dirname(root), path.resolve(os.tmpdir()));
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
+test('source includedFiles overrides fail closed if they omit the required contract', async () => {
+  const cliRoot = process.env.NETLIFY_CLI_ROOT;
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'boltcall-source-include-'));
+  try {
+    await fs.mkdir(path.join(root, 'netlify/functions'), { recursive: true });
+    await fs.writeFile(path.join(root, 'package.json'), '{"type":"module"}');
+    await fs.writeFile(path.join(root, 'netlify.toml'), '[functions]\ndirectory="netlify/functions"\nnode_bundler="esbuild"\n');
+    await fs.writeFile(path.join(root, 'netlify/functions/fixture.txt'), 'source include stays intact');
+    await fs.writeFile(path.join(root, 'netlify/functions/example.js'), 'throw Error("Never execute");\nexport default async()=>new Response("ok");\nexport const config={includedFiles:["fixture.txt"]};\n');
+    await assert.rejects(bundlePreparedFunctions(root, { cliRoot }), /missing its runtime contract/);
+    const { extractZip } = await import(pathToFileURL(path.join(cliRoot, 'dist/utils/zip.js')));
+    const extracted = path.join(root, 'inspected');
+    await extractZip(path.join(root, '.netlify-fn-build/example.zip'), { dir: extracted });
+    assert.equal(await fs.readFile(path.join(extracted, 'netlify/functions/fixture.txt'), 'utf8'), 'source include stays intact');
+  } finally {
+    assert.equal(path.dirname(root), path.resolve(os.tmpdir()));
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
