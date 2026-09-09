@@ -49,13 +49,19 @@ async function gates(api) { await gate(api, 'production'); await gate(api, 'prod
 export async function runIntegration({ env = process.env, api = githubApi() } = {}) {
   assertMain(env);
   const phase = env.INTEGRATION_PHASE;
-  if (!['inspect', 'merge'].includes(phase) || env.GITHUB_JOB !== phase || !/^[a-f0-9-]{36}$/.test(env.REQUEST_ID || '')) throw Error('Invalid integration workflow phase or request');
+  const runId = env.GITHUB_RUN_ID;
+  if (!['inspect', 'merge'].includes(phase) || env.GITHUB_JOB !== phase || !/^[a-f0-9-]{36}$/.test(env.REQUEST_ID || '') ||
+      !/^[1-9]\d*$/.test(runId || '')) throw Error('Invalid integration workflow phase, request or run identity');
   await gate(api, 'production');
   const number = Number(env.PR_NUMBER);
   const result = await inspectPullRequest(api, number, env.SOURCE_SHA);
   await summary(env, `## Review exact Boltcall integration\n\nPR: https://github.com/${REPOSITORY}/pull/${number}\n\nHead: ${env.SOURCE_SHA}\n\nRequest: ${env.REQUEST_ID}\n\nLatest CI: ${result.run?.html_url || 'Already merged'}\n\nApproval permits merging this exact head. Production deployment requires separate manifest approval.\n`);
   if (phase === 'merge' && !result.merged) {
     if (result.pr.draft) await api('graphql', { method: 'POST', body: { query: 'mutation($id:ID!){markPullRequestReadyForReview(input:{pullRequestId:$id}){pullRequest{id}}}', variables: { id: result.pr.node_id } } });
+    // The protected-main rule binds this context to the GitHub Actions App.
+    // Only this owner-approved job may attest to the freshly rechecked head.
+    await api(`statuses/${env.SOURCE_SHA}`, { method: 'POST', body: { state: 'success', context: 'atlas-owner-integration',
+      description: 'Owner approved exact PR head after latest CI passed', target_url: `https://github.com/${REPOSITORY}/actions/runs/${runId}` } });
     const merged = await api(`pulls/${number}/merge`, { method: 'PUT', body: { sha: env.SOURCE_SHA, merge_method: 'merge' } });
     if (!merged.merged || !SHA.test(merged.sha || '')) throw Error('GitHub did not merge the selected PR');
     await summary(env, `\nMerged source: ${merged.sha}\n`);

@@ -7,7 +7,7 @@ import { sha256, SITE_ID, PRODUCTION_URL } from '../release-control.mjs';
 const workflow = name => parse(readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
 const sha = 'a'.repeat(40);
 const env = { GITHUB_REPOSITORY: 'Boltcall/Boltcall', GITHUB_REF: 'refs/heads/main', GITHUB_EVENT_NAME: 'workflow_dispatch',
-  GITHUB_SHA: 'b'.repeat(40), GITHUB_JOB: 'merge', INTEGRATION_PHASE: 'merge', PR_NUMBER: '7', SOURCE_SHA: sha,
+  GITHUB_SHA: 'b'.repeat(40), GITHUB_RUN_ID: '987', GITHUB_JOB: 'merge', INTEGRATION_PHASE: 'merge', PR_NUMBER: '7', SOURCE_SHA: sha,
   REQUEST_ID: '11111111-1111-1111-1111-111111111111' };
 const gate = { name: 'production', can_admins_bypass: false,
   deployment_branch_policy: { protected_branches: false, custom_branch_policies: true },
@@ -20,6 +20,7 @@ describe('trusted integration command', () => {
       if (endpoint === 'environments/production') return gate;
       if (endpoint === 'pulls/7') return { head: { sha: head, ref: 'codex/test' }, base: { ref: 'main', repo: { full_name: 'Boltcall/Boltcall' } }, state: 'open', draft: false };
       if (endpoint.startsWith('actions/workflows')) return { total_count: 1, workflow_runs: [{ id: 1, head_sha: sha, head_branch: 'codex/test', path: '.github/workflows/pr-tests.yml', event: 'pull_request', pull_requests: [{ number: 7 }], status: 'completed', conclusion: 'success' }] };
+      if (endpoint === `statuses/${sha}` && options.method === 'POST') return { id: 42 };
       if (endpoint === 'pulls/7/merge' && options.method === 'PUT') return { merged: true, sha: 'c'.repeat(40) };
       throw Error(`Unexpected API path ${endpoint}`);
     });
@@ -27,15 +28,70 @@ describe('trusted integration command', () => {
   it('rechecks source after approval and sends GitHub the exact-head merge precondition', async () => {
     const api = fakeApi();
     expect((await runIntegration({ env, api })).merged).toBe(true);
+    expect(api.mock.calls.at(-2)).toEqual([`statuses/${sha}`, { method: 'POST', body: {
+      state: 'success', context: 'atlas-owner-integration', description: 'Owner approved exact PR head after latest CI passed',
+      target_url: 'https://github.com/Boltcall/Boltcall/actions/runs/987',
+    } }]);
     expect(api).toHaveBeenLastCalledWith('pulls/7/merge', { method: 'PUT', body: { sha, merge_method: 'merge' } });
     const changed = fakeApi('d'.repeat(40));
     await expect(runIntegration({ env, api: changed })).rejects.toThrow(/changed/);
     expect(changed.mock.calls.some(([path]) => path.endsWith('/merge'))).toBe(false);
+    expect(changed.mock.calls.some(([path]) => path.startsWith('statuses/'))).toBe(false);
   });
   it('refuses branch execution before any remote mutation', async () => {
     const api = fakeApi();
     await expect(runIntegration({ env: { ...env, GITHUB_REF: 'refs/heads/codex/other' }, api })).rejects.toThrow(/main/);
     expect(api).not.toHaveBeenCalled();
+  });
+  it('does not publish approval status while only inspecting the PR', async () => {
+    const api = fakeApi();
+    await runIntegration({ env: { ...env, GITHUB_JOB: 'inspect', INTEGRATION_PHASE: 'inspect' }, api });
+    expect(api.mock.calls.some(([, options]) => options?.method)).toBe(false);
+  });
+  it.each(['owner gate', 'latest CI'])('does not publish approval status when %s fails', async reason => {
+    const base = fakeApi();
+    const api = vi.fn(async (endpoint, options) => {
+      const result = await base(endpoint, options);
+      if (reason === 'owner gate' && endpoint === 'environments/production') return { ...result, can_admins_bypass: true };
+      if (reason === 'latest CI' && endpoint.startsWith('actions/workflows')) return { ...result,
+        workflow_runs: result.workflow_runs.map(run => ({ ...run, status: 'in_progress', conclusion: null })) };
+      return result;
+    });
+    await expect(runIntegration({ env, api })).rejects.toThrow();
+    expect(api.mock.calls.some(([, options]) => options?.method)).toBe(false);
+  });
+  it('rejects an invalid receipt run identity before remote operations', async () => {
+    const api = fakeApi();
+    await expect(runIntegration({ env: { ...env, GITHUB_RUN_ID: '../other' }, api })).rejects.toThrow(/run identity/);
+    expect(api).not.toHaveBeenCalled();
+  });
+  it('does not merge if publishing the exact-head status fails or its response is lost', async () => {
+    const base = fakeApi();
+    const api = vi.fn(async (endpoint, options) => {
+      if (endpoint.startsWith('statuses/')) throw Error('Status response lost');
+      return base(endpoint, options);
+    });
+    await expect(runIntegration({ env, api })).rejects.toThrow('Status response lost');
+    expect(api.mock.calls.some(([path]) => path.endsWith('/merge'))).toBe(false);
+  });
+  it('makes a draft ready before status publication and merges only after it', async () => {
+    const base = fakeApi();
+    const api = vi.fn(async (endpoint, options) => {
+      if (endpoint === 'graphql') return {};
+      const result = await base(endpoint, options);
+      return endpoint === 'pulls/7' ? { ...result, draft: true, node_id: 'PR_node' } : result;
+    });
+    await runIntegration({ env, api });
+    expect(api.mock.calls.filter(([, options]) => options?.method).map(([path]) => path)).toEqual(['graphql', `statuses/${sha}`, 'pulls/7/merge']);
+  });
+  it('recovers an already merged PR without creating another approval status or merge', async () => {
+    const base = fakeApi();
+    const api = vi.fn(async (endpoint, options) => {
+      const result = await base(endpoint, options);
+      return endpoint === 'pulls/7' ? { ...result, merged: true, merge_commit_sha: 'c'.repeat(40) } : result;
+    });
+    expect((await runIntegration({ env, api })).merged).toBe(true);
+    expect(api.mock.calls.some(([, options]) => options?.method)).toBe(false);
   });
   it('rejects invalid manifest selection before downloading evidence', async () => {
     const api = vi.fn();
@@ -45,6 +101,14 @@ describe('trusted integration command', () => {
 });
 
 describe('release workflow boundaries', () => {
+  it('grants status publication only to the owner-protected integration merge job', () => {
+    const integration = workflow('integrate-boltcall-pr');
+    expect(integration.permissions.statuses).toBeUndefined();
+    expect(integration.jobs.inspect.permissions?.statuses).toBeUndefined();
+    expect(integration.jobs.merge.environment.name).toBe('production');
+    expect(integration.jobs.merge.permissions.statuses).toBe('write');
+    for (const job of Object.values(integration.jobs)) expect(job.steps[0].with['persist-credentials']).toBe(false);
+  });
   it('runs PR tests without secrets, persisted credentials or privileged events', () => {
     const ci = workflow('pr-tests');
     expect(Object.keys(ci.on)).toEqual(['pull_request']);
