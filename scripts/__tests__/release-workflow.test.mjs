@@ -128,6 +128,8 @@ describe('release workflow boundaries', () => {
     expect(deploy.jobs['final-verification'].needs).toContain('owner-verification');
     expect(JSON.stringify(prepare.jobs.validate)).not.toContain('secrets.');
     expect(prepare.jobs.publish.permissions.contents).toBe('write');
+    expect(deploy.permissions).toEqual({ contents: 'read', actions: 'read' });
+    expect(Object.values(deploy.jobs).some(job => job.permissions?.contents === 'write')).toBe(false);
     expect(prepare.jobs.publish.steps[0].with.ref).toBeUndefined();
     expect(JSON.stringify(prepare.jobs.validate)).toContain('functions:build');
     expect(deploy.jobs['final-verification'].steps.at(-1).with.path).toBe('verification-receipt.json');
@@ -171,6 +173,49 @@ describe('preparation provenance at the workflow command boundary', () => {
     expect(api.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
     const missingValidation = vi.fn(async endpoint => endpoint.includes('/jobs?') ? { total_count: 0, jobs: [] } : artifact);
     await expect(publishPrepared({ env: publishEnv, api: missingValidation, run: vi.fn().mockResolvedValue('') })).rejects.toThrow(/validation/);
+  });
+
+  function publicationApi(failure) {
+    const base = evidenceApi();
+    let uploaded;
+    return vi.fn(async (endpoint, options) => {
+      if (endpoint.startsWith('releases?')) return [];
+      if (endpoint === 'releases' && options?.method === 'POST') return { id: 88, tag_name: manifest.release_id, draft: true };
+      if (endpoint.startsWith('https://uploads.github.com/')) {
+        if (failure === 'upload failed') throw Error('Upload failed');
+        uploaded = options.body;
+        return { id: 99, name: 'release-manifest.json', state: failure === 'incomplete upload' ? 'starter' : 'uploaded', size: uploaded.length };
+      }
+      if (endpoint === 'releases/assets/99') return failure === 'changed bytes' ? Buffer.from('{}') : uploaded;
+      if (endpoint === 'releases/88' && options?.method === 'PATCH') {
+        if (failure === 'publication failed') throw Error('Publication failed');
+        return { id: 88, tag_name: manifest.release_id, draft: failure === 'still draft', prerelease: true };
+      }
+      return base(endpoint, options);
+    });
+  }
+  const publishEnv = { ...env, GITHUB_JOB: 'publish', GITHUB_RUN_ID: '123', GITHUB_RUN_ATTEMPT: '1', PAYLOAD_ARTIFACT_ID: '456',
+    PAYLOAD_ARTIFACT_DIGEST: artifact.digest, PAYLOAD_SHA256: manifest.artifact.payload_sha256 };
+
+  it('makes verified preparation evidence readable without granting consumers write access', async () => {
+    const api = publicationApi();
+    const prepared = await publishPrepared({ env: publishEnv, api, run: vi.fn().mockResolvedValue('') });
+    const upload = api.mock.calls.find(([endpoint]) => endpoint.startsWith('https://uploads.github.com/'));
+    expect(JSON.parse(upload[1].body)).toEqual(prepared);
+    expect(api.mock.calls.slice(-2)).toEqual([
+      ['releases/assets/99', { raw: true }],
+      ['releases/88', { method: 'PATCH', body: { draft: false, prerelease: true, make_latest: 'false' } }],
+    ]);
+  });
+
+  it.each(['upload failed', 'incomplete upload', 'changed bytes'])('keeps evidence private when %s', async failure => {
+    const api = publicationApi(failure);
+    await expect(publishPrepared({ env: publishEnv, api, run: vi.fn().mockResolvedValue('') })).rejects.toThrow();
+    expect(api.mock.calls.some(([, options]) => options?.method === 'PATCH')).toBe(false);
+  });
+
+  it.each(['publication failed', 'still draft'])('does not report prepared evidence as available when %s', async failure => {
+    await expect(publishPrepared({ env: publishEnv, api: publicationApi(failure), run: vi.fn().mockResolvedValue('') })).rejects.toThrow();
   });
 
   it.each([
