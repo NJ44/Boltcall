@@ -82,6 +82,8 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
       assert.equal(observed.updates[0].async, true);
       assert.deepEqual(observed.updates[0].function_schedules.sort((a, b) => a.name.localeCompare(b.name)), resultSchedules());
       assert.equal(observed.uploads.length, 2);
+      assert.equal(observed.fileUploads.length, Object.keys(observed.updates[0].files).length);
+      for (const upload of observed.fileUploads) assert.equal(upload.digest, observed.updates[0].files[upload.name]);
       for (const upload of observed.uploads) {
         assert.equal(upload.parameters.runtime, 'nodejs22.x');
         assert.equal(upload.parameters.invocation_mode, 'stream');
@@ -93,6 +95,21 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
     });
     assert.deepEqual(await fs.readFile(vendorPath), vendorBytes, 'The installed CLI module must never be edited');
     for (const fn of prepared.functions) assert.equal(sha256(await fs.readFile(path.join(payload, '.netlify-fn-build', `${fn.name}.zip`))), digests.get(fn.name));
+    const failedPayload = path.join(root, 'failed-payload');
+    await fs.cp(payload, failedPayload, { recursive: true, filter: source => !source.includes(`${path.sep}.netlify${path.sep}`) && path.basename(source) !== '.netlify' });
+    await withNetlifyCLI({ root, cliRoot, uploadFailure: { status: 422, message: 'Fixture function upload rejected; token=fixture-api-secret' } }, async ({ run, observed }) => {
+      await assert.rejects(uploadPreparedPayload({ directory: failedPayload, checkoutDirectory: root, message: 'fixture failure', run }), error => {
+        // --json suppresses the CLI's warning containing the API response body;
+        // its actual terminal failure still supplies a useful status description.
+        assert.match(error.message, /JSONHTTPError: Unprocessable Entity/);
+        assert.doesNotMatch(error.message, /fixture-api-secret/);
+        assert.match(error.message, /exit 1/);
+        return true;
+      });
+      assert.deepEqual(observed.cancellations, ['f'.repeat(24)]);
+      assert.equal(observed.creates.length, 1);
+      assert.deepEqual(observed.unexpected, []);
+    });
   } finally {
     await fs.rm(root, { recursive: true, force: true });
     await fs.rm(tmpDir, { recursive: true, force: true });
