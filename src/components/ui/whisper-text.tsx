@@ -1,18 +1,17 @@
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 
-// Lazy load GSAP to reduce initial bundle size
-let gsap: any;
-let ScrollTrigger: any;
-let gsapLoaded = false;
+type AnimationModules = {
+  gsap: typeof import("gsap")["gsap"];
+  ScrollTrigger: typeof import("gsap/ScrollTrigger")["ScrollTrigger"];
+};
 
-const loadGSAP = async () => {
-  if (gsapLoaded) return;
-  const gsapModule = await import("gsap");
-  const scrollTriggerModule = await import("gsap/ScrollTrigger");
-  gsap = gsapModule.gsap;
-  ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-gsap.registerPlugin(ScrollTrigger);
-  gsapLoaded = true;
+// Share pending imports across headings and start both before either resolves.
+let animationModules: Promise<AnimationModules> | undefined;
+const loadGSAP = () => {
+  animationModules ??= Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
+    .then(([{ gsap }, { ScrollTrigger }]) => ({ gsap, ScrollTrigger }))
+    .catch(error => { animationModules = undefined; throw error; });
+  return animationModules;
 };
 
 interface WhisperTextProps {
@@ -39,14 +38,22 @@ const WhisperText: React.FC<WhisperTextProps> = ({
   wordStyles = {},
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [gsap, setGsap] = useState<AnimationModules["gsap"] | null>(null);
 
   useEffect(() => {
-    loadGSAP().then(() => setIsLoaded(true));
+    let active = true;
+    loadGSAP().then(({ gsap, ScrollTrigger }) => {
+      if (!active) return;
+      gsap.registerPlugin(ScrollTrigger);
+      setGsap(gsap);
+    }).catch(error => {
+      if (active) console.warn("WhisperText animation unavailable; displaying static text.", error);
+    });
+    return () => { active = false; };
   }, []);
 
   useLayoutEffect(() => {
-    if (!isLoaded || !gsap || !ScrollTrigger) return;
+    if (!gsap) return;
 
     const ctx = gsap.context(() => {
       const targets = gsap.utils.toArray("[data-word]") as HTMLElement[];
@@ -70,7 +77,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
     }, containerRef);
 
     return () => ctx.revert();
-  }, [text, delay, duration, x, y, triggerStart, isLoaded]);
+  }, [text, delay, duration, x, y, triggerStart, gsap]);
 
   const renderWords = () =>
     text.split(" ").map((word, i) => (

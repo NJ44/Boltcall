@@ -60,6 +60,11 @@ vi.mock('gsap', () => ({ default: gsapInstance, gsap: gsapInstance }));
 vi.mock('gsap/ScrollTrigger', () => ({ ScrollTrigger: { create: vi.fn(), refresh: vi.fn(), getAll: () => [], kill: vi.fn() } }));
 vi.mock('@gsap/react', () => ({ useGSAP: (cb: any) => { try { cb(); } catch {} } }));
 vi.mock('../../components/TalkToAgentModal', () => ({ default: () => null }));
+// Pricing assertions do not own the optional animation's asynchronous imports.
+// Its loading, unmount and failure behavior is covered by whisper-text.test.tsx.
+vi.mock('../../components/ui/whisper-text', () => ({
+  default: ({ text }: { text: string }) => <span>{text}</span>,
+}));
 vi.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: any) => <div>{children}</div>,
   LineChart: () => null, BarChart: () => null, AreaChart: () => null,
