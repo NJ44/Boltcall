@@ -89,7 +89,13 @@ export function assertNetlifySite(site) {
 export function verifyLiveDeployment({ expected, marker, receipt, site, deploy }) {
   assertNetlifySite(site);
   if (!Object.entries(expected).every(([key, value]) => marker?.[key] === value && receipt?.[key] === value)) throw Error('Public release marker or deployment receipt changed');
-  if (!/^[a-zA-Z0-9_-]+$/.test(receipt?.deploy_id || '') || receipt.production_url !== PRODUCTION_URL ||
+  if (receipt.stage !== 'published' || receipt.production_deploy_id !== receipt.deploy_id ||
+      !/^[a-f0-9]{24}$/.test(receipt.preview_deploy_id || '') || receipt.preview_deploy_id === receipt.deploy_id ||
+      receipt.preview_receipt?.deploy_id !== receipt.preview_deploy_id || receipt.preview_receipt.context !== 'deploy-preview' ||
+      receipt.production_receipt?.deploy_id !== receipt.deploy_id || receipt.production_receipt.context !== 'production' ||
+      !/^[a-f0-9]{64}$/.test(receipt.upload_fingerprint || '') || receipt.preview_receipt.upload_fingerprint !== receipt.upload_fingerprint ||
+      receipt.production_receipt.upload_fingerprint !== receipt.upload_fingerprint ||
+      !/^[a-f0-9]{24}$/.test(receipt?.deploy_id || '') || receipt.production_url !== PRODUCTION_URL ||
       site.published_deploy?.id !== receipt.deploy_id || deploy?.id !== receipt.deploy_id ||
       deploy.site_id !== SITE_ID || deploy.context !== 'production' || deploy.state !== 'ready') {
     throw Error('Expected Netlify deployment is not currently published');

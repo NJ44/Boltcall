@@ -5,6 +5,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { materializeFunctionCache, withFreshFunctionCache } from './release-functions.mjs';
 import { redactReleaseOutput } from './release-diagnostics.mjs';
+import { DEPLOY_ID, fingerprint, assertProductionPointer, readDeploymentReceipt, saveDeploymentReceipt } from './release-upload.mjs';
 import { REPOSITORY, SITE_ID, PRODUCTION_URL, SHA, HASH, sha256, assertOwnerGate,
   readApprovedManifest, verifyPreparation, inspectPullRequest, listAll, releaseMarker,
   assertNetlifySite, verifyLiveDeployment, selectApprovalReceipts } from './release-control.mjs';
@@ -138,7 +139,7 @@ export async function inspectPrepared({ env = process.env, api = githubApi(), ru
   verifyPreparation(manifest, { run: prepRun, jobs, artifact, mainContains: true });
   await gates(api);
   releaseMarker(manifest, env.MANIFEST_HASH, { requestId: env.REQUEST_ID, runId: Number(env.GITHUB_RUN_ID), runAttempt: Number(env.GITHUB_RUN_ATTEMPT) });
-  await summary(env, `## Review prepared Boltcall release\n\nRelease: ${manifest.release_id}\n\nSource: ${manifest.source_sha}\n\nManifest SHA256: ${env.MANIFEST_HASH}\n\nPayload SHA256: ${manifest.artifact.payload_sha256}\n\nNetlify site: ${SITE_ID}\n\nProduction: ${PRODUCTION_URL}\n\nRequest: ${env.REQUEST_ID}\n\nBrowser acceptance remains required after deployment.\n`);
+  await summary(env, `## Review prepared Boltcall release\n\nRelease: ${manifest.release_id}\n\nSource: ${manifest.source_sha}\n\nManifest SHA256: ${env.MANIFEST_HASH}\n\nPayload SHA256: ${manifest.artifact.payload_sha256}\n\nNetlify site: ${SITE_ID}\n\nProduction: ${PRODUCTION_URL}\n\nRequest: ${env.REQUEST_ID}\n\nApproval covers a verified preview followed by one identical production upload, with one restoration of the captured previous deployment if immediate production verification fails.\n\nBrowser acceptance remains required after deployment.\n`);
   await output(env, { source_sha: manifest.source_sha, release_url: `https://github.com/${REPOSITORY}/releases` });
   return manifest;
 }
@@ -181,22 +182,25 @@ async function smokeFunctions(baseUrl, fetchResponse = fetch) {
   }
 }
 
-export async function uploadPreparedPayload({ directory, message, checkoutDirectory = process.cwd(), run = command }) {
+export async function uploadPreparedPayload({ directory, message, checkoutDirectory = process.cwd(), run = command, mode = 'preview', cachePath }) {
   directory = path.resolve(directory);
   if (directory === path.resolve(checkoutDirectory)) throw Error('Prepared payload must be separate from the CLI process directory');
-  const cachePath = await materializeFunctionCache(directory);
+  if (!['preview', 'production'].includes(mode)) throw Error('Invalid upload mode');
+  if (mode === 'preview') cachePath = await materializeFunctionCache(directory);
+  else if (cachePath !== path.join(directory, '.netlify/functions/manifest.json')) throw Error('Production must reuse the verified function cache');
   const functionManifest = JSON.parse(await fs.readFile(cachePath));
   const functions = await Promise.all(functionManifest.functions.map(async fn => ({ name: fn.name, digest: sha256(await fs.readFile(fn.path)),
     runtime: fn.runtimeVersion, invocationMode: fn.invocationMode, buildData: fn.buildData, schedule: fn.schedule })));
-  const result = JSON.parse(await withFreshFunctionCache(cachePath, signal => run(process.execPath, [fileURLToPath(new URL('./netlify-draft.mjs', import.meta.url)), 'deploy', '--draft', '--no-build',
+  const result = JSON.parse(await withFreshFunctionCache(cachePath, signal => run(process.execPath, [fileURLToPath(new URL('./netlify-draft.mjs', import.meta.url)), 'deploy', mode === 'preview' ? '--draft' : '--prod', '--no-build',
     `--cwd=${directory}`, '--dir=dist', '--functions=.netlify-fn-build', '--timeout=600', '--json', '--message', message],
-  { cwd: checkoutDirectory, env: { ...process.env, NETLIFY_SITE_ID: SITE_ID, CONTEXT: 'production' }, signal })));
+  { cwd: checkoutDirectory, env: { ...process.env, NETLIFY_SITE_ID: SITE_ID, CONTEXT: 'production', BOLTCALL_RELEASE_MODE: mode,
+    BOLTCALL_RELEASE_STATE: path.resolve(checkoutDirectory, 'deployment-receipt.json') }, signal })));
   if (result.site_id !== SITE_ID || !/^[a-f0-9]{24}$/.test(result.deploy_id || '')) throw Error('Netlify returned an invalid draft receipt');
-  return { result, functions };
+  return { result, functions, cachePath };
 }
 
-export function assertPreparedDeployMetadata(deploy, receipt, functions) {
-  if (deploy?.id !== receipt.deploy_id || deploy.site_id !== SITE_ID || deploy.state !== 'ready' || deploy.context !== 'production') throw Error('Prepared draft deployment identity changed');
+export function assertPreparedDeployMetadata(deploy, receipt, functions, context = 'production') {
+  if (deploy?.id !== receipt.deploy_id || deploy.site_id !== SITE_ID || deploy.state !== 'ready' || deploy.context !== context) throw Error('Prepared deployment identity changed');
   const actual = deploy.available_functions;
   if (!Array.isArray(actual) || actual.length !== functions.length || new Set(actual.map(fn => fn.n)).size !== functions.length) throw Error('Prepared function inventory changed');
   for (const fn of functions) {
@@ -210,34 +214,110 @@ export function assertPreparedDeployMetadata(deploy, receipt, functions) {
   if (!Array.isArray(deploy.function_schedules) || JSON.stringify(sorted(deploy.function_schedules)) !== JSON.stringify(sorted(schedules))) throw Error('Prepared function schedules changed');
 }
 
-export async function verifyAndPromoteDraft({ receipt, functions, previousDeployId, api = netlify, fetchResponse = fetch,
-  saveReceipt = value => fs.writeFile('deployment-receipt.json', `${JSON.stringify(value, null, 2)}\n`) }) {
-  if (receipt.stage !== undefined) throw Error('An existing deployment receipt cannot be promoted again');
-  if (!/^[a-f0-9]{24}$/.test(receipt.deploy_id || '') || !/^[a-f0-9]{24}$/.test(previousDeployId || '') || receipt.site_id !== SITE_ID) throw Error('Invalid draft promotion target');
-  const draft = { ...receipt, previous_deploy_id: previousDeployId, stage: 'draft' };
-  await saveReceipt(draft);
-  const previewUrl = `https://${receipt.deploy_id}--boltcall.netlify.app`;
-  const deploy = await api(`deploys/${receipt.deploy_id}`);
-  assertPreparedDeployMetadata(deploy, receipt, functions);
-  if (deploy.published_at || deploy.deploy_ssl_url !== previewUrl) throw Error('Prepared deployment is not an unpublished draft');
-  const response = await fetchResponse(`${previewUrl}/release.json`, { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(30000) });
-  if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) throw Error('Draft release marker is unavailable');
+async function verifyMarker(baseUrl, receipt, fetchResponse) {
+  const response = await fetchResponse(`${baseUrl}/release.json`, { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(30000) });
+  if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) throw Error('Release marker is unavailable');
   const marker = await response.json();
   for (const key of ['schema_version', 'project_id', 'sha', 'release_id', 'manifest_hash', 'request_id', 'run_id', 'run_attempt', 'site_id']) {
-    if (marker[key] !== receipt[key]) throw Error('Draft release marker changed');
+    if (marker[key] !== receipt[key]) throw Error('Release marker changed');
   }
-  await smokeFunctions(previewUrl, fetchResponse);
-  const site = await api(`sites/${SITE_ID}`);
+}
+
+const runtimeIdentity = deploy => fingerprint({ available_functions: [...deploy.available_functions].sort((a, b) => a.n.localeCompare(b.n)),
+  function_schedules: [...(deploy.function_schedules || [])].sort((a, b) => a.name.localeCompare(b.name)) });
+async function markerSnapshot(fetchResponse) {
+  const response = await fetchResponse(`${PRODUCTION_URL}/release.json`, { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(30000) });
+  if (response.status >= 500) throw Error('Known production marker is unavailable');
+  return response.ok && (response.headers.get('content-type') || '').includes('application/json')
+    ? { json: await response.json() } : { status: response.status, json: null };
+}
+function assertReadyProduction(deploy, id) {
+  if (deploy?.id !== id || deploy.site_id !== SITE_ID || deploy.state !== 'ready' || deploy.context !== 'production' || !deploy.published_at ||
+      !Array.isArray(deploy.available_functions) || !deploy.available_functions.length) throw Error('Known production identity is unavailable');
+}
+
+async function recoverProduction(receipt, previous, previousMarker, { api, fetchResponse, saveReceipt }) {
+  receipt = { ...receipt, failure_stage: receipt.stage, stage: 'production_uncertain' };
+  await saveReceipt(receipt);
+  let site = await api(`sites/${SITE_ID}`);
   assertNetlifySite(site);
-  if (site.published_deploy?.id !== previousDeployId || previousDeployId === receipt.deploy_id) throw Error('Production changed while verifying the prepared draft');
-  const promotion = { ...draft, stage: 'promotion_requested', draft_verified_at: new Date().toISOString() };
-  // Save before the write: a lost response is an uncertain promotion, never a retry.
-  await saveReceipt(promotion);
-  const published = await api(`sites/${SITE_ID}/deploys/${receipt.deploy_id}/restore`, { method: 'POST' });
-  if (published?.id !== receipt.deploy_id || published.site_id !== SITE_ID) throw Error('Netlify promotion receipt changed');
-  const promoted = { ...promotion, stage: 'published' };
-  await saveReceipt(promoted);
-  return promoted;
+  if (site.published_deploy?.id === receipt.previous_deploy_id && DEPLOY_ID.test(receipt.production_deploy_id || '')) {
+    const candidate = await api(`deploys/${receipt.production_deploy_id}`);
+    if (candidate?.id !== receipt.production_deploy_id || candidate.site_id !== SITE_ID || candidate.context !== 'production') throw Error('Production candidate identity is uncertain');
+    // CLI cancellation is best-effort; an accepted candidate can still publish later.
+    site = await api(`sites/${SITE_ID}`);
+    assertNetlifySite(site);
+    if (site.published_deploy?.id === receipt.previous_deploy_id) {
+      if (candidate.state === 'error' && candidate.published_at === null) await saveReceipt({ ...receipt, stage: 'production_failed' });
+      return;
+    }
+  }
+  if (!DEPLOY_ID.test(receipt.production_deploy_id || '') || site.published_deploy?.id !== receipt.production_deploy_id) {
+    await saveReceipt({ ...receipt, stage: 'production_uncertain' });
+    return;
+  }
+  assertProductionPointer(site, receipt.production_deploy_id);
+  const recovery = { ...receipt, stage: 'restoration_requested' };
+  await saveReceipt(recovery);
+  // Exactly one restore, and only while this request's production ID is current.
+  const restored = await api(`sites/${SITE_ID}/deploys/${receipt.previous_deploy_id}/restore`, { method: 'POST' });
+  if (restored?.id !== receipt.previous_deploy_id || restored.site_id !== SITE_ID) throw Error('Restoration response is uncertain');
+  assertProductionPointer(await api(`sites/${SITE_ID}`), receipt.previous_deploy_id);
+  const deploy = await api(`deploys/${receipt.previous_deploy_id}`);
+  assertReadyProduction(deploy, receipt.previous_deploy_id);
+  if (runtimeIdentity(deploy) !== runtimeIdentity(previous)) throw Error('Restored function metadata changed');
+  if (fingerprint(await markerSnapshot(fetchResponse)) !== fingerprint(previousMarker)) throw Error('Restored release marker changed');
+  await smokeFunctions(PRODUCTION_URL, fetchResponse);
+  await saveReceipt({ ...recovery, stage: 'restored' });
+}
+
+export async function runVerifiedRelease({ receipt, previousDeployId, directory, message = 'Prepared release', api = netlify, fetchResponse = fetch,
+  upload = uploadPreparedPayload, run = command, saveReceipt = saveDeploymentReceipt, loadReceipt = readDeploymentReceipt }) {
+  if (receipt.stage !== undefined || receipt.site_id !== SITE_ID || !DEPLOY_ID.test(previousDeployId || '')) throw Error('Existing or invalid release receipt');
+  assertProductionPointer(await api(`sites/${SITE_ID}`), previousDeployId);
+  const previous = await api(`deploys/${previousDeployId}`);
+  assertReadyProduction(previous, previousDeployId);
+  await smokeFunctions(PRODUCTION_URL, fetchResponse);
+  const previousMarker = await markerSnapshot(fetchResponse);
+  await saveReceipt({ ...receipt, previous_deploy_id: previousDeployId, stage: 'preview_requested' });
+  const preview = await upload({ directory, message, mode: 'preview', run });
+  let state = await loadReceipt();
+  if (state.stage !== 'preview_finalizing' || state.preview_deploy_id !== preview.result.deploy_id || !/^[a-f0-9]{64}$/.test(state.upload_fingerprint || '')) throw Error('Preview upload receipt changed');
+  const previewUrl = `https://${state.preview_deploy_id}--boltcall.netlify.app`;
+  const draft = await api(`deploys/${state.preview_deploy_id}`);
+  assertPreparedDeployMetadata(draft, { ...receipt, deploy_id: state.preview_deploy_id }, preview.functions, 'deploy-preview');
+  if (draft.published_at || draft.deploy_ssl_url !== previewUrl) throw Error('Preview is not an unpublished immutable deploy');
+  await verifyMarker(previewUrl, receipt, fetchResponse);
+  await smokeFunctions(previewUrl, fetchResponse);
+  assertProductionPointer(await api(`sites/${SITE_ID}`), previousDeployId);
+  state = { ...state, stage: 'preview_verified', preview_verified_at: new Date().toISOString(),
+    preview_receipt: { deploy_id: state.preview_deploy_id, context: 'deploy-preview', upload_fingerprint: state.upload_fingerprint } };
+  await saveReceipt(state);
+  await saveReceipt({ ...state, stage: 'production_requested' });
+  const previewFingerprint = state.upload_fingerprint;
+  try {
+    const production = await upload({ directory, message, mode: 'production', cachePath: preview.cachePath, run });
+    state = await loadReceipt();
+    if (state.stage !== 'production_finalizing' || state.production_deploy_id !== production.result.deploy_id || state.upload_fingerprint !== previewFingerprint ||
+        state.production_deploy_id === state.preview_deploy_id || state.production_deploy_id === previousDeployId) throw Error('Production upload receipt changed');
+    state = { ...state, stage: 'production_uploaded', deploy_id: state.production_deploy_id };
+    await saveReceipt(state);
+    assertProductionPointer(await api(`sites/${SITE_ID}`), state.deploy_id);
+    const deploy = await api(`deploys/${state.deploy_id}`);
+    assertReadyProduction(deploy, state.deploy_id);
+    assertPreparedDeployMetadata(deploy, state, preview.functions);
+    await verifyMarker(PRODUCTION_URL, receipt, fetchResponse);
+    await smokeFunctions(PRODUCTION_URL, fetchResponse);
+    assertProductionPointer(await api(`sites/${SITE_ID}`), state.deploy_id);
+    const published = { ...state, stage: 'published', production_receipt: { deploy_id: state.deploy_id, context: 'production',
+      upload_fingerprint: state.upload_fingerprint, verified_at: new Date().toISOString() } };
+    await saveReceipt(published);
+    return published;
+  } catch (error) {
+    try { await recoverProduction(await loadReceipt(), previous, previousMarker, { api, fetchResponse, saveReceipt }); }
+    catch (recoveryError) { throw Error(`${error.message}\nProduction recovery is uncertain: ${recoveryError.message}`); }
+    throw error;
+  }
 }
 
 async function assertNoPriorDeployment(api, env) {
@@ -288,10 +368,9 @@ export async function deployPrepared({ env = process.env, api = githubApi(), run
   await fs.writeFile('release-payload/dist/release.json', `${JSON.stringify(marker)}\n`);
   await fs.appendFile('release-payload/dist/_headers', '\n/release.json\n  Cache-Control: no-store, max-age=0\n  Content-Type: application/json\n');
   // Payload digest was verified before extraction; only cache paths/time change.
-  const { result, functions } = await uploadPreparedPayload({ directory: path.resolve('release-payload'),
-    message: `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`, run });
-  const receipt = await verifyAndPromoteDraft({ receipt: { ...marker, deploy_id: result.deploy_id, production_url: PRODUCTION_URL }, functions, previousDeployId });
-  await liveCheck(manifest, env, receipt);
+  const receipt = await runVerifiedRelease({ directory: path.resolve('release-payload'),
+    message: `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`, run,
+    receipt: { ...marker, production_url: PRODUCTION_URL }, previousDeployId });
   await summary(env, `\nPublished deploy: ${receipt.deploy_id}\n\nBrowser-test ${PRODUCTION_URL} before accepting production-verification.\n`);
   return receipt;
 }

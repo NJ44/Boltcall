@@ -8,6 +8,7 @@ import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCac
 import { sha256 } from '../release-control.mjs';
 import { uploadPreparedPayload } from '../release-workflow.mjs';
 import { withNetlifyCLI } from './helpers/netlify-cli-fixture.mjs';
+import { SITE_ID } from '../release-control.mjs';
 
 test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source precedence without running functions', { timeout: 120000 }, async () => {
   const cliRoot = process.env.NETLIFY_CLI_ROOT;
@@ -72,8 +73,11 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
     await fs.copyFile(path.join(root, 'netlify.toml'), path.join(payload, 'netlify.toml'));
     await fs.copyFile(preparedPath, path.join(payload, '.netlify-fn-build/manifest.json'));
     for (const fn of prepared.functions) await fs.copyFile(fn.path, path.join(payload, '.netlify-fn-build', `${fn.name}.zip`));
+    const receiptFile = path.join(root, 'deployment-receipt.json');
+    const initialReceipt = { site_id: SITE_ID, previous_deploy_id: 'a'.repeat(24), stage: 'preview_requested' };
+    await fs.writeFile(receiptFile, JSON.stringify(initialReceipt));
     await withNetlifyCLI({ root, cliRoot }, async ({ run, observed }) => {
-      const { result } = await uploadPreparedPayload({ directory: payload, checkoutDirectory: root, message: 'fixture', run });
+      const { result, cachePath } = await uploadPreparedPayload({ directory: payload, checkoutDirectory: root, message: 'fixture', run });
       assert.equal(result.deploy_id, 'f'.repeat(24));
       assert.equal(observed.creates.length, 1);
       assert.equal(observed.creates[0].draft, true);
@@ -92,11 +96,24 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
         assert.equal(observed.updates[0].functions_config[upload.name].build_data.runtimeAPIVersion, 2);
       }
       assert.deepEqual(observed.unexpected, []);
+      const previewReceipt = JSON.parse(await fs.readFile(receiptFile));
+      assert.equal(previewReceipt.preview_deploy_id, result.deploy_id);
+      await fs.writeFile(receiptFile, JSON.stringify({ ...previewReceipt, stage: 'production_requested' }));
+      const production = await uploadPreparedPayload({ directory: payload, checkoutDirectory: root, cachePath, mode: 'production', message: 'fixture', run });
+      assert.notEqual(production.result.deploy_id, result.deploy_id);
+      assert.equal(observed.creates[1].draft, false);
+      assert.equal(observed.updates[1].draft, false);
+      for (const key of ['files', 'functions', 'functions_config', 'function_schedules']) assert.deepEqual(observed.updates[1][key], observed.updates[0][key]);
+      const phaseUploads = id => observed.uploads.filter(u => u.deployId === id).map(({ deployId, ...u }) => u).sort((a, b) => a.name.localeCompare(b.name));
+      assert.deepEqual(phaseUploads('e'.repeat(24)), phaseUploads('f'.repeat(24)));
+      assert.ok(observed.creates.every(body => !('environment' in body)) && observed.updates.every(body => !('environment' in body)), 'Netlify must inherit context variables without a client-provided environment');
+      assert.equal(JSON.parse(await fs.readFile(receiptFile)).production_deploy_id, production.result.deploy_id);
     });
     assert.deepEqual(await fs.readFile(vendorPath), vendorBytes, 'The installed CLI module must never be edited');
     for (const fn of prepared.functions) assert.equal(sha256(await fs.readFile(path.join(payload, '.netlify-fn-build', `${fn.name}.zip`))), digests.get(fn.name));
     const failedPayload = path.join(root, 'failed-payload');
     await fs.cp(payload, failedPayload, { recursive: true, filter: source => !source.includes(`${path.sep}.netlify${path.sep}`) && path.basename(source) !== '.netlify' });
+    await fs.writeFile(receiptFile, JSON.stringify(initialReceipt));
     await withNetlifyCLI({ root, cliRoot, uploadFailure: { status: 422, code: 'FUNCTION_TIMEOUT_LIMIT',
       message: 'Fixture function upload rejected; token=fixture-api-secret\nAuthorization: Bearer fixture-message-secret',
       extra: { headers: { Authorization: 'Bearer ignored-header-secret' }, request: { env: 'ignored-request-secret' } } } }, async ({ run, observed }) => {
@@ -116,6 +133,20 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
       assert.deepEqual(observed.unexpected, []);
     });
     assert.deepEqual(await fs.readFile(vendorPath), vendorBytes, 'Failure diagnostics must not edit the installed CLI');
+    const changedPayload = path.join(root, 'changed-payload');
+    await fs.cp(payload, changedPayload, { recursive: true, filter: source => !source.includes(`${path.sep}.netlify${path.sep}`) && path.basename(source) !== '.netlify' });
+    await fs.writeFile(receiptFile, JSON.stringify(initialReceipt));
+    await withNetlifyCLI({ root, cliRoot }, async ({ run, observed }) => {
+      const first = await uploadPreparedPayload({ directory: changedPayload, checkoutDirectory: root, message: 'mutation fixture', run });
+      await fs.writeFile(receiptFile, JSON.stringify({ ...JSON.parse(await fs.readFile(receiptFile)), stage: 'production_requested' }));
+      await fs.writeFile(path.join(changedPayload, 'dist/index.html'), 'unreviewed mutation');
+      await assert.rejects(uploadPreparedPayload({ directory: changedPayload, checkoutDirectory: root, cachePath: first.cachePath, mode: 'production', message: 'mutation fixture', run }), /differs from the verified preview/);
+      assert.equal(observed.creates.length, 2);
+      assert.equal(observed.updates.length, 1, 'Changed production maps must never be finalized');
+      assert.deepEqual(observed.cancellations, ['e'.repeat(24)]);
+      assert.equal(JSON.parse(await fs.readFile(receiptFile)).production_deploy_id, 'e'.repeat(24));
+    });
+    assert.deepEqual(await fs.readFile(vendorPath), vendorBytes);
   } finally {
     await fs.rm(root, { recursive: true, force: true });
     await fs.rm(tmpDir, { recursive: true, force: true });
