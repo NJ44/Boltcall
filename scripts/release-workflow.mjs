@@ -95,7 +95,16 @@ export async function publishPrepared({ env = process.env, api = githubApi(), ru
   if (existing.some(release => release.tag_name === releaseId)) throw Error('Release identity already exists; prepared evidence is write-once');
   const release = await api('releases', { method: 'POST', body: { tag_name: releaseId, target_commitish: source,
     name: releaseId, draft: true, body: `Prepared source: ${source}\nManifest SHA256: ${hash}\nPreparation: https://github.com/${REPOSITORY}/actions/runs/${runId}\nProduction is not deployed by preparation.` } });
-  await api(`https://uploads.github.com/repos/${REPOSITORY}/releases/${release.id}/assets?name=release-manifest.json`, { method: 'POST', body: bytes, upload: true });
+  const asset = await api(`https://uploads.github.com/repos/${REPOSITORY}/releases/${release.id}/assets?name=release-manifest.json`, { method: 'POST', body: bytes, upload: true });
+  if (!Number.isSafeInteger(asset?.id) || asset.id < 1 || asset.name !== 'release-manifest.json' ||
+      asset.state !== 'uploaded' || asset.size !== bytes.length) throw Error('Prepared manifest upload is incomplete');
+  readApprovedManifest(await api(`releases/assets/${asset.id}`, { raw: true }), releaseId, hash);
+  // Drafts are invisible to contents:read callers. Publish only the verified
+  // evidence as a prerelease; the separate owner gates still control deployment.
+  const published = await api(`releases/${release.id}`, { method: 'PATCH', body: { draft: false, prerelease: true, make_latest: 'false' } });
+  if (published?.id !== release.id || published.tag_name !== releaseId || published.draft !== false || published.prerelease !== true) {
+    throw Error('Prepared manifest release is not published');
+  }
   await summary(env, `## Prepared Boltcall release\n\nRelease: ${releaseId}\n\nSource: ${source}\n\nManifest SHA256: ${hash}\n\nPayload SHA256: ${manifest.artifact.payload_sha256}\n\nRetained artifact: ${artifact.id}\n\nDeployment requires the exact release ID/hash and owner approval.\n`);
   return manifest;
 }
@@ -108,7 +117,7 @@ export async function inspectPrepared({ env = process.env, api = githubApi(), ru
   const assets = release?.assets?.filter(asset => asset.name === 'release-manifest.json');
   if (assets?.length !== 1 || assets[0].size > 200000) throw Error('Prepared manifest asset is unavailable');
   // Asset API returns JSON by default. The authenticated octet-stream request
-  // downloads draft assets without exposing the token to runtime workers.
+  // downloads published evidence using the consumer's read-only token.
   const bytes = await api(`releases/assets/${assets[0].id}`, { raw: true });
   const manifest = readApprovedManifest(bytes, env.RELEASE_ID, env.MANIFEST_HASH);
   await run('git', ['fetch', 'origin', 'main']);
