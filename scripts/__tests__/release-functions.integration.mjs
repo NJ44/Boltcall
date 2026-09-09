@@ -97,12 +97,17 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
     for (const fn of prepared.functions) assert.equal(sha256(await fs.readFile(path.join(payload, '.netlify-fn-build', `${fn.name}.zip`))), digests.get(fn.name));
     const failedPayload = path.join(root, 'failed-payload');
     await fs.cp(payload, failedPayload, { recursive: true, filter: source => !source.includes(`${path.sep}.netlify${path.sep}`) && path.basename(source) !== '.netlify' });
-    await withNetlifyCLI({ root, cliRoot, uploadFailure: { status: 422, message: 'Fixture function upload rejected; token=fixture-api-secret' } }, async ({ run, observed }) => {
+    await withNetlifyCLI({ root, cliRoot, uploadFailure: { status: 422, code: 'FUNCTION_TIMEOUT_LIMIT',
+      message: 'Fixture function upload rejected; token=fixture-api-secret\nAuthorization: Bearer fixture-message-secret',
+      extra: { headers: { Authorization: 'Bearer ignored-header-secret' }, request: { env: 'ignored-request-secret' } } } }, async ({ run, observed }) => {
       await assert.rejects(uploadPreparedPayload({ directory: failedPayload, checkoutDirectory: root, message: 'fixture failure', run }), error => {
-        // --json suppresses the CLI's warning containing the API response body;
-        // its actual terminal failure still supplies a useful status description.
         assert.match(error.message, /JSONHTTPError: Unprocessable Entity/);
-        assert.doesNotMatch(error.message, /fixture-api-secret/);
+        assert.match(error.message, /Fixture function upload rejected/);
+        assert.match(error.message, /"status":422/);
+        assert.match(error.message, /"code":"FUNCTION_TIMEOUT_LIMIT"/);
+        const diagnostic = JSON.parse(error.message.split('\n').find(line => line.startsWith('NETLIFY_RELEASE_ERROR ')).slice('NETLIFY_RELEASE_ERROR '.length));
+        assert.deepEqual(Object.keys(diagnostic).sort(), ['code', 'message', 'status']);
+        assert.doesNotMatch(error.message, /fixture-api-secret|fixture-message-secret|ignored-header-secret|ignored-request-secret/);
         assert.match(error.message, /exit 1/);
         return true;
       });
@@ -110,6 +115,7 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
       assert.equal(observed.creates.length, 1);
       assert.deepEqual(observed.unexpected, []);
     });
+    assert.deepEqual(await fs.readFile(vendorPath), vendorBytes, 'Failure diagnostics must not edit the installed CLI');
   } finally {
     await fs.rm(root, { recursive: true, force: true });
     await fs.rm(tmpDir, { recursive: true, force: true });

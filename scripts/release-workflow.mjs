@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { materializeFunctionCache, withFreshFunctionCache } from './release-functions.mjs';
+import { redactReleaseOutput } from './release-diagnostics.mjs';
 import { REPOSITORY, SITE_ID, PRODUCTION_URL, SHA, HASH, sha256, assertOwnerGate,
   readApprovedManifest, verifyPreparation, inspectPullRequest, listAll, releaseMarker,
   assertNetlifySite, verifyLiveDeployment, selectApprovalReceipts } from './release-control.mjs';
@@ -17,17 +18,7 @@ export async function command(bin, args, options = {}) {
     const status = Number.isInteger(error.code) ? `exit ${error.code}` : /^[A-Z_0-9]+$/.test(error.code || '') ? error.code : 'unknown exit';
     // Child error.message includes the full command and arguments. Report only
     // bounded stdout/stderr after redaction, never the raw error or its cause.
-    let detail = `${error.stdout || ''}\n${error.stderr || ''}`;
-    const env = options.env || process.env;
-    const secrets = Object.entries(env).filter(([key, value]) => value && /token|secret|password|passwd|auth|cookie|credential|(?:^|_)key$|private.?key|api.?key|connection.?string/i.test(key))
-      .map(([, value]) => String(value)).sort((a, b) => b.length - a.length);
-    for (const secret of secrets) detail = detail.split(secret).join('[REDACTED]');
-    detail = detail
-      .replace(/(["']?(?:authorization|proxy-authorization|cookie|set-cookie)["']?\s*[:=]\s*)(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\r\n]*)/gi, '$1[REDACTED]')
-      .replace(/(https?:\/\/)[^\s/@]+:[^\s/@]+@/gi, '$1[REDACTED]@')
-      .replace(/([?&](?:token|key|api_key|access_token|signature|sig|auth|password)=)[^&#\s]+/gi, '$1[REDACTED]')
-      .replace(/((?:token|secret|password|passwd|api_key)\s*["']?\s*[:=]\s*["']?)[^\s,"';}]+/gi, '$1[REDACTED]')
-      .replace(/\x1b\[[0-9;]*m/g, '').trim().slice(-6000);
+    const detail = redactReleaseOutput(`${error.stdout || ''}\n${error.stderr || ''}`, options.env || process.env);
     throw Error(`${path.basename(bin)} failed (${status})${error.signal ? `; signal ${error.signal}` : ''}${detail ? `\n${detail}` : ''}\nInspect workflow receipts and production before recovery; do not replay the failed deployment request.`);
   }
 }

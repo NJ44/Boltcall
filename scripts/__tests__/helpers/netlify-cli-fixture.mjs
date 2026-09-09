@@ -45,7 +45,7 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
       result = {};
     } else if (req.method === 'PUT' && url.pathname.includes('/functions/')) {
       observed.uploads.push({ name: url.pathname.split('/').at(-1), parameters: Object.fromEntries(url.searchParams), digest: sha256(bytes) });
-      if (uploadFailure) { res.writeHead(uploadFailure.status, { 'content-type': 'application/json' }).end(JSON.stringify({ message: uploadFailure.message })); return; }
+      if (uploadFailure) { res.writeHead(uploadFailure.status, { 'content-type': 'application/json' }).end(JSON.stringify({ message: uploadFailure.message, code: uploadFailure.code, ...uploadFailure.extra })); return; }
       requiredFunctions = requiredFunctions.filter(digest => digest !== sha256(bytes));
       result = {};
     } else if (req.method === 'POST' && url.pathname.endsWith(`/deploys/${deployId}/cancel`)) {
