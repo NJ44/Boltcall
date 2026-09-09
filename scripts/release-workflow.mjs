@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { materializeFunctionCache, withFreshFunctionCache } from './release-functions.mjs';
 import { REPOSITORY, SITE_ID, PRODUCTION_URL, SHA, HASH, sha256, assertOwnerGate,
   readApprovedManifest, verifyPreparation, inspectPullRequest, listAll, releaseMarker,
   assertNetlifySite, verifyLiveDeployment, selectApprovalReceipts } from './release-control.mjs';
@@ -209,8 +210,10 @@ export async function deployPrepared({ env = process.env, api = githubApi(), run
   const marker = releaseMarker(manifest, env.MANIFEST_HASH, { requestId: env.REQUEST_ID, runId: Number(env.GITHUB_RUN_ID), runAttempt: Number(env.GITHUB_RUN_ATTEMPT) });
   await fs.writeFile('release-payload/dist/release.json', `${JSON.stringify(marker)}\n`);
   await fs.appendFile('release-payload/dist/_headers', '\n/release.json\n  Cache-Control: no-store, max-age=0\n  Content-Type: application/json\n');
-  const result = JSON.parse(await run('netlify', ['deploy', '--prod', '--no-build', '--dir=dist', '--functions=.netlify-fn-build', '--timeout=600', '--json',
-    '--message', `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`], { cwd: path.resolve('release-payload'), env: { ...process.env, NETLIFY_SITE_ID: SITE_ID } }));
+  // Payload digest was verified before extraction; only cache paths/time change.
+  const cachePath = await materializeFunctionCache(path.resolve('release-payload'));
+  const result = JSON.parse(await withFreshFunctionCache(cachePath, signal => run('netlify', ['deploy', '--prod', '--no-build', '--dir=dist', '--functions=.netlify-fn-build', '--timeout=600', '--json',
+    '--message', `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`], { cwd: path.resolve('release-payload'), env: { ...process.env, NETLIFY_SITE_ID: SITE_ID }, signal })));
   if (result.site_id !== SITE_ID || !/^[a-zA-Z0-9_-]+$/.test(result.deploy_id || '')) throw Error('Netlify returned an invalid deployment receipt');
   const receipt = { ...marker, deploy_id: result.deploy_id, production_url: PRODUCTION_URL };
   // Save before smoke checks so failed verification still retains the deploy ID.

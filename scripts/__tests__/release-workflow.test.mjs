@@ -150,7 +150,9 @@ describe('release workflow boundaries', () => {
     expect(deploy.permissions).toEqual({ contents: 'read', actions: 'read' });
     expect(Object.values(deploy.jobs).some(job => job.permissions?.contents === 'write')).toBe(false);
     expect(prepare.jobs.publish.steps[0].with.ref).toBeUndefined();
-    expect(JSON.stringify(prepare.jobs.validate)).toContain('functions:build');
+    expect(JSON.stringify(prepare.jobs.validate)).toContain('release-functions.mjs bundle');
+    expect(JSON.stringify(prepare.jobs.validate)).toContain('release-functions.integration.mjs');
+    expect(JSON.stringify(prepare.jobs.validate)).toContain('netlify-cli@26.2.0');
     expect(deploy.jobs['final-verification'].steps.at(-1).with.path).toBe('verification-receipt.json');
     expect(deploy.jobs.deploy.steps.at(-1).if).toBe('always()');
   });

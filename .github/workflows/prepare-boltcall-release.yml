@@ -45,8 +45,12 @@ jobs:
       - run: npm run test:run
       - name: Build production site including prerender and SEO checks
         run: npm run build:prerender
-      - name: Bundle serverless functions
-        run: npx --yes --package=netlify-cli@26.2.0 netlify functions:build --src netlify/functions --functions .netlify-fn-build
+      - name: Install pinned function preparation toolchain
+        run: npm install --global netlify-cli@26.2.0
+      - name: Verify CLI preserves prepared runtime metadata
+        run: NETLIFY_CLI_ROOT="$(npm root --global)/netlify-cli" node --test scripts/__tests__/release-functions.integration.mjs
+      - name: Bundle serverless functions with production configuration
+        run: NETLIFY_CLI_ROOT="$(npm root --global)/netlify-cli" node scripts/release-functions.mjs bundle
       - name: Package tested site and function bundles
         id: pack
         run: |
