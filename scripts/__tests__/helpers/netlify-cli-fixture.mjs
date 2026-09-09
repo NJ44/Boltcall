@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { SITE_ID, sha256 } from '../../release-control.mjs';
+import { SITE_ID, PRODUCTION_URL, sha256 } from '../../release-control.mjs';
 import { command } from '../../release-workflow.mjs';
 
 // Exercise the actual CLI through the production draft wrapper. Its outbound API
@@ -14,9 +14,9 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
     function allow(input){const host=typeof input==='string'?new URL(input).hostname:input instanceof URL?input.hostname:input.hostname||input.host||'localhost';if(!['localhost','127.0.0.1'].includes(host.split(':')[0]))throw Error('Nonlocal test network blocked');}
     for(const module of [http,https])for(const key of ['request','get']){const original=module[key];module[key]=function(input,...rest){allow(input);return original.call(this,input,...rest)}}
     const originalFetch=globalThis.fetch;globalThis.fetch=(input,...rest)=>{allow(typeof input==='object'&&input.url?input.url:input);return originalFetch(input,...rest)};syncBuiltinESMExports();`);
-  const deployId = 'f'.repeat(24);
+  let deployId = 'f'.repeat(24), draft = true;
   const site = { id: SITE_ID, name: 'fixture-site', account_id: 'fixture-account', account_slug: 'fixture',
-    url: 'https://fixture.invalid', ssl_url: 'https://fixture.invalid', build_settings: {}, feature_flags: {}, capabilities: {}, processing_settings: {} };
+    url: PRODUCTION_URL, ssl_url: PRODUCTION_URL, build_settings: { stop_builds: true }, published_deploy: { id: 'a'.repeat(24), locked: false }, feature_flags: {}, capabilities: {}, processing_settings: {} };
   const observed = { creates: [], updates: [], uploads: [], fileUploads: [], cancellations: [], unexpected: [] };
   let requiredFunctions = [], requiredFiles = [];
   const server = http.createServer(async (req, res) => {
@@ -31,6 +31,8 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
     else if (url.pathname.includes('/env') || url.pathname.endsWith('/plugins') || url.pathname.includes('/extensions')) result = [];
     else if (url.pathname.endsWith('/user')) result = { id: 'fixture-user', email: 'fixture@example.invalid' };
     else if (req.method === 'POST' && url.pathname.endsWith('/deploys')) {
+      deployId = (observed.creates.length === 0 ? 'f' : 'e').repeat(24);
+      draft = body.draft;
       observed.creates.push(body);
       result = { ...site, id: deployId, site_id: SITE_ID };
     } else if (req.method === 'PUT' && body?.functions) {
@@ -40,11 +42,11 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
       result = { id: deployId, site_id: SITE_ID, required: requiredFiles, required_functions: requiredFunctions };
     } else if (req.method === 'PUT' && url.pathname.includes('/files/')) {
       const digest = createHash('sha1').update(bytes).digest('hex');
-      observed.fileUploads.push({ name: decodeURI(url.pathname.split('/files/')[1]), digest });
+      observed.fileUploads.push({ deployId, name: decodeURI(url.pathname.split('/files/')[1]), digest });
       requiredFiles = requiredFiles.filter(value => value !== digest);
       result = {};
     } else if (req.method === 'PUT' && url.pathname.includes('/functions/')) {
-      observed.uploads.push({ name: url.pathname.split('/').at(-1), parameters: Object.fromEntries(url.searchParams), digest: sha256(bytes) });
+      observed.uploads.push({ deployId, name: url.pathname.split('/').at(-1), parameters: Object.fromEntries(url.searchParams), digest: sha256(bytes) });
       if (uploadFailure) { res.writeHead(uploadFailure.status, { 'content-type': 'application/json' }).end(JSON.stringify({ message: uploadFailure.message, code: uploadFailure.code, ...uploadFailure.extra })); return; }
       requiredFunctions = requiredFunctions.filter(digest => digest !== sha256(bytes));
       result = {};
@@ -52,6 +54,7 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
       observed.cancellations.push(deployId);
       result = { id: deployId, state: 'error', error_message: 'Deploy canceled' };
     } else if (req.method === 'GET' && url.pathname.includes('/deploys/')) {
+      if (!draft && requiredFiles.length === 0 && requiredFunctions.length === 0) site.published_deploy.id = deployId;
       result = { id: deployId, site_id: SITE_ID, state: 'ready', url: site.url, ssl_url: site.ssl_url,
         deploy_url: `https://${deployId}--boltcall.netlify.app`, deploy_ssl_url: `https://${deployId}--boltcall.netlify.app`,
         admin_url: 'https://fixture.invalid', required: requiredFiles, required_functions: requiredFunctions };
@@ -72,7 +75,8 @@ export async function withNetlifyCLI({ root, cliRoot, uploadFailure }, operation
     return await operation({ observed, run: async (bin, args, options) => {
       if (bin !== process.execPath || !args[0].endsWith('netlify-draft.mjs')) throw Error('Unexpected CLI command');
       return command(process.execPath, ['--import', pathToFileURL(guard).href, ...args],
-        { ...options, env: { ...env, CONTEXT: options.env.CONTEXT, NETLIFY_CLI_ROOT: cliRoot }, timeout: 120000, maxBuffer: 2000000, windowsHide: true });
+        { ...options, env: { ...env, CONTEXT: options.env.CONTEXT, NETLIFY_CLI_ROOT: cliRoot,
+          BOLTCALL_RELEASE_MODE: options.env.BOLTCALL_RELEASE_MODE, BOLTCALL_RELEASE_STATE: options.env.BOLTCALL_RELEASE_STATE }, timeout: 120000, maxBuffer: 2000000, windowsHide: true });
     } });
   } finally {
     server.closeAllConnections();

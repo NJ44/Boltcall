@@ -21,6 +21,12 @@ describe('pinned draft subprocess guard', () => {
   it('refuses a changed vendor module', () => {
     expect(() => draftOnlySource(Buffer.from('draft = false'))).toThrow(/module hash/);
   });
+  it('allows only the explicit production command in production mode', () => {
+    expect(() => assertDraftArguments(['deploy', '--prod', '--no-build'], 'production')).not.toThrow();
+    for (const flags of [['--draft'], ['--prod', '--draft'], ['--prod-if-unlocked'], ['--prod', '--alias=live'], ['--prod', '--build']]) {
+      expect(() => assertDraftArguments(['deploy', '--no-build', ...flags], 'production')).toThrow();
+    }
+  });
   it('refuses an unexpected CLI version before importing its code', async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), 'boltcall-cli-version-'));
     try {

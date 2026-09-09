@@ -35,13 +35,19 @@ describe('production acceptance', () => {
   it('ties the public marker and receipt to the deploy currently published by Netlify', () => {
     const m = manifest(); const hash = 'f'.repeat(64);
     const marker = releaseMarker(m, hash, { requestId: 'request-1', runId: 789, runAttempt: 1 });
-    const receipt = { ...marker, deploy_id: 'deploy1', production_url: PRODUCTION_URL };
-    const site = { id: SITE_ID, ssl_url: PRODUCTION_URL, build_settings: { stop_builds: true }, published_deploy: { id: 'deploy1' } };
-    const deploy = { id: 'deploy1', site_id: SITE_ID, context: 'production', state: 'ready' };
+    const id = 'a'.repeat(24), previewId = 'b'.repeat(24), upload = 'c'.repeat(64);
+    const receipt = { ...marker, deploy_id: id, production_deploy_id: id, preview_deploy_id: previewId, production_url: PRODUCTION_URL,
+      stage: 'published', upload_fingerprint: upload, preview_receipt: { deploy_id: previewId, context: 'deploy-preview', upload_fingerprint: upload },
+      production_receipt: { deploy_id: id, context: 'production', upload_fingerprint: upload } };
+    const site = { id: SITE_ID, ssl_url: PRODUCTION_URL, build_settings: { stop_builds: true }, published_deploy: { id } };
+    const deploy = { id, site_id: SITE_ID, context: 'production', state: 'ready' };
     expect(verifyLiveDeployment({ expected: marker, marker, receipt, site, deploy })).toBe(true);
     expect(() => verifyLiveDeployment({ expected: marker, marker, receipt, site: { ...site, published_deploy: { id: 'other' } }, deploy })).toThrow(/published/);
     expect(() => verifyLiveDeployment({ expected: marker, marker: { ...marker, manifest_hash: 'a'.repeat(64) }, receipt, site, deploy })).toThrow(/marker/);
     expect(() => verifyLiveDeployment({ expected: marker, marker, receipt, site: { ...site, build_settings: { stop_builds: false } }, deploy })).toThrow(/Git/);
+    for (const change of [{ stage: 'restored' }, { preview_deploy_id: id }, { preview_receipt: {} }, { upload_fingerprint: 'd'.repeat(64) }]) {
+      expect(() => verifyLiveDeployment({ expected: marker, marker, receipt: { ...receipt, ...change }, site, deploy })).toThrow(/published/);
+    }
   });
 });
 const policies = [{ name: 'main', type: 'branch' }];
