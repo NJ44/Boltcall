@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { materializeFunctionCache, withFreshFunctionCache } from './release-functions.mjs';
@@ -147,8 +148,8 @@ async function downloadArtifact(api, artifact, directory, expectedFile) {
   await command('unzip', ['-q', archive, '-d', directory]);
   return path.resolve(directory, expectedFile);
 }
-async function netlify(endpoint) {
-  const response = await fetch(`https://api.netlify.com/api/v1/${endpoint}`, { headers: { Authorization: `Bearer ${process.env.NETLIFY_AUTH_TOKEN}` }, signal: AbortSignal.timeout(30000) });
+async function netlify(endpoint, { method = 'GET' } = {}) {
+  const response = await fetch(`https://api.netlify.com/api/v1/${endpoint}`, { method, headers: { Authorization: `Bearer ${process.env.NETLIFY_AUTH_TOKEN}` }, signal: AbortSignal.timeout(30000) });
   if (!response.ok) throw Error(`Netlify inspection failed (HTTP ${response.status})`);
   return response.json();
 }
@@ -161,9 +162,75 @@ async function liveCheck(manifest, env, receipt) {
   const site = await netlify(`sites/${SITE_ID}`);
   const deploy = await netlify(`deploys/${receipt.deploy_id}`);
   verifyLiveDeployment({ expected, marker, receipt, site, deploy });
-  const functionResponse = await fetch(`${PRODUCTION_URL}/.netlify/functions/saas-v2-leads`, { signal: AbortSignal.timeout(30000) });
-  if (![401, 403, 405].includes(functionResponse.status)) throw Error('Production function smoke test failed');
+  await smokeFunctions(PRODUCTION_URL);
   return expected;
+}
+
+async function smokeFunctions(baseUrl, fetchResponse = fetch) {
+  for (const name of ['saas-v2-leads', 'saas-v2-calls', 'retell-agents']) {
+    const response = await fetchResponse(`${baseUrl}/.netlify/functions/${name}`, { redirect: 'error', signal: AbortSignal.timeout(30000) });
+    if (response.status !== 401) throw Error(`Function smoke failed: ${name} returned HTTP ${response.status}`);
+    await response.body?.cancel?.();
+  }
+}
+
+export async function uploadPreparedPayload({ directory, message, checkoutDirectory = process.cwd(), run = command }) {
+  directory = path.resolve(directory);
+  if (directory === path.resolve(checkoutDirectory)) throw Error('Prepared payload must be separate from the CLI process directory');
+  const cachePath = await materializeFunctionCache(directory);
+  const functionManifest = JSON.parse(await fs.readFile(cachePath));
+  const functions = await Promise.all(functionManifest.functions.map(async fn => ({ name: fn.name, digest: sha256(await fs.readFile(fn.path)),
+    runtime: fn.runtimeVersion, invocationMode: fn.invocationMode, buildData: fn.buildData, schedule: fn.schedule })));
+  const result = JSON.parse(await withFreshFunctionCache(cachePath, signal => run(process.execPath, [fileURLToPath(new URL('./netlify-draft.mjs', import.meta.url)), 'deploy', '--draft', '--no-build',
+    `--cwd=${directory}`, '--dir=dist', '--functions=.netlify-fn-build', '--timeout=600', '--json', '--message', message],
+  { cwd: checkoutDirectory, env: { ...process.env, NETLIFY_SITE_ID: SITE_ID, CONTEXT: 'production' }, signal })));
+  if (result.site_id !== SITE_ID || !/^[a-f0-9]{24}$/.test(result.deploy_id || '')) throw Error('Netlify returned an invalid draft receipt');
+  return { result, functions };
+}
+
+export function assertPreparedDeployMetadata(deploy, receipt, functions) {
+  if (deploy?.id !== receipt.deploy_id || deploy.site_id !== SITE_ID || deploy.state !== 'ready' || deploy.context !== 'production') throw Error('Prepared draft deployment identity changed');
+  const actual = deploy.available_functions;
+  if (!Array.isArray(actual) || actual.length !== functions.length || new Set(actual.map(fn => fn.n)).size !== functions.length) throw Error('Prepared function inventory changed');
+  for (const fn of functions) {
+    const observed = actual.find(item => item.n === fn.name);
+    if (!observed || observed.d !== fn.digest || (fn.runtime && observed.r !== fn.runtime) ||
+        (observed.im || null) !== (fn.invocationMode || null) ||
+        !Object.entries(fn.buildData).every(([key, value]) => observed.bd?.[key] === value)) throw Error(`Prepared function metadata changed: ${fn.name}`);
+  }
+  const schedules = functions.filter(fn => fn.schedule).map(fn => ({ name: fn.name, cron: fn.schedule }));
+  const sorted = list => [...list].sort((a, b) => a.name.localeCompare(b.name));
+  if (!Array.isArray(deploy.function_schedules) || JSON.stringify(sorted(deploy.function_schedules)) !== JSON.stringify(sorted(schedules))) throw Error('Prepared function schedules changed');
+}
+
+export async function verifyAndPromoteDraft({ receipt, functions, previousDeployId, api = netlify, fetchResponse = fetch,
+  saveReceipt = value => fs.writeFile('deployment-receipt.json', `${JSON.stringify(value, null, 2)}\n`) }) {
+  if (receipt.stage !== undefined) throw Error('An existing deployment receipt cannot be promoted again');
+  if (!/^[a-f0-9]{24}$/.test(receipt.deploy_id || '') || !/^[a-f0-9]{24}$/.test(previousDeployId || '') || receipt.site_id !== SITE_ID) throw Error('Invalid draft promotion target');
+  const draft = { ...receipt, previous_deploy_id: previousDeployId, stage: 'draft' };
+  await saveReceipt(draft);
+  const previewUrl = `https://${receipt.deploy_id}--boltcall.netlify.app`;
+  const deploy = await api(`deploys/${receipt.deploy_id}`);
+  assertPreparedDeployMetadata(deploy, receipt, functions);
+  if (deploy.published_at || deploy.deploy_ssl_url !== previewUrl) throw Error('Prepared deployment is not an unpublished draft');
+  const response = await fetchResponse(`${previewUrl}/release.json`, { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(30000) });
+  if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) throw Error('Draft release marker is unavailable');
+  const marker = await response.json();
+  for (const key of ['schema_version', 'project_id', 'sha', 'release_id', 'manifest_hash', 'request_id', 'run_id', 'run_attempt', 'site_id']) {
+    if (marker[key] !== receipt[key]) throw Error('Draft release marker changed');
+  }
+  await smokeFunctions(previewUrl, fetchResponse);
+  const site = await api(`sites/${SITE_ID}`);
+  assertNetlifySite(site);
+  if (site.published_deploy?.id !== previousDeployId || previousDeployId === receipt.deploy_id) throw Error('Production changed while verifying the prepared draft');
+  const promotion = { ...draft, stage: 'promotion_requested', draft_verified_at: new Date().toISOString() };
+  // Save before the write: a lost response is an uncertain promotion, never a retry.
+  await saveReceipt(promotion);
+  const published = await api(`sites/${SITE_ID}/deploys/${receipt.deploy_id}/restore`, { method: 'POST' });
+  if (published?.id !== receipt.deploy_id || published.site_id !== SITE_ID) throw Error('Netlify promotion receipt changed');
+  const promoted = { ...promotion, stage: 'published' };
+  await saveReceipt(promoted);
+  return promoted;
 }
 
 async function assertNoPriorDeployment(api, env) {
@@ -199,7 +266,10 @@ export async function deployPrepared({ env = process.env, api = githubApi(), run
   if (env.GITHUB_JOB !== 'deploy') throw Error('Deployment must run in the protected workflow deploy phase');
   const manifest = await inspectPrepared({ env, api, run });
   await assertNoPriorDeployment(api, env);
-  assertNetlifySite(await netlify(`sites/${SITE_ID}`));
+  const previousSite = await netlify(`sites/${SITE_ID}`);
+  assertNetlifySite(previousSite);
+  const previousDeployId = previousSite.published_deploy?.id;
+  if (!/^[a-f0-9]{24}$/.test(previousDeployId || '')) throw Error('Current production deployment is unavailable');
   const artifact = await api(`actions/artifacts/${manifest.artifact.id}`);
   const payload = await downloadArtifact(api, artifact, 'release-download', 'payload.tar.gz');
   if (sha256(await fs.readFile(payload)) !== manifest.artifact.payload_sha256) throw Error('Prepared payload changed');
@@ -211,13 +281,9 @@ export async function deployPrepared({ env = process.env, api = githubApi(), run
   await fs.writeFile('release-payload/dist/release.json', `${JSON.stringify(marker)}\n`);
   await fs.appendFile('release-payload/dist/_headers', '\n/release.json\n  Cache-Control: no-store, max-age=0\n  Content-Type: application/json\n');
   // Payload digest was verified before extraction; only cache paths/time change.
-  const cachePath = await materializeFunctionCache(path.resolve('release-payload'));
-  const result = JSON.parse(await withFreshFunctionCache(cachePath, signal => run('netlify', ['deploy', '--prod', '--no-build', '--dir=dist', '--functions=.netlify-fn-build', '--timeout=600', '--json',
-    '--message', `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`], { cwd: path.resolve('release-payload'), env: { ...process.env, NETLIFY_SITE_ID: SITE_ID }, signal })));
-  if (result.site_id !== SITE_ID || !/^[a-zA-Z0-9_-]+$/.test(result.deploy_id || '')) throw Error('Netlify returned an invalid deployment receipt');
-  const receipt = { ...marker, deploy_id: result.deploy_id, production_url: PRODUCTION_URL };
-  // Save before smoke checks so failed verification still retains the deploy ID.
-  await fs.writeFile('deployment-receipt.json', `${JSON.stringify(receipt, null, 2)}\n`);
+  const { result, functions } = await uploadPreparedPayload({ directory: path.resolve('release-payload'),
+    message: `Release ${manifest.release_id} request ${env.REQUEST_ID} manifest ${env.MANIFEST_HASH}`, run });
+  const receipt = await verifyAndPromoteDraft({ receipt: { ...marker, deploy_id: result.deploy_id, production_url: PRODUCTION_URL }, functions, previousDeployId });
   await liveCheck(manifest, env, receipt);
   await summary(env, `\nPublished deploy: ${receipt.deploy_id}\n\nBrowser-test ${PRODUCTION_URL} before accepting production-verification.\n`);
   return receipt;

@@ -68,7 +68,7 @@ jobs:
       - name: Revalidate evidence and deploy retained site and functions
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: node scripts/release-workflow.mjs deploy
+        run: NETLIFY_CLI_ROOT="$(npm root --global)/netlify-cli" node scripts/release-workflow.mjs deploy
       - name: Retain Netlify receipt even when smoke checks fail
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

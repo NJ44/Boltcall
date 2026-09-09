@@ -6,12 +6,16 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCache } from '../release-functions.mjs';
 import { sha256 } from '../release-control.mjs';
+import { uploadPreparedPayload } from '../release-workflow.mjs';
+import { withNetlifyCLI } from './helpers/netlify-cli-fixture.mjs';
 
 test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source precedence without running functions', { timeout: 120000 }, async () => {
   const cliRoot = process.env.NETLIFY_CLI_ROOT;
   assert.ok(cliRoot, 'Run with the pinned NETLIFY_CLI_ROOT');
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'boltcall-function-cli-'));
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'boltcall-function-hash-'));
+  const vendorPath = path.join(cliRoot, 'dist/utils/deploy/deploy-site.js');
+  const vendorBytes = await fs.readFile(vendorPath);
   try {
     await fs.mkdir(path.join(root, 'netlify/functions'), { recursive: true });
     await fs.writeFile(path.join(root, 'package.json'), '{"type":"module"}');
@@ -55,8 +59,44 @@ test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source pre
       { name: 'override', cron: '0 6 * * *' }, { name: 'scheduled', cron: '*/5 * * * *' },
     ]);
     assert.deepEqual(await fs.readFile(preparedPath), preparedBytes);
+    // Match deployment layout: a prepared payload nested inside a checkout that
+    // has its own package.json and Netlify config. CWD alone selects the wrong
+    // project root in CLI 26; exercise the real command through its upload API.
+    const payload = path.join(root, 'release-payload');
+    await fs.mkdir(path.join(payload, '.netlify-fn-build'), { recursive: true });
+    await fs.mkdir(path.join(payload, 'dist'));
+    await fs.writeFile(path.join(payload, 'dist/index.html'), 'fixture');
+    // More than the CLI's 100-file limit exercises its asynchronous diff poll,
+    // as the full production payload does, before uploading required functions.
+    await Promise.all(Array.from({ length: 101 }, (_, index) => fs.writeFile(path.join(payload, 'dist', `${index}.txt`), String(index))));
+    await fs.copyFile(path.join(root, 'netlify.toml'), path.join(payload, 'netlify.toml'));
+    await fs.copyFile(preparedPath, path.join(payload, '.netlify-fn-build/manifest.json'));
+    for (const fn of prepared.functions) await fs.copyFile(fn.path, path.join(payload, '.netlify-fn-build', `${fn.name}.zip`));
+    await withNetlifyCLI({ root, cliRoot }, async ({ run, observed }) => {
+      const { result } = await uploadPreparedPayload({ directory: payload, checkoutDirectory: root, message: 'fixture', run });
+      assert.equal(result.deploy_id, 'f'.repeat(24));
+      assert.equal(observed.creates.length, 1);
+      assert.equal(observed.creates[0].draft, true);
+      assert.equal(observed.updates.length, 1);
+      assert.equal(observed.updates[0].draft, true);
+      assert.equal(observed.updates[0].async, true);
+      assert.deepEqual(observed.updates[0].function_schedules.sort((a, b) => a.name.localeCompare(b.name)), resultSchedules());
+      assert.equal(observed.uploads.length, 2);
+      for (const upload of observed.uploads) {
+        assert.equal(upload.parameters.runtime, 'nodejs22.x');
+        assert.equal(upload.parameters.invocation_mode, 'stream');
+        assert.equal(Number(upload.parameters.timeout), expected[upload.name].timeout);
+        assert.equal(upload.digest, digests.get(upload.name));
+        assert.equal(observed.updates[0].functions_config[upload.name].build_data.runtimeAPIVersion, 2);
+      }
+      assert.deepEqual(observed.unexpected, []);
+    });
+    assert.deepEqual(await fs.readFile(vendorPath), vendorBytes, 'The installed CLI module must never be edited');
+    for (const fn of prepared.functions) assert.equal(sha256(await fs.readFile(path.join(payload, '.netlify-fn-build', `${fn.name}.zip`))), digests.get(fn.name));
   } finally {
     await fs.rm(root, { recursive: true, force: true });
     await fs.rm(tmpDir, { recursive: true, force: true });
   }
 });
+
+function resultSchedules() { return [{ name: 'override', cron: '0 6 * * *' }, { name: 'scheduled', cron: '*/5 * * * *' }]; }
