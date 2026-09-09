@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
-import { runIntegration, inspectPrepared, publishPrepared, deployPrepared } from '../release-workflow.mjs';
+import { runIntegration, inspectPrepared, publishPrepared, deployPrepared, githubApi } from '../release-workflow.mjs';
 import { sha256, SITE_ID, PRODUCTION_URL } from '../release-control.mjs';
 
 const workflow = name => parse(readFileSync(`.github/workflows/${name}.yml`, 'utf8'));
@@ -12,6 +12,25 @@ const env = { GITHUB_REPOSITORY: 'Boltcall/Boltcall', GITHUB_REF: 'refs/heads/ma
 const gate = { name: 'production', can_admins_bypass: false,
   deployment_branch_policy: { protected_branches: false, custom_branch_policies: true },
   protection_rules: [{ type: 'required_reviewers', reviewers: [{ type: 'User', reviewer: { id: 77395319 } }] }] };
+
+describe('GitHub release transport', () => {
+  it.each([
+    { endpoint: 'actions/artifacts/456/zip', options: { raw: true }, accept: 'application/vnd.github+json' },
+    { endpoint: 'releases/assets/99', options: { raw: true, accept: 'application/octet-stream' }, accept: 'application/octet-stream' },
+  ])('downloads $endpoint bytes using its required request media type', async ({ endpoint, options, accept }) => {
+    const bytes = Buffer.from([0x50, 0x4b, 0x03, 0x04, 0xff]);
+    const json = vi.fn();
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, headers: new Headers(),
+      arrayBuffer: async () => Uint8Array.from(bytes).buffer, json });
+    vi.stubGlobal('fetch', fetchMock);
+    try {
+      expect(await githubApi('test-token')(endpoint, options)).toEqual(bytes);
+      expect(fetchMock).toHaveBeenCalledWith(`https://api.github.com/repos/Boltcall/Boltcall/${endpoint}`,
+        expect.objectContaining({ headers: expect.objectContaining({ Accept: accept }) }));
+      expect(json).not.toHaveBeenCalled();
+    } finally { vi.unstubAllGlobals(); }
+  });
+});
 
 describe('trusted integration command', () => {
   function fakeApi(head = sha) {
@@ -203,7 +222,7 @@ describe('preparation provenance at the workflow command boundary', () => {
     const upload = api.mock.calls.find(([endpoint]) => endpoint.startsWith('https://uploads.github.com/'));
     expect(JSON.parse(upload[1].body)).toEqual(prepared);
     expect(api.mock.calls.slice(-2)).toEqual([
-      ['releases/assets/99', { raw: true }],
+      ['releases/assets/99', { raw: true, accept: 'application/octet-stream' }],
       ['releases/88', { method: 'PATCH', body: { draft: false, prerelease: true, make_latest: 'false' } }],
     ]);
   });
