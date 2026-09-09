@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { runVerifiedRelease } from '../release-workflow.mjs';
 import { SITE_ID, PRODUCTION_URL } from '../release-control.mjs';
 
-function fixture(failure) {
+function fixture(failure, candidate = { state: 'preparing', published_at: null }) {
   const previous = 'a'.repeat(24), preview = 'b'.repeat(24), production = 'c'.repeat(24);
   let current = previous, state;
   const saved = [], phases = [];
@@ -21,6 +21,7 @@ function fixture(failure) {
       if (failure === 'preview URL' && id === preview) result.deploy_ssl_url = 'https://other.invalid';
       if (failure === 'production context' && id === production) result.context = 'deploy-preview';
       if (failure === 'production metadata' && id === production) result.available_functions[0].im = null;
+      if (failure === 'lost finalization response' && id === production) Object.assign(result, candidate);
       return result;
     }
     if (endpoint === `sites/${SITE_ID}/deploys/${previous}/restore` && options?.method === 'POST') {
@@ -41,10 +42,12 @@ function fixture(failure) {
     await saveReceipt({ ...state, stage: `${mode}_started`, [`${mode}_deploy_id`]: id });
     if (failure === 'production upload' && mode === 'production') throw Error('Upload rejected');
     await saveReceipt({ ...state, stage: `${mode}_finalizing`, upload_fingerprint: '1'.repeat(64) });
+    if (failure === 'lost finalization response' && mode === 'production') throw Error('Finalization response lost; best-effort cancellation also lost');
     if (mode === 'production') current = failure === 'other deploy' ? '9'.repeat(24) : production;
     return { result: { site_id: SITE_ID, deploy_id: id }, functions, cachePath: '/fixture/cache.json' };
   });
-  return { api, saved, phases, upload, options: { receipt, previousDeployId: previous, directory: '/fixture', api, fetchResponse, saveReceipt,
+  return { api, saved, phases, upload, publishedId: () => current, publishCandidate: () => { current = production; },
+    options: { receipt, previousDeployId: previous, directory: '/fixture', api, fetchResponse, saveReceipt,
     loadReceipt: async () => structuredClone(state), upload } };
 }
 
@@ -81,6 +84,66 @@ describe('preview then normal production upload', () => {
     const f = fixture('lost restore response');
     await expect(runVerifiedRelease(f.options)).rejects.toThrow();
     expect(f.saved.at(-1).stage).toBe('restoration_requested');
+    expect(f.api.mock.calls.filter(([, options]) => options?.method === 'POST')).toHaveLength(1);
+  });
+  it('keeps a preparing candidate uncertain after finalization and cancellation responses are lost', async () => {
+    const f = fixture('lost finalization response');
+    await expect(runVerifiedRelease(f.options)).rejects.toThrow('Finalization response lost');
+    expect(f.saved.at(-1).stage).toBe('production_uncertain');
+    expect(f.api).toHaveBeenCalledWith(`deploys/${'c'.repeat(24)}`);
+    expect(f.publishedId()).toBe('a'.repeat(24));
+    f.publishCandidate(); // Accepted server-side work can complete after recovery returns.
+    expect(f.publishedId()).toBe('c'.repeat(24));
+    expect(f.saved.at(-1).stage).toBe('production_uncertain');
+    expect(f.phases).toEqual(['preview', 'production']);
+    expect(f.api.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('records failure only after confirming the exact candidate is terminal and unpublished', async () => {
+    const f = fixture('lost finalization response', { state: 'error', published_at: null, error_message: 'Deploy canceled' });
+    await expect(runVerifiedRelease(f.options)).rejects.toThrow('Finalization response lost');
+    expect(f.saved.at(-1).stage).toBe('production_failed');
+    expect(f.api).toHaveBeenCalledWith(`deploys/${'c'.repeat(24)}`);
+    expect(f.phases).toEqual(['preview', 'production']);
+    expect(f.api.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it.each([
+    ['ready', { state: 'ready', published_at: null }],
+    ['unconfirmed cancellation', { state: 'preparing', published_at: null, error_message: 'Deploy canceled' }],
+    ['missing publication state', { state: 'error', published_at: undefined }],
+    ['previously published', { state: 'error', published_at: '2026-09-09T00:00:00Z' }],
+    ['different ID', { id: '9'.repeat(24), state: 'error', published_at: null }],
+    ['different site', { site_id: 'other', state: 'error', published_at: null }],
+    ['different context', { context: 'deploy-preview', state: 'error', published_at: null }],
+  ])('keeps the request uncertain when the candidate is %s', async (_, candidate) => {
+    const f = fixture('lost finalization response', candidate);
+    await expect(runVerifiedRelease(f.options)).rejects.toThrow('Finalization response lost');
+    expect(f.saved.at(-1).stage).toBe('production_uncertain');
+    expect(f.phases).toEqual(['preview', 'production']);
+    expect(f.api.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('keeps uncertainty when the exact candidate cannot be read', async () => {
+    const f = fixture('lost finalization response'), api = f.options.api;
+    f.options.api = vi.fn(async (endpoint, options) => {
+      if (endpoint === `deploys/${'c'.repeat(24)}`) throw Error('Candidate response lost');
+      return api(endpoint, options);
+    });
+    await expect(runVerifiedRelease(f.options)).rejects.toThrow('Candidate response lost');
+    expect(f.saved.at(-1).stage).toBe('production_uncertain');
+    expect(f.phases).toEqual(['preview', 'production']);
+    expect(f.api.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('restores once if the accepted candidate becomes current during bounded reconciliation', async () => {
+    const f = fixture('lost finalization response'), api = f.options.api;
+    f.options.api = vi.fn(async (endpoint, options) => {
+      const response = await api(endpoint, options);
+      if (endpoint === `deploys/${'c'.repeat(24)}`) f.publishCandidate();
+      return response;
+    });
+    await expect(runVerifiedRelease(f.options)).rejects.toThrow('Finalization response lost');
+    expect(f.saved.at(-1).stage).toBe('restored');
+    expect(f.publishedId()).toBe('a'.repeat(24));
+    expect(f.phases).toEqual(['preview', 'production']);
+    expect(f.api.mock.calls.filter(([endpoint]) => endpoint === `deploys/${'c'.repeat(24)}`)).toHaveLength(1);
     expect(f.api.mock.calls.filter(([, options]) => options?.method === 'POST')).toHaveLength(1);
   });
   it('refuses an existing request receipt before any reads or uploads', async () => {

@@ -239,11 +239,18 @@ function assertReadyProduction(deploy, id) {
 async function recoverProduction(receipt, previous, previousMarker, { api, fetchResponse, saveReceipt }) {
   receipt = { ...receipt, failure_stage: receipt.stage, stage: 'production_uncertain' };
   await saveReceipt(receipt);
-  const site = await api(`sites/${SITE_ID}`);
+  let site = await api(`sites/${SITE_ID}`);
   assertNetlifySite(site);
-  if (site.published_deploy?.id === receipt.previous_deploy_id) {
-    await saveReceipt({ ...receipt, stage: DEPLOY_ID.test(receipt.production_deploy_id || '') ? 'production_failed' : 'production_uncertain' });
-    return;
+  if (site.published_deploy?.id === receipt.previous_deploy_id && DEPLOY_ID.test(receipt.production_deploy_id || '')) {
+    const candidate = await api(`deploys/${receipt.production_deploy_id}`);
+    if (candidate?.id !== receipt.production_deploy_id || candidate.site_id !== SITE_ID || candidate.context !== 'production') throw Error('Production candidate identity is uncertain');
+    // CLI cancellation is best-effort; an accepted candidate can still publish later.
+    site = await api(`sites/${SITE_ID}`);
+    assertNetlifySite(site);
+    if (site.published_deploy?.id === receipt.previous_deploy_id) {
+      if (candidate.state === 'error' && candidate.published_at === null) await saveReceipt({ ...receipt, stage: 'production_failed' });
+      return;
+    }
   }
   if (!DEPLOY_ID.test(receipt.production_deploy_id || '') || site.published_deploy?.id !== receipt.production_deploy_id) {
     await saveReceipt({ ...receipt, stage: 'production_uncertain' });
