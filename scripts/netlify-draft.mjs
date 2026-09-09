@@ -22,7 +22,12 @@ export function assertDraftArguments(args) {
 
 export function draftOnlySource(source) {
   if (sha256(source) !== DEPLOY_SITE_SHA256) throw Error('Unexpected Netlify deploy module hash');
-  return source.toString().replace('deployTimeout = DEFAULT_DEPLOY_TIMEOUT, draft = false,', 'deployTimeout = DEFAULT_DEPLOY_TIMEOUT, draft = true,');
+  const original = source.toString()
+    .replace('deployTimeout = DEFAULT_DEPLOY_TIMEOUT, draft = false,', 'deployTimeout = DEFAULT_DEPLOY_TIMEOUT, draft = true,')
+    .replace('export const deploySite = async', 'const deploySiteImplementation = async');
+  const diagnosticModule = JSON.stringify(new URL('./release-diagnostics.mjs', import.meta.url).href);
+  return `import { reportNetlifyFailure } from ${diagnosticModule};\n${original}\n` +
+    'export const deploySite = async (...args) => { try { return await deploySiteImplementation(...args); } catch (error) { reportNetlifyFailure(error); throw error; } };\n';
 }
 
 export async function runDraftCLI(args, cliRoot = process.env.NETLIFY_CLI_ROOT) {
