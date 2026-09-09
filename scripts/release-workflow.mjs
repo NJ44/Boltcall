@@ -15,10 +15,10 @@ export async function command(bin, args, options = {}) {
 }
 
 export function githubApi(token = process.env.GH_TOKEN) {
-  return async (endpoint, { method = 'GET', body, raw = false, upload = false } = {}) => {
+  return async (endpoint, { method = 'GET', body, raw = false, upload = false, accept = 'application/vnd.github+json' } = {}) => {
     const url = upload ? endpoint : `https://api.github.com/${endpoint === 'graphql' ? endpoint : `repos/${REPOSITORY}/${endpoint}`}`;
     const response = await fetch(url, { method, headers: { Authorization: `Bearer ${token}`,
-      Accept: raw ? 'application/octet-stream' : 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28',
+      Accept: accept, 'X-GitHub-Api-Version': '2022-11-28',
       ...(body ? { 'Content-Type': 'application/json' } : {}) },
       ...(body ? { body: upload ? body : JSON.stringify(body) } : {}), signal: AbortSignal.timeout(180000) });
     if (!response.ok) throw Error(`GitHub release request failed (HTTP ${response.status})`);
@@ -98,7 +98,7 @@ export async function publishPrepared({ env = process.env, api = githubApi(), ru
   const asset = await api(`https://uploads.github.com/repos/${REPOSITORY}/releases/${release.id}/assets?name=release-manifest.json`, { method: 'POST', body: bytes, upload: true });
   if (!Number.isSafeInteger(asset?.id) || asset.id < 1 || asset.name !== 'release-manifest.json' ||
       asset.state !== 'uploaded' || asset.size !== bytes.length) throw Error('Prepared manifest upload is incomplete');
-  readApprovedManifest(await api(`releases/assets/${asset.id}`, { raw: true }), releaseId, hash);
+  readApprovedManifest(await api(`releases/assets/${asset.id}`, { raw: true, accept: 'application/octet-stream' }), releaseId, hash);
   // Drafts are invisible to contents:read callers. Publish only the verified
   // evidence as a prerelease; the separate owner gates still control deployment.
   const published = await api(`releases/${release.id}`, { method: 'PATCH', body: { draft: false, prerelease: true, make_latest: 'false' } });
@@ -118,7 +118,7 @@ export async function inspectPrepared({ env = process.env, api = githubApi(), ru
   if (assets?.length !== 1 || assets[0].size > 200000) throw Error('Prepared manifest asset is unavailable');
   // Asset API returns JSON by default. The authenticated octet-stream request
   // downloads published evidence using the consumer's read-only token.
-  const bytes = await api(`releases/assets/${assets[0].id}`, { raw: true });
+  const bytes = await api(`releases/assets/${assets[0].id}`, { raw: true, accept: 'application/octet-stream' });
   const manifest = readApprovedManifest(bytes, env.RELEASE_ID, env.MANIFEST_HASH);
   await run('git', ['fetch', 'origin', 'main']);
   await run('git', ['merge-base', '--is-ancestor', manifest.source_sha, 'origin/main']);
@@ -135,6 +135,7 @@ export async function inspectPrepared({ env = process.env, api = githubApi(), ru
 }
 
 async function downloadArtifact(api, artifact, directory, expectedFile) {
+  // Actions requires the JSON API media type before redirecting to ZIP bytes.
   const bytes = await api(`actions/artifacts/${artifact.id}/zip`, { raw: true });
   if (`sha256:${sha256(bytes)}` !== artifact.digest) throw Error('Downloaded artifact digest changed');
   await fs.mkdir(directory, { recursive: true });
