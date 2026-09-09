@@ -3,12 +3,27 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCache } from '../release-functions.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
+import { bundlePreparedFunctions, materializeFunctionCache, withFreshFunctionCache, NETLIFY_CLI_VERSION } from '../release-functions.mjs';
 import { sha256 } from '../release-control.mjs';
 import { uploadPreparedPayload } from '../release-workflow.mjs';
 import { withNetlifyCLI } from './helpers/netlify-cli-fixture.mjs';
 import { SITE_ID } from '../release-control.mjs';
+
+test('repository functions use the modern runtime required by the site environment', async () => {
+  const cliRoot = process.env.NETLIFY_CLI_ROOT;
+  assert.ok(cliRoot, 'Run with the pinned NETLIFY_CLI_ROOT');
+  assert.equal(JSON.parse(await fs.readFile(path.join(cliRoot, 'package.json'))).version, NETLIFY_CLI_VERSION);
+  const require = createRequire(path.join(cliRoot, 'package.json'));
+  const { listFunctions } = await import(pathToFileURL(require.resolve('@netlify/zip-it-and-ship-it')));
+  const directory = fileURLToPath(new URL('../../netlify/functions/', import.meta.url));
+  // Actual bundler analysis catches named handler exports even beside a modern default export.
+  const functions = await listFunctions(directory, { parseISC: true });
+  assert.ok(functions.some(fn => fn.name === 'generate-runbook'));
+  assert.deepEqual(functions.filter(fn => fn.runtimeAPIVersion !== 2).map(fn => fn.name), [],
+    'Lambda-compatible functions cannot use this site environment; export only the modern entry point');
+});
 
 test('pinned Netlify CLI preserves v2 transport, TOML settings and in-source precedence without running functions', { timeout: 120000 }, async () => {
   const cliRoot = process.env.NETLIFY_CLI_ROOT;
